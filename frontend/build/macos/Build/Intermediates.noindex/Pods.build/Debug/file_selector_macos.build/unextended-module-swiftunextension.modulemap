@@ -1,0 +1,4 @@
+
+module file_selector_macos.__Swift {
+  exclude header "file_selector_macos-Swift.h"
+}
