@@ -1,0 +1,9 @@
+/Users/selebry/corporate_portal/backend/CorporatePortal.API/obj/Debug/net8.0/CorporatePortal.API.csproj.AssemblyReference.cache
+/Users/selebry/corporate_portal/backend/CorporatePortal.API/obj/Debug/net8.0/rpswa.dswa.cache.json
+/Users/selebry/corporate_portal/backend/CorporatePortal.API/obj/Debug/net8.0/CorporatePortal.API.GeneratedMSBuildEditorConfig.editorconfig
+/Users/selebry/corporate_portal/backend/CorporatePortal.API/obj/Debug/net8.0/CorporatePortal.API.AssemblyInfoInputs.cache
+/Users/selebry/corporate_portal/backend/CorporatePortal.API/obj/Debug/net8.0/CorporatePortal.API.AssemblyInfo.cs
+/Users/selebry/corporate_portal/backend/CorporatePortal.API/obj/Debug/net8.0/CorporatePortal.API.csproj.CoreCompileInputs.cache
+/Users/selebry/corporate_portal/backend/CorporatePortal.API/obj/Debug/net8.0/CorporatePortal.API.MvcApplicationPartsAssemblyInfo.cs
+/Users/selebry/corporate_portal/backend/CorporatePortal.API/obj/Debug/net8.0/CorporatePortal.API.MvcApplicationPartsAssemblyInfo.cache
+/Users/selebry/corporate_portal/backend/CorporatePortal.API/obj/Debug/net8.0/CorporatePortal.API.sourcelink.json

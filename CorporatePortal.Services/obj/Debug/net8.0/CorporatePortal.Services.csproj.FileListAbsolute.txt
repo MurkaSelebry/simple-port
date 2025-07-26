@@ -1,6 +1,0 @@
-/Users/selebry/corporate_portal/CorporatePortal.Services/obj/Debug/net8.0/CorporatePortal.Services.csproj.AssemblyReference.cache
-/Users/selebry/corporate_portal/CorporatePortal.Services/obj/Debug/net8.0/CorporatePortal.Services.GeneratedMSBuildEditorConfig.editorconfig
-/Users/selebry/corporate_portal/CorporatePortal.Services/obj/Debug/net8.0/CorporatePortal.Services.AssemblyInfoInputs.cache
-/Users/selebry/corporate_portal/CorporatePortal.Services/obj/Debug/net8.0/CorporatePortal.Services.AssemblyInfo.cs
-/Users/selebry/corporate_portal/CorporatePortal.Services/obj/Debug/net8.0/CorporatePortal.Services.csproj.CoreCompileInputs.cache
-/Users/selebry/corporate_portal/CorporatePortal.Services/obj/Debug/net8.0/CorporatePortal.Services.sourcelink.json
