@@ -1,1 +1,0 @@
- C:\\Users\\User\\Desktop\\diplom\\diplom\\.dart_tool\\flutter_build\\3ba389c1b47998f9dcaf2e9a7a0c180b\\native_assets.yaml: 
