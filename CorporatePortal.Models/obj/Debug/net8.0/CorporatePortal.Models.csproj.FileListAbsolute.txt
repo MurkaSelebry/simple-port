@@ -1,0 +1,13 @@
+/Users/selebry/corporate_portal/CorporatePortal.Models/bin/Debug/net8.0/CorporatePortal.Models.deps.json
+/Users/selebry/corporate_portal/CorporatePortal.Models/bin/Debug/net8.0/CorporatePortal.Models.dll
+/Users/selebry/corporate_portal/CorporatePortal.Models/bin/Debug/net8.0/CorporatePortal.Models.pdb
+/Users/selebry/corporate_portal/CorporatePortal.Models/obj/Debug/net8.0/CorporatePortal.Models.csproj.AssemblyReference.cache
+/Users/selebry/corporate_portal/CorporatePortal.Models/obj/Debug/net8.0/CorporatePortal.Models.GeneratedMSBuildEditorConfig.editorconfig
+/Users/selebry/corporate_portal/CorporatePortal.Models/obj/Debug/net8.0/CorporatePortal.Models.AssemblyInfoInputs.cache
+/Users/selebry/corporate_portal/CorporatePortal.Models/obj/Debug/net8.0/CorporatePortal.Models.AssemblyInfo.cs
+/Users/selebry/corporate_portal/CorporatePortal.Models/obj/Debug/net8.0/CorporatePortal.Models.csproj.CoreCompileInputs.cache
+/Users/selebry/corporate_portal/CorporatePortal.Models/obj/Debug/net8.0/CorporatePortal.Models.sourcelink.json
+/Users/selebry/corporate_portal/CorporatePortal.Models/obj/Debug/net8.0/CorporatePortal.Models.dll
+/Users/selebry/corporate_portal/CorporatePortal.Models/obj/Debug/net8.0/refint/CorporatePortal.Models.dll
+/Users/selebry/corporate_portal/CorporatePortal.Models/obj/Debug/net8.0/CorporatePortal.Models.pdb
+/Users/selebry/corporate_portal/CorporatePortal.Models/obj/Debug/net8.0/ref/CorporatePortal.Models.dll

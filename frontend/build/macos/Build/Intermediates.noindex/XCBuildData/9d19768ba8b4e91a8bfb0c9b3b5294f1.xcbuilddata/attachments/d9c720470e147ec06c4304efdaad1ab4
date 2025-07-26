@@ -1,5 +1,0 @@
-
-module file_selector_macos.Swift {
-  header "file_selector_macos-Swift.h"
-  requires objc
-}

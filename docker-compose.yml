@@ -1,0 +1,91 @@
+version: "3.8"
+
+services:
+  # SQL Server
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: corporate-portal-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - corporate-portal-network
+
+  # Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: corporate-portal-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--storage.tsdb.retention.time=200h"
+      - "--web.enable-lifecycle"
+    networks:
+      - corporate-portal-network
+
+  # Grafana
+  grafana:
+    image: grafana/grafana:latest
+    container_name: corporate-portal-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./configs/grafana/provisioning:/etc/grafana/provisioning
+      - ./configs/grafana/dashboards:/var/lib/grafana/dashboards
+    networks:
+      - corporate-portal-network
+
+  # Jaeger
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: corporate-portal-jaeger
+    ports:
+      - "16686:16686"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - corporate-portal-network
+
+  # Load Testing Service
+  load-testing:
+    build:
+      context: ./load-testing
+      dockerfile: Dockerfile.alternative
+    container_name: corporate-portal-load-testing
+    ports:
+      - "8080:8080"
+    environment:
+      - API_BASE_URL=http://host.docker.internal:5000
+      - TELEGRAM_BOT_TOKEN=YOUR_BOT_TOKEN_HERE
+      - TELEGRAM_CHANNEL_ID=@corporate_portal_alerts
+    networks:
+      - corporate-portal-network
+    depends_on:
+      - sqlserver
+
+volumes:
+  sqlserver_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  corporate-portal-network:
+    driver: bridge
