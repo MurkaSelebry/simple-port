@@ -1,5 +1,6 @@
 import 'package:diplom/user_category/admin/admin.dart';
 import 'package:diplom/user_category/employee/screens/employee_main.dart';
+import 'package:diplom/services/api_service.dart';
 import 'package:flutter/material.dart';
 void main() {
   runApp(MyApp());
@@ -82,13 +83,52 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      print('Ник: $_nick');
-      print('Почта: $_email');
-      print('Пароль: $_password');
-      Navigator.pushReplacementNamed(context, '/employee');
+      
+      try {
+        // Показываем индикатор загрузки
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
+        );
+
+        // Выполняем авторизацию
+        final result = await ApiService.login(_email, _password);
+        
+        // Скрываем индикатор загрузки
+        Navigator.pop(context);
+        
+        // Переходим на главную страницу
+        Navigator.pushReplacementNamed(context, '/employee');
+        
+      } catch (e) {
+        // Скрываем индикатор загрузки
+        Navigator.pop(context);
+        
+        // Показываем ошибку
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Ошибка'),
+              content: Text('Ошибка входа: $e'),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:diplom/user_category/employee/screens/orders/orders_page.dart';
 import 'package:diplom/user_category/employee/screens/screens.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http; // <--- ДОБАВЛЕНО
 import 'dart:convert';
 
 class RagResponse {
@@ -18,7 +18,6 @@ class RagResponse {
     );
   }
 }
-
 void main() {
   runApp(EmployeeMainPage());
 }
@@ -61,9 +60,10 @@ class _HomePageState extends State<HomePage> {
 
   // --- НОВЫЕ ПЕРЕМЕННЫЕ для API ---
   bool _isLoading = false;
-  // Обновленный URL для локального C# backend
-  final String _apiUrl = "http://localhost:5000/api/chat/send"; 
+  // !!! ЗАМЕНИТЕ ЭТОТ URL НА ВАШ АКТУАЛЬНЫЙ URL ОТ NGROK !!!
+  final String _apiUrl = "https://enormously-simple-cicada.ngrok-free.app/ask"; 
   // --- Конец новых переменных ---
+
 
   void _selectCategory(String category) {
     setState(() {
@@ -104,6 +104,7 @@ class _HomePageState extends State<HomePage> {
         Uri.parse(_apiUrl),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
+          'ngrok-skip-browser-warning': 'true',
         },
         body: jsonEncode({'query': query}),
       );
@@ -158,12 +159,22 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+
+
   Widget _buildContent() {
     switch (_selectedCategory) {
       case 'Информация':
         return InfoPage();
       case 'Заказы':
         return OrdersPage();
+      // case 'QR код':
+      //   return QRPage();
+      // case 'Каталог':
+      //   return CatalogPage();
+      // case 'Администрирование':
+      //   return AdminPage();
+      // case 'Настройки аккаунта':
+      //   return AccountSettingsPage();
       default:
         return const Dashboard();
     }
@@ -185,6 +196,10 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   _buildCategoryButton('Информация'),
                   _buildCategoryButton('Заказы'),
+                  // _buildCategoryButton('QR код'),
+                  // _buildCategoryButton('Каталог'),
+                  // _buildCategoryButton('Администрирование'),
+                  // _buildCategoryButton('Настройки аккаунта'),
                 ],
               ),
               const SizedBox(height: 20.0),

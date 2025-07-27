@@ -4,35 +4,36 @@ services:
   # SQL Server
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: corporate_portal_sqlserver
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=YourStrong@Passw0rd
-      - MSSQL_PID=Developer
+      - MSSQL_PID=Express
     ports:
       - "1433:1433"
     volumes:
       - sqlserver_data:/var/opt/mssql
     networks:
-      - corporate_portal_network
-    healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P YourStrong@Passw0rd -Q 'SELECT 1'",
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      - corporate_network
+
+  # Jaeger
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "16686:16686" # UI
+      - "6831:6831/udp" # Agent
+      - "14268:14268" # Collector
+    networks:
+      - corporate_network
 
   # Prometheus
   prometheus:
     image: prom/prometheus:latest
-    container_name: corporate_portal_prometheus
     ports:
       - "9090:9090"
     volumes:
-      - ./Configs/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
@@ -42,69 +43,53 @@ services:
       - "--storage.tsdb.retention.time=200h"
       - "--web.enable-lifecycle"
     networks:
-      - corporate_portal_network
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost:9090/-/healthy",
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      - corporate_network
 
   # Grafana
   grafana:
     image: grafana/grafana:latest
-    container_name: corporate_portal_grafana
     ports:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_USERS_ALLOW_SIGN_UP=false
     volumes:
       - grafana_data:/var/lib/grafana
-      - ./Configs/grafana/dashboards:/etc/grafana/provisioning/dashboards
-      - ./Configs/grafana/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/provisioning:/etc/grafana/provisioning
     networks:
-      - corporate_portal_network
-    depends_on:
-      - prometheus
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:3000/api/health || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      - corporate_network
 
-  # Jaeger
-  jaeger:
-    image: jaegertracing/all-in-one:latest
-    container_name: corporate_portal_jaeger
+  # Corporate Portal API
+  corporate-api:
+    build:
+      context: .
+      dockerfile: CorporatePortalApi/Dockerfile
     ports:
-      - "16686:16686"
-      - "14268:14268"
+      - "6000:6000"
     environment:
-      - COLLECTOR_OTLP_ENABLED=true
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:6000
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=CorporatePortal;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true;
+      - Jaeger__Host=jaeger
+      - Jaeger__Port=6831
+    depends_on:
+      - sqlserver
+      - jaeger
     networks:
-      - corporate_portal_network
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "wget",
-          "--no-verbose",
-          "--tries=1",
-          "--spider",
-          "http://localhost:16686/",
-        ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      - corporate_network
+
+  # Load Testing Service
+  load-tester:
+    build:
+      context: ./load-tester
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - API_URL=http://corporate-api:6000
+    depends_on:
+      - corporate-api
+    networks:
+      - corporate_network
 
 volumes:
   sqlserver_data:
@@ -112,5 +97,5 @@ volumes:
   grafana_data:
 
 networks:
-  corporate_portal_network:
+  corporate_network:
     driver: bridge
