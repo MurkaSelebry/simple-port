@@ -4,7 +4,7 @@
 
 API корпоративного портала предоставляет RESTful интерфейс для работы с пользователями, информационными элементами и заказами.
 
-**Базовый URL:** `http://localhost:6000/api`
+**Базовый URL:** `http://localhost:6500/api`
 
 ## Аутентификация
 
@@ -356,25 +356,25 @@ GET /metrics
 
 ```bash
 # Авторизация
-curl -X POST http://localhost:6000/api/auth/login \
+curl -X POST http://localhost:6500/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{"email": "employee@company.com", "password": "employee123"}'
 
 # Получение всех заказов
-curl http://localhost:6000/api/orders
+curl http://localhost:6500/api/orders
 
 # Получение статистики
-curl http://localhost:6000/api/orders/statistics
+curl http://localhost:6500/api/orders/statistics
 
 # Получение документов
-curl http://localhost:6000/api/info?category=GeneralDocuments
+curl http://localhost:6500/api/info?category=GeneralDocuments
 ```
 
 ### JavaScript
 
 ```javascript
 // Авторизация
-const loginResponse = await fetch("http://localhost:6000/api/auth/login", {
+const loginResponse = await fetch("http://localhost:6500/api/auth/login", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
@@ -386,11 +386,11 @@ const loginResponse = await fetch("http://localhost:6000/api/auth/login", {
 });
 
 // Получение заказов
-const ordersResponse = await fetch("http://localhost:6000/api/orders");
+const ordersResponse = await fetch("http://localhost:6500/api/orders");
 const orders = await ordersResponse.json();
 
 // Получение информации
-const infoResponse = await fetch("http://localhost:6000/api/info");
+const infoResponse = await fetch("http://localhost:6500/api/info");
 const info = await infoResponse.json();
 ```
 
@@ -400,14 +400,14 @@ const info = await infoResponse.json();
 import requests
 
 # Авторизация
-response = requests.post('http://localhost:6000/api/auth/login', json={
+response = requests.post('http://localhost:6500/api/auth/login', json={
     'email': 'employee@company.com',
     'password': 'employee123'
 })
 
 # Получение заказов
-orders = requests.get('http://localhost:6000/api/orders').json()
+orders = requests.get('http://localhost:6500/api/orders').json()
 
 # Получение информации
-info = requests.get('http://localhost:6000/api/info').json()
+info = requests.get('http://localhost:6500/api/info').json()
 ```

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'charts.dart';
+import 'charts_with_api.dart';
 import 'orders.dart';
+import 'orders_with_api.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});
@@ -24,8 +26,8 @@ class _OrdersContentState extends State<_OrdersContent> {
   int _selectedCategoryIndex = 0;
 
   final List<Widget> _pages = [
-    const Orders(),
-    Charts(),
+    const OrdersWithApi(),
+    const ChartsWithApi(),
   ];
 
   final List<String> _categories = [

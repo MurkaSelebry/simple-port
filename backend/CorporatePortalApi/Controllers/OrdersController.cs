@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CorporatePortalApi.Data;
 using CorporatePortalApi.Models;
+// using CorporatePortalApi.Services;
 using System.Diagnostics;
 
 namespace CorporatePortalApi.Controllers
@@ -56,6 +57,7 @@ namespace CorporatePortalApi.Controllers
                     .ToListAsync();
 
                 stopwatch.Stop();
+                
                 _logger.LogInformation("Получено {Count} заказов за {ElapsedMs}ms", 
                     orders.Count, stopwatch.ElapsedMilliseconds);
 
@@ -102,9 +104,11 @@ namespace CorporatePortalApi.Controllers
         {
             try
             {
+                var stopwatch = Stopwatch.StartNew();
                 var order = await _context.Orders
                     .Include(o => o.AssignedUser)
                     .FirstOrDefaultAsync(o => o.Id == id);
+                stopwatch.Stop();
 
                 if (order == null)
                 {
@@ -141,6 +145,7 @@ namespace CorporatePortalApi.Controllers
         [HttpGet("statistics")]
         public async Task<IActionResult> GetStatistics()
         {
+            var stopwatch = Stopwatch.StartNew();
             try
             {
                 var totalOrders = await _context.Orders.CountAsync();
@@ -153,6 +158,8 @@ namespace CorporatePortalApi.Controllers
                     .Where(o => o.TotalAmount.HasValue)
                     .SumAsync(o => o.TotalAmount ?? 0);
 
+                stopwatch.Stop();
+                
                 return Ok(new
                 {
                     total = totalOrders,

@@ -241,10 +241,10 @@ rate(http_requests_total{status=~"5.."}[5m]) / rate(http_requests_total[5m]) > 0
 
 ```bash
 # Тест медленного ответа API
-curl "http://localhost:6000/api/info?category=slow"
+curl "http://localhost:6500/api/info?category=slow"
 
 # Тест высокой нагрузки на БД
-curl "http://localhost:6000/api/orders?status=slow"
+curl "http://localhost:6500/api/orders?status=slow"
 ```
 
 ## Дашборды Grafana

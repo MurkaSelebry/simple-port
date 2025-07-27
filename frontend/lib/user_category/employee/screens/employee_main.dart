@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:diplom/user_category/employee/screens/orders/orders_page.dart';
 import 'package:diplom/user_category/employee/screens/screens.dart';
+import 'package:diplom/user_category/employee/screens/api_status_screen.dart';
 import 'package:http/http.dart' as http; // <--- ДОБАВЛЕНО
 import 'dart:convert';
 
@@ -167,6 +168,8 @@ class _HomePageState extends State<HomePage> {
         return InfoPage();
       case 'Заказы':
         return OrdersPage();
+      case 'API Статус':
+        return ApiStatusScreen();
       // case 'QR код':
       //   return QRPage();
       // case 'Каталог':
@@ -196,6 +199,7 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   _buildCategoryButton('Информация'),
                   _buildCategoryButton('Заказы'),
+                  _buildCategoryButton('API Статус'),
                   // _buildCategoryButton('QR код'),
                   // _buildCategoryButton('Каталог'),
                   // _buildCategoryButton('Администрирование'),

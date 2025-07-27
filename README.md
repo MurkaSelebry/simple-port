@@ -52,8 +52,8 @@ flutter run
 
 | Сервис      | URL                           | Описание                         |
 | ----------- | ----------------------------- | -------------------------------- |
-| API         | http://localhost:6000         | Основной API с Swagger           |
-| Swagger     | http://localhost:6000/swagger | Документация API                 |
+| API         | http://localhost:6500         | Основной API с Swagger           |
+| Swagger     | http://localhost:6500/swagger | Документация API                 |
 | Load Tester | http://localhost:8080         | UI для нагрузочного тестирования |
 | Jaeger      | http://localhost:16686        | Трейсинг запросов                |
 | Prometheus  | http://localhost:9090         | Метрики                          |
@@ -228,7 +228,7 @@ TELEGRAM_BOT_TOKEN=your_bot_token
 TELEGRAM_CHANNEL_ID=@your_channel
 
 # Load Tester
-API_URL=http://corporate-api:6000
+API_URL=http://corporate-api:6500
 ```
 
 ## 📝 Логирование
@@ -263,8 +263,8 @@ docker-compose logs load-tester
 ### Проблемы с API:
 
 1. Проверьте логи: `docker-compose logs corporate-api`
-2. Проверьте Swagger: http://localhost:6000/swagger
-3. Проверьте health check: http://localhost:6000/health
+2. Проверьте Swagger: http://localhost:6500/swagger
+3. Проверьте health check: http://localhost:6500/health
 
 ### Проблемы с мониторингом:
 

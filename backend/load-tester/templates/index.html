@@ -50,6 +50,19 @@
             border-color: #667eea;
             outline: none;
         }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background: white;
+        }
+        select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
         .button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -146,6 +159,16 @@
                     <input type="number" id="duration" name="duration" value="60" min="10" max="3600" required>
                 </div>
                 
+                <div class="form-group">
+                    <label for="endpoint">Endpoint для тестирования:</label>
+                    <select id="endpoint" name="endpoint" required>
+                        <option value="/api/auth/health">Health Check</option>
+                        <option value="/api/info">Info Items</option>
+                        <option value="/api/orders">Orders (с задержкой 600ms)</option>
+                        <option value="/api/orders/statistics">Order Statistics</option>
+                    </select>
+                </div>
+                
                 <button type="submit" class="button" id="startBtn">Запустить тест</button>
                 <button type="button" class="button stop" id="stopBtn" disabled>Остановить тест</button>
             </form>
@@ -175,6 +198,10 @@
                 <div class="stat-item">
                     <span>Время окончания:</span>
                     <span id="endTime">-</span>
+                </div>
+                <div class="stat-item">
+                    <span>Выбранный endpoint:</span>
+                    <span id="selectedEndpoint">-</span>
                 </div>
                 
                 <div class="progress">
@@ -210,6 +237,12 @@
                         document.getElementById('avgResponseTime').textContent = 
                             data.stats.avg_response_time ? `${data.stats.avg_response_time.toFixed(2)}ms` : '0ms';
                         
+                        // Показываем выбранный endpoint
+                        if (data.config.selected_endpoint) {
+                            const endpointLabel = getEndpointLabel(data.config.selected_endpoint);
+                            document.getElementById('selectedEndpoint').textContent = endpointLabel;
+                        }
+                        
                         if (data.stats.start_time) {
                             document.getElementById('startTime').textContent = new Date(data.stats.start_time).toLocaleString();
                         }
@@ -243,6 +276,7 @@
             
             const rps = document.getElementById('rps').value;
             const duration = document.getElementById('duration').value;
+            const endpoint = document.getElementById('endpoint').value;
             
             fetch('/api/start', {
                 method: 'POST',
@@ -251,7 +285,8 @@
                 },
                 body: JSON.stringify({
                     rps: parseInt(rps),
-                    duration: parseInt(duration)
+                    duration: parseInt(duration),
+                    endpoint: endpoint
                 })
             })
             .then(response => response.json())
@@ -287,6 +322,17 @@
                 alert('Ошибка при остановке теста');
             });
         });
+        
+        // Функция для получения названия endpoint
+        function getEndpointLabel(endpoint) {
+            const endpointMap = {
+                '/api/auth/health': 'Health Check',
+                '/api/info': 'Info Items',
+                '/api/orders': 'Orders (с задержкой 600ms)',
+                '/api/orders/statistics': 'Order Statistics'
+            };
+            return endpointMap[endpoint] || endpoint;
+        }
         
         // Обновляем статус каждую секунду
         statusInterval = setInterval(updateStatus, 1000);

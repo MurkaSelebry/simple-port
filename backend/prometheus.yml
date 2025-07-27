@@ -18,9 +18,10 @@ scrape_configs:
 
   - job_name: "corporate-api"
     static_configs:
-      - targets: ["corporate-api:6000"]
+      - targets: ["metrics-proxy:8090"]
     metrics_path: "/metrics"
     scrape_interval: 5s
+    honor_labels: true
 
   - job_name: "sqlserver"
     static_configs:

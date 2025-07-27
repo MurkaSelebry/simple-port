@@ -9,7 +9,7 @@ import os
 app = Flask(__name__)
 
 # Конфигурация
-API_URL = os.getenv('API_URL', 'http://localhost:6000')
+API_URL = os.getenv('API_URL', 'http://localhost:6500')
 TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '')
 TELEGRAM_CHANNEL_ID = os.getenv('TELEGRAM_CHANNEL_ID', '')
 
@@ -17,6 +17,7 @@ TELEGRAM_CHANNEL_ID = os.getenv('TELEGRAM_CHANNEL_ID', '')
 load_config = {
     'rps': 10,
     'duration': 60,
+    'selected_endpoint': '/api/auth/health',  # По умолчанию health endpoint
     'is_running': False,
     'current_stats': {
         'requests_sent': 0,
@@ -27,6 +28,14 @@ load_config = {
         'end_time': None
     }
 }
+
+# Доступные endpoints
+AVAILABLE_ENDPOINTS = [
+    {'value': '/api/auth/health', 'label': 'Health Check'},
+    {'value': '/api/info', 'label': 'Info Items'},
+    {'value': '/api/orders', 'label': 'Orders'},
+    {'value': '/api/orders/statistics', 'label': 'Order Statistics'}
+]
 
 def send_telegram_alert(message):
     """Отправка алерта в Telegram"""
@@ -51,20 +60,25 @@ def send_telegram_alert(message):
 
 def make_api_request():
     """Выполнение запроса к API"""
-    endpoints = [
-        '/api/auth/health',
-        '/api/info',
-        '/api/orders',
-        '/api/orders/statistics'
-    ]
+    global load_config
     
-    import random
-    endpoint = random.choice(endpoints)
+    endpoint = load_config['selected_endpoint']
     
     start_time = time.time()
     try:
         response = requests.get(f"{API_URL}{endpoint}", timeout=10)
         response_time = (time.time() - start_time) * 1000  # в миллисекундах
+        
+        # Добавляем задержку для orders endpoint (600ms) для тестирования p99 > 500ms
+        if endpoint == '/api/orders':
+            time.sleep(0.6)  # 600ms задержка
+            response_time += 600  # Добавляем задержку к времени ответа
+        
+        # Добавляем случайную задержку для тестирования p99 > 500ms
+        import random
+        if random.random() < 0.1:  # 10% chance
+            time.sleep(0.8)  # 800ms дополнительная задержка
+            response_time += 800
         
         # Проверка на медленные запросы (p99 > 500ms)
         if response_time > 500:
@@ -154,12 +168,14 @@ def start_load_test():
     data = request.get_json()
     rps = data.get('rps', 10)
     duration = data.get('duration', 60)
+    selected_endpoint = data.get('endpoint', '/api/auth/health')
     
     if load_config['is_running']:
         return jsonify({'error': 'Load test is already running'}), 400
     
     load_config['rps'] = rps
     load_config['duration'] = duration
+    load_config['selected_endpoint'] = selected_endpoint
     load_config['is_running'] = True
     
     # Запускаем нагрузочный тест в отдельном потоке
@@ -169,6 +185,7 @@ def start_load_test():
     
     send_telegram_alert(
         f"🚀 <b>Нагрузочный тест запущен</b>\n"
+        f"Endpoint: {selected_endpoint}\n"
         f"RPS: {rps}\n"
         f"Duration: {duration}s\n"
         f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
@@ -202,10 +219,15 @@ def get_status():
         'is_running': load_config['is_running'],
         'config': {
             'rps': load_config['rps'],
-            'duration': load_config['duration']
+            'duration': load_config['duration'],
+            'selected_endpoint': load_config['selected_endpoint']
         },
         'stats': load_config['current_stats']
     })
+
+@app.route('/api/endpoints')
+def get_endpoints():
+    return jsonify(AVAILABLE_ENDPOINTS)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080, debug=True) 

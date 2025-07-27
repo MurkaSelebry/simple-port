@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using CorporatePortalApi.Data;
+// using CorporatePortalApi.Services;
+// using CorporatePortalApi.Middleware;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -25,29 +27,18 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<ApplicationDbContext>();
 
-// OpenTelemetry Configuration
+// OpenTelemetry Configuration - Simplified to fix metric parsing issues
 builder.Services.AddOpenTelemetry()
-    .WithTracing(tracerProviderBuilder =>
-        tracerProviderBuilder
-            .AddSource("CorporatePortalApi")
-            .SetResourceBuilder(ResourceBuilder.CreateDefault()
-                .AddService(serviceName: "CorporatePortalApi", serviceVersion: "1.0.0"))
-            .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation()
-            .AddEntityFrameworkCoreInstrumentation()
-            .AddJaegerExporter(options =>
-            {
-                options.AgentHost = builder.Configuration["Jaeger:Host"] ?? "localhost";
-                options.AgentPort = int.Parse(builder.Configuration["Jaeger:Port"] ?? "6831");
-            }))
     .WithMetrics(metricsProviderBuilder =>
         metricsProviderBuilder
             .SetResourceBuilder(ResourceBuilder.CreateDefault()
                 .AddService(serviceName: "CorporatePortalApi", serviceVersion: "1.0.0"))
             .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation()
             .AddRuntimeInstrumentation()
             .AddPrometheusExporter());
+
+// Using built-in ASP.NET Core metrics instead of custom ones
+// builder.Services.AddSingleton<MetricsService>();
 
 // CORS
 builder.Services.AddCors(options =>
@@ -79,6 +70,8 @@ if (app.Environment.IsDevelopment())
 // app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
+
+// app.UseMetrics(); // Disabled to prevent custom metric conflicts
 
 app.UseAuthorization();
 
