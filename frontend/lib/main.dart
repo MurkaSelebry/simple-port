@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
             );
           },
         );
-
+        
         // Выполняем авторизацию
         final result = await ApiService.login(_email, _password);
         

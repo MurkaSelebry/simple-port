@@ -5,13 +5,14 @@ import time
 import json
 from datetime import datetime
 import os
+import uuid
 
 app = Flask(__name__)
 
 # Конфигурация
 API_URL = os.getenv('API_URL', 'http://localhost:6500')
-TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '')
-TELEGRAM_CHANNEL_ID = os.getenv('TELEGRAM_CHANNEL_ID', '')
+TELEGRAM_BOT_TOKEN = "7166498436:AAFsL1mg2o70lpWDqkE5a3xCVKldlSxEZfY"
+TELEGRAM_CHANNEL_ID = "-1002789557665"
 
 # Глобальные переменные для управления нагрузкой
 load_config = {
@@ -34,7 +35,9 @@ AVAILABLE_ENDPOINTS = [
     {'value': '/api/auth/health', 'label': 'Health Check'},
     {'value': '/api/info', 'label': 'Info Items'},
     {'value': '/api/orders', 'label': 'Orders'},
-    {'value': '/api/orders/statistics', 'label': 'Order Statistics'}
+    {'value': '/api/orders/statistics', 'label': 'Order Statistics'},
+    {'value': '/api/sqlmetrics/rps', 'label': 'SQL RPS'},
+    {'value': '/api/sqlmetrics/health', 'label': 'SQL Health'}
 ]
 
 def send_telegram_alert(message):
@@ -64,9 +67,21 @@ def make_api_request():
     
     endpoint = load_config['selected_endpoint']
     
+    # Генерируем уникальные trace headers для связи с Jaeger
+    trace_id = uuid.uuid4().hex
+    span_id = uuid.uuid4().hex[:16]
+    
+    headers = {
+        'traceparent': f'00-{trace_id}-{span_id}-01',  # W3C Trace Context
+        'x-trace-id': trace_id,
+        'x-load-test': 'true',
+        'x-sql-metrics': 'true',  # Флаг для SQL метрик
+        'user-agent': 'CorporatePortal-LoadTester/1.0'
+    }
+    
     start_time = time.time()
     try:
-        response = requests.get(f"{API_URL}{endpoint}", timeout=10)
+        response = requests.get(f"{API_URL}{endpoint}", headers=headers, timeout=10)
         response_time = (time.time() - start_time) * 1000  # в миллисекундах
         
         # Добавляем задержку для orders endpoint (600ms) для тестирования p99 > 500ms
@@ -93,14 +108,16 @@ def make_api_request():
         return {
             'success': response.status_code < 400,
             'response_time': response_time,
-            'status_code': response.status_code
+            'status_code': response.status_code,
+            'trace_id': trace_id
         }
     except Exception as e:
         return {
             'success': False,
             'response_time': (time.time() - start_time) * 1000,
             'status_code': 0,
-            'error': str(e)
+            'error': str(e),
+            'trace_id': trace_id
         }
 
 def load_test_worker():

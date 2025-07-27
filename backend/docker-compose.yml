@@ -68,8 +68,8 @@ services:
     ports:
       - "8081:8080"
     environment:
-      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
-      - TELEGRAM_CHANNEL_ID=${TELEGRAM_CHANNEL_ID:-@corporate_portal_alerts}
+      - TELEGRAM_BOT_TOKEN="7166498436:AAFsL1mg2o70lpWDqkE5a3xCVKldlSxEZf"
+      - TELEGRAM_CHANNEL_ID="-1002789557665"
     networks:
       - corporate_network
 

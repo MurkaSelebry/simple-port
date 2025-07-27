@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CorporatePortalApi.Data;
 using CorporatePortalApi.Models;
+using CorporatePortalApi.Services;
 using System.Diagnostics;
 
 namespace CorporatePortalApi.Controllers
@@ -12,16 +13,22 @@ namespace CorporatePortalApi.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<InfoController> _logger;
+        private readonly SqlMetricsService _sqlMetricsService;
+        private static readonly ActivitySource ActivitySource = new("CorporatePortalApi.Info");
 
-        public InfoController(ApplicationDbContext context, ILogger<InfoController> logger)
+        public InfoController(ApplicationDbContext context, ILogger<InfoController> logger, SqlMetricsService sqlMetricsService)
         {
             _context = context;
             _logger = logger;
+            _sqlMetricsService = sqlMetricsService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetInfoItems([FromQuery] string? category = null)
         {
+            using var activity = ActivitySource.StartActivity("GetInfoItems");
+            activity?.SetTag("info.filter.category", category);
+            
             var stopwatch = Stopwatch.StartNew();
             
             try
@@ -31,6 +38,9 @@ namespace CorporatePortalApi.Controllers
                 // Имитация задержки для тестирования производительности
                 if (category?.Contains("slow") == true)
                 {
+                    using var delayActivity = ActivitySource.StartActivity("SimulateSlowInfoOperation");
+                    delayActivity?.SetTag("delay.reason", "artificial_info_slowness");
+                    delayActivity?.SetTag("delay.duration_ms", 800);
                     await Task.Delay(800); // Искусственная задержка для тестирования p99 > 500ms
                 }
 
@@ -47,8 +57,23 @@ namespace CorporatePortalApi.Controllers
                     .ToListAsync();
 
                 stopwatch.Stop();
-                _logger.LogInformation("Получено {Count} информационных элементов за {ElapsedMs}ms", 
-                    items.Count, stopwatch.ElapsedMilliseconds);
+                
+                // SQL Metrics Integration
+                var sqlRps = await _sqlMetricsService.GetCurrentRps();
+                activity?.SetTag("sql.server.rps", sqlRps);
+                activity?.SetTag("sql.server.service", "CorporatePortalApi.SqlServer");
+                
+                // Проверяем флаг SQL метрик из load tester
+                if (Request.Headers.ContainsKey("x-sql-metrics"))
+                {
+                    activity?.SetTag("load.test.sql.metrics", true);
+                    activity?.SetTag("load.test.trace.id", Request.Headers["x-trace-id"].ToString());
+                }
+                
+                _sqlMetricsService.RecordQueryDuration(stopwatch.Elapsed.TotalSeconds);
+                
+                _logger.LogInformation("Получено {Count} информационных элементов за {ElapsedMs}ms, SQL RPS: {SqlRps}", 
+                    items.Count, stopwatch.ElapsedMilliseconds, sqlRps);
 
                 return Ok(new
                 {

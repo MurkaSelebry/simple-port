@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CorporatePortalApi.Data;
 using CorporatePortalApi.Models;
-// using CorporatePortalApi.Services;
+using CorporatePortalApi.Services;
 using System.Diagnostics;
 
 namespace CorporatePortalApi.Controllers
@@ -13,16 +13,23 @@ namespace CorporatePortalApi.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<OrdersController> _logger;
+        private readonly SqlMetricsService _sqlMetricsService;
+        private static readonly ActivitySource ActivitySource = new("CorporatePortalApi.Orders");
 
-        public OrdersController(ApplicationDbContext context, ILogger<OrdersController> logger)
+        public OrdersController(ApplicationDbContext context, ILogger<OrdersController> logger, SqlMetricsService sqlMetricsService)
         {
             _context = context;
             _logger = logger;
+            _sqlMetricsService = sqlMetricsService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetOrders([FromQuery] string? status = null, [FromQuery] string? priority = null)
         {
+            using var activity = ActivitySource.StartActivity("GetOrders");
+            activity?.SetTag("orders.filter.status", status);
+            activity?.SetTag("orders.filter.priority", priority);
+            
             var stopwatch = Stopwatch.StartNew();
             
             try
@@ -32,8 +39,14 @@ namespace CorporatePortalApi.Controllers
                 // Имитация задержки для тестирования производительности
                 if (status?.Contains("slow") == true || priority?.Contains("slow") == true)
                 {
+                    using var delayActivity = ActivitySource.StartActivity("SimulateSlowOperation");
+                    delayActivity?.SetTag("delay.reason", "artificial_slowness");
+                    delayActivity?.SetTag("delay.duration_ms", 700);
                     await Task.Delay(700); // Искусственная задержка для тестирования p99 > 500ms
                 }
+
+                using var dbActivity = ActivitySource.StartActivity("DatabaseQuery");
+                dbActivity?.SetTag("db.operation", "select_orders");
 
                 var query = _context.Orders
                     .Include(o => o.AssignedUser)
@@ -44,22 +57,43 @@ namespace CorporatePortalApi.Controllers
                     if (Enum.TryParse<OrderStatus>(status, true, out var orderStatus))
                     {
                         query = query.Where(o => o.Status == orderStatus);
+                        dbActivity?.SetTag("db.filter.status", status);
                     }
                 }
 
                 if (!string.IsNullOrEmpty(priority))
                 {
                     query = query.Where(o => o.Priority == priority);
+                    dbActivity?.SetTag("db.filter.priority", priority);
                 }
 
                 var orders = await query
                     .OrderByDescending(o => o.CreatedAt)
                     .ToListAsync();
+                
+                dbActivity?.SetTag("db.result.count", orders.Count);
+
+                // ИСПРАВЛЕНО: Убрали N+1 Query проблему
+                // Теперь пользователи загружаются эффективно через .Include()
 
                 stopwatch.Stop();
                 
-                _logger.LogInformation("Получено {Count} заказов за {ElapsedMs}ms", 
-                    orders.Count, stopwatch.ElapsedMilliseconds);
+                // SQL Metrics Integration
+                var sqlRps = await _sqlMetricsService.GetCurrentRps();
+                dbActivity?.SetTag("sql.server.rps", sqlRps);
+                dbActivity?.SetTag("sql.server.service", "CorporatePortalApi.SqlServer");
+                
+                // Проверяем флаг SQL метрик из load tester
+                if (Request.Headers.ContainsKey("x-sql-metrics"))
+                {
+                    dbActivity?.SetTag("load.test.sql.metrics", true);
+                    dbActivity?.SetTag("load.test.trace.id", Request.Headers["x-trace-id"].ToString());
+                }
+                
+                _sqlMetricsService.RecordQueryDuration(stopwatch.Elapsed.TotalSeconds);
+                
+                _logger.LogInformation("Получено {Count} заказов за {ElapsedMs}ms, SQL RPS: {SqlRps}", 
+                    orders.Count, stopwatch.ElapsedMilliseconds, sqlRps);
 
                 return Ok(new
                 {
@@ -145,21 +179,37 @@ namespace CorporatePortalApi.Controllers
         [HttpGet("statistics")]
         public async Task<IActionResult> GetStatistics()
         {
+            using var activity = ActivitySource.StartActivity("GetStatistics");
             var stopwatch = Stopwatch.StartNew();
             try
             {
+                using var dbActivity = ActivitySource.StartActivity("DatabaseStatisticsQueries");
+                
                 var totalOrders = await _context.Orders.CountAsync();
+                dbActivity?.AddEvent(new("total_orders_counted", DateTimeOffset.UtcNow));
+                
                 var newOrders = await _context.Orders.CountAsync(o => o.Status == OrderStatus.New);
+                dbActivity?.AddEvent(new("new_orders_counted", DateTimeOffset.UtcNow));
+                
                 var inProgressOrders = await _context.Orders.CountAsync(o => o.Status == OrderStatus.InProgress);
+                dbActivity?.AddEvent(new("inprogress_orders_counted", DateTimeOffset.UtcNow));
+                
                 var completedOrders = await _context.Orders.CountAsync(o => o.Status == OrderStatus.Completed);
+                dbActivity?.AddEvent(new("completed_orders_counted", DateTimeOffset.UtcNow));
+                
                 var cancelledOrders = await _context.Orders.CountAsync(o => o.Status == OrderStatus.Cancelled);
+                dbActivity?.AddEvent(new("cancelled_orders_counted", DateTimeOffset.UtcNow));
 
                 var totalAmount = await _context.Orders
                     .Where(o => o.TotalAmount.HasValue)
                     .SumAsync(o => o.TotalAmount ?? 0);
+                dbActivity?.AddEvent(new("total_amount_calculated", DateTimeOffset.UtcNow));
+                
+                activity?.SetTag("statistics.total_orders", totalOrders);
+                activity?.SetTag("statistics.total_amount", totalAmount);
 
                 stopwatch.Stop();
-                
+
                 return Ok(new
                 {
                     total = totalOrders,

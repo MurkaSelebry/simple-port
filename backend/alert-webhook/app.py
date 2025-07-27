@@ -7,8 +7,8 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Telegram configuration
-TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN', '')
-TELEGRAM_CHANNEL_ID = os.getenv('TELEGRAM_CHANNEL_ID', '@corporate_portal_alerts')
+TELEGRAM_BOT_TOKEN = "7166498436:AAFsL1mg2o70lpWDqkE5a3xCVKldlSxEZfY"
+TELEGRAM_CHANNEL_ID = "-1002789557665"
 
 def send_telegram_alert(alert_data):
     """Send alert to Telegram channel"""
@@ -98,4 +98,4 @@ def health():
     return jsonify({'status': 'healthy', 'timestamp': datetime.now().isoformat()})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True) 
+    app.run(host='0.0.0.0', port=8088, debug=True) 

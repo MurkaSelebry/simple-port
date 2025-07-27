@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using CorporatePortalApi.Data;
-// using CorporatePortalApi.Services;
+using CorporatePortalApi.Services;
 // using CorporatePortalApi.Middleware;
 using OpenTelemetry.Trace;
 using OpenTelemetry.Metrics;
@@ -27,14 +27,55 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<ApplicationDbContext>();
 
-// OpenTelemetry Configuration - Simplified to fix metric parsing issues
+// SQL Metrics Service
+builder.Services.AddSingleton<SqlMetricsService>();
+
+// OpenTelemetry Configuration with Tracing and Metrics
 builder.Services.AddOpenTelemetry()
+    .WithTracing(tracerProviderBuilder =>
+        tracerProviderBuilder
+            .SetResourceBuilder(ResourceBuilder.CreateDefault()
+                .AddService(serviceName: "CorporatePortalApi", serviceVersion: "1.0.0"))
+            .AddSource("CorporatePortalApi.Orders")
+            .AddSource("CorporatePortalApi.Info")
+            .AddSource("CorporatePortalApi.Performance")
+            .AddSource("CorporatePortalApi.SqlServer")
+            .AddAspNetCoreInstrumentation(options =>
+            {
+                options.RecordException = true;
+                options.EnrichWithHttpRequest = (activity, httpRequest) =>
+                {
+                    activity.SetTag("http.request.body.size", httpRequest.ContentLength);
+                    activity.SetTag("http.request.user_agent", httpRequest.Headers.UserAgent.ToString());
+                };
+                options.EnrichWithHttpResponse = (activity, httpResponse) =>
+                {
+                    activity.SetTag("http.response.body.size", httpResponse.ContentLength);
+                };
+            })
+            .AddHttpClientInstrumentation()
+            .AddEntityFrameworkCoreInstrumentation(options =>
+            {
+                options.SetDbStatementForText = true;
+                options.SetDbStatementForStoredProcedure = true;
+                options.EnrichWithIDbCommand = (activity, command) =>
+                {
+                    activity.SetTag("db.command.text", command.CommandText);
+                    activity.SetTag("db.command.timeout", command.CommandTimeout);
+                };
+            })
+            .AddJaegerExporter(options =>
+            {
+                options.AgentHost = builder.Configuration["Jaeger:Host"] ?? "localhost";
+                options.AgentPort = int.Parse(builder.Configuration["Jaeger:Port"] ?? "6831");
+            }))
     .WithMetrics(metricsProviderBuilder =>
         metricsProviderBuilder
             .SetResourceBuilder(ResourceBuilder.CreateDefault()
                 .AddService(serviceName: "CorporatePortalApi", serviceVersion: "1.0.0"))
             .AddAspNetCoreInstrumentation()
             .AddRuntimeInstrumentation()
+            .AddMeter("CorporatePortalApi.SqlServer")
             .AddPrometheusExporter());
 
 // Using built-in ASP.NET Core metrics instead of custom ones
