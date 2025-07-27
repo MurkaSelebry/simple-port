@@ -131,6 +131,18 @@ services:
     networks:
       - corporate_network
 
+  # Documentation Server
+  docs-server:
+    build:
+      context: ../docs-server
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ../docs:/app/docs
+    networks:
+      - corporate_network
+
 volumes:
   sqlserver_data:
   prometheus_data:
