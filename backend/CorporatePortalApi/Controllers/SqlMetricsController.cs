@@ -18,6 +18,41 @@ namespace CorporatePortalApi.Controllers
             _logger = logger;
         }
 
+        [HttpGet("rps")]
+        public async Task<IActionResult> GetCurrentRps()
+        {
+            using var activity = ActivitySource.StartActivity("GetSqlRps");
+            activity?.SetTag("sql.metrics.operation", "get_rps");
+            
+            var stopwatch = Stopwatch.StartNew();
+            
+            try
+            {
+                var rps = await _sqlMetricsService.GetCurrentRps();
+                
+                stopwatch.Stop();
+                activity?.SetTag("sql.server.rps", rps);
+                activity?.SetTag("sql.server.service", "CorporatePortalApi.SqlServer");
+                activity?.SetTag("sql.metrics.duration_ms", stopwatch.ElapsedMilliseconds);
+                
+                _logger.LogInformation("SQL RPS: {Rps}, Duration: {DurationMs}ms", rps, stopwatch.ElapsedMilliseconds);
+                
+                return Ok(new
+                {
+                    rps = rps,
+                    timestamp = DateTime.UtcNow,
+                    duration_ms = stopwatch.ElapsedMilliseconds
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Ошибка при получении SQL RPS");
+                activity?.SetTag("error", true);
+                activity?.SetTag("error.message", ex.Message);
+                return StatusCode(500, new { message = "Ошибка при получении SQL метрик" });
+            }
+        }
+
         [HttpGet("health")]
         public async Task<IActionResult> GetSqlHealth()
         {
@@ -38,8 +73,7 @@ namespace CorporatePortalApi.Controllers
                     healthy = isHealthy,
                     rps = rps,
                     timestamp = DateTime.UtcNow,
-                    service = "CorporatePortalApi.SqlServer",
-                    message = "SQL metrics are being collected every second, RPS calculated every 10 seconds"
+                    service = "CorporatePortalApi.SqlServer"
                 });
             }
             catch (Exception ex)
@@ -55,4 +89,4 @@ namespace CorporatePortalApi.Controllers
             }
         }
     }
-}
+} 
