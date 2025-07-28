@@ -98,6 +98,7 @@ builder.Services.AddLogging(logging =>
     logging.AddConsole();
     logging.AddDebug();
 });
+builder.Services.AddHostedService<SqlBatchRequestsMonitorService>();
 
 var app = builder.Build();
 
