@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text;
+
 using Microsoft.Data.SqlClient;
 
 namespace CorporatePortalApi.Services
@@ -117,16 +118,25 @@ namespace CorporatePortalApi.Services
 
                 if (result != null)
                 {
-                    var totalRequestsNow = Convert.ToInt64(result);
+                    double rps = 0;
+long totalNow = totalRequestsNow;
+long totalPrev = 0;
 
-                    lock (_lockObject)
-                    {
-                        if (_totalRequestsPrev > 0)
-                        {
-                            var rps = (totalRequestsNow - _totalRequestsPrev) / 10.0;
-                            _logger.LogInformation("SQL RPS = ({TotalRequestsNow} - {TotalRequestsPrev}) / 10 = {Rps}", 
-                                totalRequestsNow, _totalRequestsPrev, rps);
-                            if (rps > 100)
+lock (_lockObject)
+{
+    if (_totalRequestsPrev > 0)
+    {
+        totalPrev = _totalRequestsPrev;
+        rps = (totalNow - totalPrev) / 10.0;
+    }
+
+    _totalRequestsPrev = totalNow;
+}
+
+_logger.LogInformation("SQL RPS = ({TotalRequestsNow} - {TotalRequestsPrev}) / 10 = {Rps}", 
+    totalNow, totalPrev, rps);
+
+if (rps > 100)
 {
     using var httpClient = new HttpClient();
 
@@ -165,10 +175,6 @@ namespace CorporatePortalApi.Services
     }
 }
 
-                        }
-
-                        _totalRequestsPrev = totalRequestsNow;
-                    }
                 }
                 else
                 {
