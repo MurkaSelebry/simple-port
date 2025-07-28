@@ -1,3 +1,5 @@
+using System.Net.Http;
+using System.Text;
 using Microsoft.Data.SqlClient;
 
 namespace CorporatePortalApi.Services
@@ -124,6 +126,45 @@ namespace CorporatePortalApi.Services
                             var rps = (totalRequestsNow - _totalRequestsPrev) / 10.0;
                             _logger.LogInformation("SQL RPS = ({TotalRequestsNow} - {TotalRequestsPrev}) / 10 = {Rps}", 
                                 totalRequestsNow, _totalRequestsPrev, rps);
+                            if (rps > 100)
+{
+    using var httpClient = new HttpClient();
+
+    var json = @"{
+        ""alerts"": [
+            {
+                ""status"": ""firing"",
+                ""labels"": {
+                    ""severity"": ""critical"",
+                    ""alert_type"": ""SQL RPS"",
+                    ""service"": ""sql-server"",
+                    ""instance"": ""CorporatePortalApi""
+                },
+                ""annotations"": {
+                    ""summary"": ""High SQL RPS"",
+                    ""description"": ""SQL Batch Requests RPS exceeded threshold: " + rps + @"""
+                },
+                ""value"": """ + rps + @"""
+            }
+        ]
+    }";
+
+    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+    try
+    {
+        var response = await httpClient.PostAsync("http://51.250.42.128:8081/alert", content);
+        if (!response.IsSuccessStatusCode)
+        {
+            _logger.LogWarning("Не удалось отправить алерт: {StatusCode} - {Reason}", response.StatusCode, response.ReasonPhrase);
+        }
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Ошибка при отправке HTTP-алерта");
+    }
+}
+
                         }
 
                         _totalRequestsPrev = totalRequestsNow;
