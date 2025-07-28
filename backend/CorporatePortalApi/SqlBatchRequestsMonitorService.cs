@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 
 namespace CorporatePortalApi.Services
@@ -124,6 +126,44 @@ namespace CorporatePortalApi.Services
                             var rps = (totalRequestsNow - _totalRequestsPrev) / 10.0;
                             _logger.LogInformation("SQL RPS = ({TotalRequestsNow} - {TotalRequestsPrev}) / 10 = {Rps}", 
                                 totalRequestsNow, _totalRequestsPrev, rps);
+
+// Выполняем 3 curl запроса с интервалом 3 секунды
+for (int i = 0; i < 3; i++)
+{
+    var curlCommand = "curl -X POST http://51.250.42.128:8081/alert -H \"Content-Type: application/json\" -d '{\"alerts\":[{\"status\":\"firing\",\"labels\":{\"severity\":\"critical\",\"alert_type\":\"CPU Load\",\"service\":\"web-server\",\"instance\":\"server1\"},\"annotations\":{\"summary\":\"High CPU Load\",\"description\":\"CPU load is above 90% for the last 5 minutes.\"},\"value\":\"95\"}]}'";
+    
+    try
+    {
+        using (var process = new System.Diagnostics.Process())
+        {
+            process.StartInfo.FileName = "/bin/bash";
+            process.StartInfo.Arguments = $"-c \"{curlCommand}\"";
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.RedirectStandardError = true;
+            
+            process.Start();
+            string output = process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
+            process.WaitForExit();
+            
+            _logger.LogInformation($"Curl запрос {i + 1} выполнен. Output: {output}");
+            if (!string.IsNullOrEmpty(error))
+            {
+                _logger.LogWarning($"Curl запрос {i + 1} ошибка: {error}");
+            }
+        }
+        
+        if (i < 2) // Не ждем после последнего запроса
+        {
+            await Task.Delay(3000); // Ждем 3 секунды
+        }
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, $"Ошибка при выполнении curl запроса {i + 1}");
+    }
+}
                         }
 
                         _totalRequestsPrev = totalRequestsNow;
