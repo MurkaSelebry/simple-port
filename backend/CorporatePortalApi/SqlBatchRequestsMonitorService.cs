@@ -118,15 +118,17 @@ namespace CorporatePortalApi.Services
                 if (result != null)
                 {
                     var totalRequestsNow = Convert.ToInt64(result);
-
+                    var rps = 0.0;
                     lock (_lockObject)
                     {
                         if (_totalRequestsPrev > 0)
                         {
-                            var rps = (totalRequestsNow - _totalRequestsPrev) / 10.0;
+                            rps = (totalRequestsNow - _totalRequestsPrev) / 10.0;
                             _logger.LogInformation("SQL RPS = ({TotalRequestsNow} - {TotalRequestsPrev}) / 10 = {Rps}", 
                                 totalRequestsNow, _totalRequestsPrev, rps);
-
+                                }
+                                }
+if (rps>100.0){
 // Выполняем 3 curl запроса с интервалом 3 секунды
 for (int i = 0; i < 3; i++)
 {
@@ -164,10 +166,11 @@ for (int i = 0; i < 3; i++)
         _logger.LogError(ex, $"Ошибка при выполнении curl запроса {i + 1}");
     }
 }
-                        }
+}
+                        
 
                         _totalRequestsPrev = totalRequestsNow;
-                    }
+                    
                 }
                 else
                 {
