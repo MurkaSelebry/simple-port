@@ -119,6 +119,7 @@ namespace CorporatePortalApi.Services
                 if (result != null)
                 {
                     double rps = 0;
+var totalRequestsNow = Convert.ToInt64(result);
 long totalNow = totalRequestsNow;
 long totalPrev = 0;
 
@@ -163,7 +164,7 @@ if (rps > 100)
 
     try
     {
-        var response = httpClient.Post("http://51.250.42.128:8081/alert", content);
+        var response = await httpClient.PostAsync("http://51.250.42.128:8081/alert", content);
         if (!response.IsSuccessStatusCode)
         {
             _logger.LogWarning("Не удалось отправить алерт: {StatusCode} - {Reason}", response.StatusCode, response.ReasonPhrase);
