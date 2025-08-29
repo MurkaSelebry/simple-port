@@ -1,0 +1,66 @@
+# Основной домен и HTTP -> HTTPS редирект
+http://portal-elegrum.ru {
+    # Редирект на HTTPS
+    redir https://example.com{uri}
+}
+
+# HTTPS сервер
+https://portal-elegrum.ru {
+    # Использовать автоматический SSL сертификат (Let's Encrypt)
+    tls email@example.com
+
+    # Установить заголовки безопасности
+    header {
+        # Защита от XSS
+        X-XSS-Protection "1; mode=block"
+        # Защита от использования в iframe
+        X-Frame-Options "DENY"
+        # Защита от сниффинга MIME-типов
+        X-Content-Type-Options "nosniff"
+        # HSTS (HTTP Strict Transport Security)
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        # CORS настройки (для разрешения запросов с клиента Flutter)
+        Access-Control-Allow-Origin "*"
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "Content-Type, Authorization"
+    }
+
+    # Проксировать API запросы на сервер Go
+    reverse_proxy /api/* {
+        to localhost:8080  # Go сервер на localhost:8080
+        header_up Host {host}
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Forwarded-Proto {scheme}
+    }
+
+    # Проксирование статики (если клиент Flutter собран и деплоится на сервер)
+    file_server /static/* {
+        root /path/to/flutter/build/web
+    }
+
+    # 404 страница
+    respond /404 404 {
+        body "Страница не найдена"
+    }
+}
+
+# Локальная разработка (если нужно запускать на локальном сервере без SSL)
+http://localhost {
+    # Проксирование запросов к API
+    reverse_proxy /api/* {
+        to localhost:8080
+    }
+
+    # Статические файлы (локальная сборка Flutter)
+    file_server /static/* {
+        root /path/to/flutter/build/web
+    }
+
+    # Заголовки CORS для разработки
+    header {
+        Access-Control-Allow-Origin "*"
+        Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+        Access-Control-Allow-Headers "Content-Type, Authorization"
+    }
+}

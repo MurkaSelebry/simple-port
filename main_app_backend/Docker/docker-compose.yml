@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  caddy:
+    build:
+      context: ./caddy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"     # Для HTTP редиректов
+      - "443:443"   # Для HTTPS
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile   # Используем локальный Caddyfile
+      - ./flutter/build/web:/srv   # Статические файлы клиента Flutter
+    depends_on:
+      - goapp  # Caddy зависит от Go-сервера
+    networks:
+      - app-network
+
+  goapp:
+    build:
+      context: ./goapp
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
