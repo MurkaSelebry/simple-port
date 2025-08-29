@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="C:\Users\User\AppData\Local\Pub\Cache\hosted\pub.dev\flutter_native_splash-2.4.4\android"
+    name=":flutter_native_splash"
+    type="LIBRARY"
+    maven="net.jonhanson.flutter_native_splash:flutter_native_splash:"
+    agpVersion="8.3.2"
+    buildFolder="C:\Users\User\Desktop\diplom\diplom\build\flutter_native_splash"
+    bootClassPath="C:\Users\User\AppData\Local\Android\sdk\platforms\android-31\android.jar;C:\Users\User\AppData\Local\Android\sdk\build-tools\34.0.0\core-lambda-stubs.jar"
+    javaSourceLevel="1.8"
+    compileTarget="android-31"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="release"/>
+</lint-module>
