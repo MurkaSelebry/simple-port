@@ -1,17 +1,18 @@
 version: "3.8"
 
+# Production Docker Compose configuration
 services:
   postgres:
     image: postgres:15-alpine
-    container_name: portal_postgres
+    container_name: portal_postgres_prod
     environment:
       POSTGRES_USER: portal_user
-      POSTGRES_PASSWORD: portal_password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-portal_strong_password_123}
       POSTGRES_DB: portal_db
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data_prod:/var/lib/postgresql/data
       - ./init-db:/docker-entrypoint-initdb.d
     networks:
       - app-network
@@ -20,19 +21,21 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    restart: unless-stopped
 
   goapp:
     build:
       context: ../GoServer
       dockerfile: ../Docker/Dockerfile
-    container_name: portal_backend
+    container_name: portal_backend_prod
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_USER: portal_user
-      POSTGRES_PASSWORD: portal_password
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-portal_strong_password_123}
       POSTGRES_DATABASE: portal_db
       POSTGRES_PORT: 5432
-      JWT_SECRET: your_super_secret_jwt_key_here
+      JWT_SECRET: ${JWT_SECRET:-your_super_secret_jwt_key_production_change_me}
+      GIN_MODE: release
     ports:
       - "3000:3000"
     depends_on:
@@ -41,44 +44,38 @@ services:
     networks:
       - app-network
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   caddy:
     image: caddy:2-alpine
-    container_name: portal_caddy
+    container_name: portal_caddy_prod
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ../caddy/Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
+      - caddy_data_prod:/data
+      - caddy_config_prod:/config
     depends_on:
-      - goapp
+      goapp:
+        condition: service_healthy
     networks:
       - app-network
     restart: unless-stopped
 
-  swagger-ui:
-    image: swaggerapi/swagger-ui
-    container_name: portal_swagger
-    ports:
-      - "8081:8080"
-    environment:
-      SWAGGER_JSON_URL: http://goapp:3000/swagger/doc.json
-    depends_on:
-      - goapp
-    networks:
-      - app-network
-
 networks:
   app-network:
     driver: bridge
-    name: portal_network
+    name: portal_network_prod
 
 volumes:
-  postgres_data:
-    name: portal_postgres_data
-  caddy_data:
-    name: portal_caddy_data
-  caddy_config:
-    name: portal_caddy_config
+  postgres_data_prod:
+    name: portal_postgres_data_prod
+  caddy_data_prod:
+    name: portal_caddy_data_prod
+  caddy_config_prod:
+    name: portal_caddy_config_prod
