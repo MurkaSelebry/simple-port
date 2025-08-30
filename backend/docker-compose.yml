@@ -1,0 +1,154 @@
+version: "3.8"
+
+services:
+  # SQL Server
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong@Passw0rd
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - corporate_network
+
+  # Jaeger
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    ports:
+      - "16686:16686" # UI
+      - "6831:6831/udp" # Agent
+      - "14268:14268" # Collector
+    networks:
+      - corporate_network
+
+  # Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./alert_rules.yml:/etc/prometheus/alert_rules.yml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--storage.tsdb.retention.time=200h"
+      - "--web.enable-lifecycle"
+    networks:
+      - corporate_network
+
+  # AlertManager
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - alertmanager_data:/alertmanager
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--storage.path=/alertmanager"
+    networks:
+      - corporate_network
+
+  # Alert Webhook Service
+  alert-webhook:
+    build:
+      context: ./alert-webhook
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8080"
+    environment:
+      - TELEGRAM_BOT_TOKEN="7166498436:AAFsL1mg2o70lpWDqkE5a3xCVKldlSxEZf"
+      - TELEGRAM_CHANNEL_ID="-1002789557665"
+    networks:
+      - corporate_network
+
+  # Metrics Proxy Service
+  metrics-proxy:
+    build:
+      context: ./metrics-proxy
+      dockerfile: Dockerfile
+    ports:
+      - "8090:8090"
+    depends_on:
+      - corporate-api
+    networks:
+      - corporate_network
+
+  # Grafana
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - corporate_network
+
+  # Corporate Portal API
+  corporate-api:
+    build:
+      context: .
+      dockerfile: CorporatePortalApi/Dockerfile
+    ports:
+      - "6500:6500"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:6500
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=CorporatePortal;User Id=sa;Password=YourStrong@Passw0rd;TrustServerCertificate=true;
+      - Jaeger__Host=jaeger
+      - Jaeger__Port=6831
+    depends_on:
+      - sqlserver
+      - jaeger
+    networks:
+      - corporate_network
+
+  # Load Testing Service
+  load-tester:
+    build:
+      context: ./load-tester
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - API_URL=http://corporate-api:6500
+    depends_on:
+      - corporate-api
+    networks:
+      - corporate_network
+
+  # Documentation Server
+  docs-server:
+    build:
+      context: ../docs-server
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - ../docs:/app/docs
+    networks:
+      - corporate_network
+
+volumes:
+  sqlserver_data:
+  prometheus_data:
+  alertmanager_data:
+  grafana_data:
+
+networks:
+  corporate_network:
+    driver: bridge

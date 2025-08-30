@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - Corporate Portal{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/docs">Документация</a></li>
+        <li class="breadcrumb-item active">{{ title }}</li>
+    </ol>
+</nav>
+
+<div class="markdown-content">
+    {{ content | safe }}
+</div>
+
+<script>
+    // Подсветка синтаксиса для кода
+    document.addEventListener('DOMContentLoaded', function() {
+        Prism.highlightAll();
+    });
+</script>
+{% endblock %} 

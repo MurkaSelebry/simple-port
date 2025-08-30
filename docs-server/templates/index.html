@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+
+{% block title %}Corporate Portal - Документация{% endblock %}
+
+{% block content %}
+<div class="markdown-content">
+    <h1><i class="fas fa-book"></i> Corporate Portal - Документация</h1>
+    
+    <div class="row">
+        <div class="col-md-8">
+            <h2>📚 Содержание</h2>
+            
+            <h3>🚀 Быстрый старт</h3>
+            <ul>
+                <li><a href="/docs/QUICK_START">Quick Start Guide</a> - Быстрый старт и проверка системы</li>
+            </ul>
+            
+            <h3>📋 Полный отчет</h3>
+            <ul>
+                <li><a href="/docs/REPORT">REPORT.md</a> - Подробный отчет по всем пунктам задания</li>
+                <li><a href="/docs/FINAL_SUMMARY">FINAL_SUMMARY.md</a> - Финальное резюме проекта</li>
+            </ul>
+            
+            <h3>🔧 Техническая документация</h3>
+            <ul>
+                <li><a href="/docs/API_Documentation">API Documentation</a> - Документация API</li>
+                <li><a href="/docs/Monitoring_Guide">Monitoring Guide</a> - Руководство по мониторингу</li>
+            </ul>
+            
+            <h2>🌐 Доступные сервисы</h2>
+            
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Сервис</th>
+                            <th>URL</th>
+                            <th>Описание</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><i class="fas fa-server"></i> API</td>
+                            <td><a href="http://51.250.42.128:6500" target="_blank">http://51.250.42.128:6500</a></td>
+                            <td>Основной бизнес-сервис</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-file-code"></i> Swagger</td>
+                            <td><a href="http://51.250.42.128:6500/swagger" target="_blank">http://51.250.42.128:6500/swagger</a></td>
+                            <td>API документация</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-tachometer-alt"></i> Load Tester</td>
+                            <td><a href="http://51.250.42.128:8080" target="_blank">http://51.250.42.128:8080</a></td>
+                            <td>Нагрузочное тестирование</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-chart-line"></i> Grafana</td>
+                            <td><a href="http://51.250.42.128:3000" target="_blank">http://51.250.42.128:3000</a></td>
+                            <td>Мониторинг и дашборды</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-search"></i> Jaeger</td>
+                            <td><a href="http://51.250.42.128:16686" target="_blank">http://51.250.42.128:16686</a></td>
+                            <td>Трейсинг</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-chart-bar"></i> Prometheus</td>
+                            <td><a href="http://51.250.42.128:9090" target="_blank">http://51.250.42.128:9090</a></td>
+                            <td>Метрики</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-bell"></i> AlertManager</td>
+                            <td><a href="http://51.250.42.128:9093" target="_blank">http://51.250.42.128:9093</a></td>
+                            <td>Алерты</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fab fa-telegram"></i> Telegram</td>
+                            <td><a href="https://t.me/corporate_portal_alerts" target="_blank">https://t.me/corporate_portal_alerts</a></td>
+                            <td>Алерты в Telegram</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <h2>🎯 Ключевые возможности</h2>
+            
+            <h3>✅ Реализованные требования</h3>
+            <ol>
+                <li><strong>Архитектура</strong> - Микросервисная с Docker Compose</li>
+                <li><strong>Документация</strong> - Подробная в <code>/docs</code></li>
+                <li><strong>Бизнес-сервис</strong> - Corporate Portal API</li>
+                <li><strong>Load Testing</strong> - UI для настройки RPS</li>
+                <li><strong>База данных</strong> - SQL Server с метриками</li>
+                <li><strong>Графики</strong> - Корректные метрики в Grafana</li>
+                <li><strong>Алерты</strong> - Telegram канал с двумя типами</li>
+                <li><strong>IaC</strong> - Все конфигурации в коде</li>
+                <li><strong>Swagger</strong> - Полная документация API</li>
+                <li><strong>Трейсинг</strong> - Jaeger с связью между сервисами</li>
+                <li><strong>Performance</strong> - Инструменты для дебага</li>
+            </ol>
+            
+            <h2>🚨 Алерты</h2>
+            
+            <h3>1. P99 Response Time > 500ms</h3>
+            <p><strong>Как воспроизвести:</strong></p>
+            <pre><code class="language-bash">curl -X POST http://51.250.42.128:8080/api/start \
+  -H "Content-Type: application/json" \
+  -d '{"rps": 10, "duration": 60, "endpoint": "/api/orders?status=slow"}'</code></pre>
+            
+            <h3>2. SQL Server RPS > 100</h3>
+            <p><strong>Как воспроизвести:</strong></p>
+            <pre><code class="language-bash">curl -X POST http://51.250.42.128:8080/api/start \
+  -H "Content-Type: application/json" \
+  -d '{"rps": 50, "duration": 120, "endpoint": "/api/orders"}'</code></pre>
+            
+            <h2>🔍 Трейсинг</h2>
+            
+            <p><strong>Связь между сервисами:</strong></p>
+            <ol>
+                <li>Запустите load test</li>
+                <li>Откройте <a href="http://51.250.42.128:16686" target="_blank">Jaeger</a></li>
+                <li>Найдите трейсы с тегом <code>sql.server.service</code></li>
+                <li>Просмотрите детали HTTP и SQL запросов</li>
+            </ol>
+            
+            <h2>📊 Мониторинг</h2>
+            
+            <p><strong>Grafana Dashboard:</strong> <a href="http://51.250.42.128:3000" target="_blank">http://51.250.42.128:3000</a></p>
+            <ul>
+                <li>HTTP Request Rate</li>
+                <li>Response Time Percentiles</li>
+                <li>SQL Server RPS</li>
+                <li>SQL Query Duration</li>
+            </ul>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-rocket"></i> Быстрый старт</h5>
+                </div>
+                <div class="card-body">
+                    <ol>
+                        <li>Запустите систему:
+                            <pre><code class="language-bash">cd backend
+docker-compose up -d</code></pre>
+                        </li>
+                        <li>Откройте <a href="http://51.250.42.128:8080" target="_blank">Load Tester</a></li>
+                        <li>Выберите endpoint и настройте RPS</li>
+                        <li>Наблюдайте метрики в <a href="http://51.250.42.128:3000" target="_blank">Grafana</a></li>
+                        <li>Проверьте трейсы в <a href="http://51.250.42.128:16686" target="_blank">Jaeger</a></li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5><i class="fas fa-exclamation-triangle"></i> Тестирование алертов</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>P99 > 500ms:</strong></p>
+                    <pre><code class="language-bash">curl http://51.250.42.128:6500/api/orders?status=slow</code></pre>
+                    
+                    <p><strong>SQL RPS > 100:</strong></p>
+                    <pre><code class="language-bash">curl -X POST http://51.250.42.128:8080/api/start \
+  -H "Content-Type: application/json" \
+  -d '{"rps": 50, "duration": 60, "endpoint": "/api/orders"}'</code></pre>
+                </div>
+            </div>
+            
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5><i class="fas fa-check-circle"></i> Проверка работоспособности</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>✅ API работает: <code>curl http://51.250.42.128:6500/api/auth/health</code></li>
+                        <li>✅ Load Tester доступен: <a href="http://51.250.42.128:8080" target="_blank">http://51.250.42.128:8080</a></li>
+                        <li>✅ Grafana показывает данные: <a href="http://51.250.42.128:3000" target="_blank">http://51.250.42.128:3000</a></li>
+                        <li>✅ Jaeger собирает трейсы: <a href="http://51.250.42.128:16686" target="_blank">http://51.250.42.128:16686</a></li>
+                        <li>✅ Алерты отправляются: <a href="https://t.me/corporate_portal_alerts" target="_blank">Telegram</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

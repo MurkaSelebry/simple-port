@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Tester - Corporate Portal</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            padding: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="number"]:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background: white;
+        }
+        select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        .button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: translateY(-2px);
+        }
+        .button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .button.stop {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        }
+        .stats {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .stats h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 3px;
+            border-left: 4px solid #667eea;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .status.running {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.stopped {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .progress {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Load Tester</h1>
+            <p>Нагрузочное тестирование Corporate Portal API</p>
+        </div>
+        
+        <div class="content">
+            <div id="status" class="status stopped">
+                Статус: Остановлено
+            </div>
+            
+            <form id="loadTestForm">
+                <div class="form-group">
+                    <label for="rps">RPS (Requests Per Second):</label>
+                    <input type="number" id="rps" name="rps" value="10" min="1" max="1000" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">Длительность (секунды):</label>
+                    <input type="number" id="duration" name="duration" value="60" min="10" max="3600" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="endpoint">Endpoint для тестирования:</label>
+                    <select id="endpoint" name="endpoint" required>
+                        <option value="/api/auth/health">Health Check</option>
+                        <option value="/api/info">Info Items</option>
+                        <option value="/api/orders">Orders (с задержкой 600ms)</option>
+                        <option value="/api/orders/statistics">Order Statistics</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="button" id="startBtn">Запустить тест</button>
+                <button type="button" class="button stop" id="stopBtn" disabled>Остановить тест</button>
+            </form>
+            
+            <div class="stats" id="stats" style="display: none;">
+                <h3>📊 Статистика</h3>
+                <div class="stat-item">
+                    <span>Отправлено запросов:</span>
+                    <span id="requestsSent">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Успешных запросов:</span>
+                    <span id="successfulRequests">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Неудачных запросов:</span>
+                    <span id="failedRequests">0</span>
+                </div>
+                <div class="stat-item">
+                    <span>Среднее время ответа:</span>
+                    <span id="avgResponseTime">0ms</span>
+                </div>
+                <div class="stat-item">
+                    <span>Время начала:</span>
+                    <span id="startTime">-</span>
+                </div>
+                <div class="stat-item">
+                    <span>Время окончания:</span>
+                    <span id="endTime">-</span>
+                </div>
+                <div class="stat-item">
+                    <span>Выбранный endpoint:</span>
+                    <span id="selectedEndpoint">-</span>
+                </div>
+                
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let statusInterval;
+        
+        function updateStatus() {
+            fetch('/api/status')
+                .then(response => response.json())
+                .then(data => {
+                    const statusDiv = document.getElementById('status');
+                    const startBtn = document.getElementById('startBtn');
+                    const stopBtn = document.getElementById('stopBtn');
+                    const statsDiv = document.getElementById('stats');
+                    
+                    if (data.is_running) {
+                        statusDiv.textContent = 'Статус: Запущено';
+                        statusDiv.className = 'status running';
+                        startBtn.disabled = true;
+                        stopBtn.disabled = false;
+                        statsDiv.style.display = 'block';
+                        
+                        // Обновляем статистику
+                        document.getElementById('requestsSent').textContent = data.stats.requests_sent || 0;
+                        document.getElementById('successfulRequests').textContent = data.stats.successful_requests || 0;
+                        document.getElementById('failedRequests').textContent = data.stats.failed_requests || 0;
+                        document.getElementById('avgResponseTime').textContent = 
+                            data.stats.avg_response_time ? `${data.stats.avg_response_time.toFixed(2)}ms` : '0ms';
+                        
+                        // Показываем выбранный endpoint
+                        if (data.config.selected_endpoint) {
+                            const endpointLabel = getEndpointLabel(data.config.selected_endpoint);
+                            document.getElementById('selectedEndpoint').textContent = endpointLabel;
+                        }
+                        
+                        if (data.stats.start_time) {
+                            document.getElementById('startTime').textContent = new Date(data.stats.start_time).toLocaleString();
+                        }
+                        
+                        // Вычисляем прогресс
+                        if (data.config.duration && data.stats.start_time) {
+                            const startTime = new Date(data.stats.start_time).getTime();
+                            const currentTime = Date.now();
+                            const elapsed = (currentTime - startTime) / 1000;
+                            const progress = Math.min((elapsed / data.config.duration) * 100, 100);
+                            document.getElementById('progressBar').style.width = `${progress}%`;
+                        }
+                    } else {
+                        statusDiv.textContent = 'Статус: Остановлено';
+                        statusDiv.className = 'status stopped';
+                        startBtn.disabled = false;
+                        stopBtn.disabled = true;
+                        
+                        if (data.stats.end_time) {
+                            document.getElementById('endTime').textContent = new Date(data.stats.end_time).toLocaleString();
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating status:', error);
+                });
+        }
+        
+        document.getElementById('loadTestForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const rps = document.getElementById('rps').value;
+            const duration = document.getElementById('duration').value;
+            const endpoint = document.getElementById('endpoint').value;
+            
+            fetch('/api/start', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    rps: parseInt(rps),
+                    duration: parseInt(duration),
+                    endpoint: endpoint
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Ошибка: ' + data.error);
+                } else {
+                    alert('Нагрузочный тест запущен!');
+                    updateStatus();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ошибка при запуске теста');
+            });
+        });
+        
+        document.getElementById('stopBtn').addEventListener('click', function() {
+            fetch('/api/stop', {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Ошибка: ' + data.error);
+                } else {
+                    alert('Нагрузочный тест остановлен!');
+                    updateStatus();
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ошибка при остановке теста');
+            });
+        });
+        
+        // Функция для получения названия endpoint
+        function getEndpointLabel(endpoint) {
+            const endpointMap = {
+                '/api/auth/health': 'Health Check',
+                '/api/info': 'Info Items',
+                '/api/orders': 'Orders (с задержкой 600ms)',
+                '/api/orders/statistics': 'Order Statistics'
+            };
+            return endpointMap[endpoint] || endpoint;
+        }
+        
+        // Обновляем статус каждую секунду
+        statusInterval = setInterval(updateStatus, 1000);
+        
+        // Первоначальное обновление статуса
+        updateStatus();
+    </script>
+</body>
+</html> 

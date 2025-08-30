@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'general_documents.dart';
 import 'advertising_materials.dart';
 import 'prices.dart';
+import 'info_with_api.dart';
 
 class InfoPage extends StatelessWidget {
   const InfoPage({super.key});
@@ -25,24 +26,28 @@ class _InfoContentState extends State<_InfoContent> {
   int _selectedCategoryIndex = 0;
 
   final List<Widget> _pages = const [
+    InfoWithApi(),
     GeneralDocuments(),
     AdvertisingMaterials(),
     Prices(),
   ];
 
   final List<String> _categories = [
+    'API Данные',
     'Общие документы',
     'Рекламные материалы',
     'Прайсы',
   ];
 
   final List<IconData> _icons = [
+    Icons.api,
     Icons.description,
     Icons.campaign,
     Icons.price_change,
   ];
 
   final List<Color> _categoryColors = [
+    Color(0xFFE8F5E8),
     Color(0xFFFFF1E9),
     Color(0xFFE3F2FD),
     Color(0xFFF1F8E9),

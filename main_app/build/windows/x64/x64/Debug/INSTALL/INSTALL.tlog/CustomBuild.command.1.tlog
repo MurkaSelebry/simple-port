@@ -1,0 +1,10 @@
+^C:\USERS\USER\DESKTOP\DIPLOM\DIPLOM_LAST\SIMPLE-PORT\MAIN_APP\BUILD\WINDOWS\X64\CMAKEFILES\1AB97C2DDCFE437F33447BAE6C602682\INSTALL_FORCE.RULE
+setlocal
+cd .
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

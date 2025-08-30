@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\User\Desktop\diplom\diplom_last\simple-port\main_app\build\windows\x64\CMakeFiles\1ab97c2ddcfe437f33447bae6c602682\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{A85758D5-4631-3119-83C3-9D741C5D1180}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
