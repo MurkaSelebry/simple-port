@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'responsive_sales_structure_table.dart';
 
 class Group {
   String headName;      // Название головного
@@ -59,37 +60,103 @@ class Group {
 // Начальные данные для примера
 final List<Group> initialGroups = [
   Group(
-    headName: 'Группа 1',
-    headCode: '001',
-    name: 'Подгруппа 1',
-    code: '001-1',
+    headName: 'Центральный офис',
+    headCode: 'CO001',
+    name: 'Московский филиал',
+    code: 'MF001',
     city: 'Москва',
-    address: 'ул. Ленина, 1',
-    phone: '+7 (495) 111-11-11',
-    users: '5',
-    subsidiaries: 'Да',
+    address: 'ул. Тверская, д. 1',
+    phone: '+7 (495) 123-45-67',
+    users: '25',
+    subsidiaries: '3',
   ),
   Group(
-    headName: 'Группа 1',
-    headCode: '001',
-    name: 'Подгруппа 2',
-    code: '001-2',
-    city: 'Москва',
-    address: 'ул. Ленина, 2',
-    phone: '+7 (495) 222-22-22',
-    users: '3',
-    subsidiaries: 'Да',
-  ),
-  Group(
-    headName: 'Группа 2',
-    headCode: '002',
-    name: 'Подгруппа 1',
-    code: '002-1',
+    headName: 'Центральный офис',
+    headCode: 'CO001',
+    name: 'Санкт-Петербургский филиал',
+    code: 'SPB001',
     city: 'Санкт-Петербург',
-    address: 'Невский пр., 10',
-    phone: '+7 (812) 333-33-33',
+    address: 'Невский пр., д. 50',
+    phone: '+7 (812) 234-56-78',
+    users: '18',
+    subsidiaries: '2',
+  ),
+  Group(
+    headName: 'Московский филиал',
+    headCode: 'MF001',
+    name: 'Отдел продаж Москва-Центр',
+    code: 'MF-SC001',
+    city: 'Москва',
+    address: 'ул. Арбат, д. 10',
+    phone: '+7 (495) 345-67-89',
+    users: '8',
+    subsidiaries: '0',
+  ),
+  Group(
+    headName: 'Московский филиал',
+    headCode: 'MF001',
+    name: 'Отдел продаж Москва-Север',
+    code: 'MF-SN001',
+    city: 'Москва',
+    address: 'Ленинградский пр., д. 30',
+    phone: '+7 (495) 456-78-90',
+    users: '6',
+    subsidiaries: '0',
+  ),
+  Group(
+    headName: 'Московский филиал',
+    headCode: 'MF001',
+    name: 'Отдел продаж Москва-Юг',
+    code: 'MF-SS001',
+    city: 'Москва',
+    address: 'Варшавское ш., д. 15',
+    phone: '+7 (495) 567-89-01',
     users: '7',
-    subsidiaries: 'Нет',
+    subsidiaries: '0',
+  ),
+  Group(
+    headName: 'Санкт-Петербургский филиал',
+    headCode: 'SPB001',
+    name: 'Отдел продаж СПб-Центр',
+    code: 'SPB-SC001',
+    city: 'Санкт-Петербург',
+    address: 'ул. Марата, д. 25',
+    phone: '+7 (812) 678-90-12',
+    users: '10',
+    subsidiaries: '0',
+  ),
+  Group(
+    headName: 'Санкт-Петербургский филиал',
+    headCode: 'SPB001',
+    name: 'Отдел продаж СПб-Васильевский',
+    code: 'SPB-V001',
+    city: 'Санкт-Петербург',
+    address: 'Васильевский остров, 10-я линия, д. 5',
+    phone: '+7 (812) 789-01-23',
+    users: '8',
+    subsidiaries: '0',
+  ),
+  Group(
+    headName: 'Центральный офис',
+    headCode: 'CO001',
+    name: 'Екатеринбургский филиал',
+    code: 'EK001',
+    city: 'Екатеринбург',
+    address: 'ул. Ленина, д. 20',
+    phone: '+7 (343) 123-45-67',
+    users: '12',
+    subsidiaries: '1',
+  ),
+  Group(
+    headName: 'Екатеринбургский филиал',
+    headCode: 'EK001',
+    name: 'Отдел продаж Екатеринбург-Центр',
+    code: 'EK-SC001',
+    city: 'Екатеринбург',
+    address: 'пр. Ленина, д. 35',
+    phone: '+7 (343) 234-56-78',
+    users: '12',
+    subsidiaries: '0',
   ),
 ];
 
@@ -496,7 +563,7 @@ class _StructureOfSalesDepartmentsState extends State<StructureOfSalesDepartment
     }).toList();
   }
 
-  Widget _buildDataTableView() {
+    Widget _buildDataTableView() {
     final filteredGroups = _getFilteredGroups();
     
     if (filteredGroups.isEmpty) {
@@ -508,99 +575,26 @@ class _StructureOfSalesDepartmentsState extends State<StructureOfSalesDepartment
       );
     }
     
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      final availableWidth = constraints.maxWidth;
-      
-    return Scrollbar(
-      controller: _verticalScrollController,
-      thumbVisibility: true,
-      child: SingleChildScrollView(
-        controller: _horizontalScrollController,
-        child: Container(
-          width: double.infinity,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              // Вычисляем ширину для каждой колонки
-              final totalWidth = constraints.maxWidth;
-              final actionWidth = 350.0;
-              final remainingWidth = totalWidth - actionWidth;
-              
-              final descriptionWidth = remainingWidth * 0.35;
-              final fileNameWidth = remainingWidth * 0.25;
-              final addedByWidth = remainingWidth * 0.2;
-              final dateWidth = remainingWidth * 0.1;
-              final statusWidth = remainingWidth * 0.1;
-
-            return DataTable(
-              headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-              dataRowMinHeight: 60,
-              dataRowMaxHeight: 80,
-              columnSpacing: 20, 
-              horizontalMargin: 16,
-              dividerThickness: 1,
-              showCheckboxColumn: false,
-              columns: [
-                DataColumn(label: _buildSortableColumnHeader('Название головного')),
-                DataColumn(label: _buildSortableColumnHeader('Код головного')),
-                DataColumn(label: _buildSortableColumnHeader('Название')),
-                DataColumn(label: _buildSortableColumnHeader('Код')),
-                DataColumn(label: _buildSortableColumnHeader('Город')),
-                DataColumn(label: _buildSortableColumnHeader('Адрес')),
-                DataColumn(label: _buildSortableColumnHeader('Телефон')),
-                DataColumn(label: _buildSortableColumnHeader('Пользователей')),
-                DataColumn(label: _buildSortableColumnHeader('Дочерних')),
-                const DataColumn(
-                  label: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Действия', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ],
-              rows: filteredGroups.asMap().entries.map((entry) {
-                final index = entry.key;
-                final group = entry.value;
-                return DataRow(
-                  color: MaterialStateProperty.resolveWith<Color?>(
-                    (Set<MaterialState> states) {
-                      if (index % 2 == 0) return Colors.grey[100];
-                      return null;
-                    },
-                  ),
-                  cells: [
-                    DataCell(_buildEditableCell(group.headName, index, 'Название головного')),
-                    DataCell(_buildEditableCell(group.headCode, index, 'Код головного')),
-                    DataCell(_buildEditableCell(group.name, index, 'Название')),
-                    DataCell(_buildEditableCell(group.code, index, 'Код')),
-                    DataCell(_buildEditableCell(group.city, index, 'Город')),
-                    DataCell(_buildEditableCell(group.address, index, 'Адрес')),
-                    DataCell(_buildEditableCell(group.phone, index, 'Телефон')),
-                    DataCell(_buildEditableCell(group.users, index, 'Пользователей')),
-                    DataCell(_buildEditableCell(group.subsidiaries, index, 'Дочерних')),
-                    DataCell(
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _removeItem(index),
-                            tooltip: 'Удалить',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              }).toList(),
-            );
-            }
-          ),
-        ),
-        ),
-      );
-    }
+    // Преобразуем список групп в формат для таблицы
+    final List<Map<String, dynamic>> groupsData = filteredGroups.map((group) => group.toMap()).toList();
+    
+    return ResponsiveSalesStructureTable(
+      groups: groupsData,
+      onEdit: (index, field, value) {
+        final group = filteredGroups[index];
+        final updatedGroup = _updateGroupField(group, field, value);
+        setState(() {
+          _groups[_groups.indexOf(group)] = updatedGroup;
+        });
+      },
+      onDelete: (index) {
+        _removeItem(index);
+      },
+      primaryColor: Theme.of(context).colorScheme.primary,
     );
   }
+
+
 }
 
 extension GroupCopyWith on Group {

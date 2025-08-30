@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import '../common/universal_responsive_table.dart';
 
 class Group {
   String headName;      // Название головного
@@ -507,98 +508,30 @@ class _SalesDepartmentsState extends State<SalesDepartments> {
         ),
       );
     }
-    
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      final availableWidth = constraints.maxWidth;
-      
-    return Scrollbar(
-      controller: _verticalScrollController,
-      thumbVisibility: true,
-      child: SingleChildScrollView(
-        controller: _horizontalScrollController,
-        child: Container(
-          width: double.infinity,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              // Вычисляем ширину для каждой колонки
-              final totalWidth = constraints.maxWidth;
-              final actionWidth = 350.0;
-              final remainingWidth = totalWidth - actionWidth;
-              
-              final descriptionWidth = remainingWidth * 0.35;
-              final fileNameWidth = remainingWidth * 0.25;
-              final addedByWidth = remainingWidth * 0.2;
-              final dateWidth = remainingWidth * 0.1;
-              final statusWidth = remainingWidth * 0.1;
 
-            return DataTable(
-              headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-              dataRowMinHeight: 60,
-              dataRowMaxHeight: 80,
-              columnSpacing: 20, 
-              horizontalMargin: 16,
-              dividerThickness: 1,
-              showCheckboxColumn: false,
-              columns: [
-                DataColumn(label: _buildSortableColumnHeader('Название головного')),
-                DataColumn(label: _buildSortableColumnHeader('Код головного')),
-                DataColumn(label: _buildSortableColumnHeader('Название')),
-                DataColumn(label: _buildSortableColumnHeader('Код')),
-                DataColumn(label: _buildSortableColumnHeader('Город')),
-                DataColumn(label: _buildSortableColumnHeader('Адрес')),
-                DataColumn(label: _buildSortableColumnHeader('Телефон')),
-                DataColumn(label: _buildSortableColumnHeader('Пользователей')),
-                DataColumn(label: _buildSortableColumnHeader('Дочерних')),
-                const DataColumn(
-                  label: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Действия', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ],
-              rows: filteredGroups.asMap().entries.map((entry) {
-                final index = entry.key;
-                final group = entry.value;
-                return DataRow(
-                  color: MaterialStateProperty.resolveWith<Color?>(
-                    (Set<MaterialState> states) {
-                      if (index % 2 == 0) return Colors.grey[100];
-                      return null;
-                    },
-                  ),
-                  cells: [
-                    DataCell(_buildEditableCell(group.headName, index, 'Название головного')),
-                    DataCell(_buildEditableCell(group.headCode, index, 'Код головного')),
-                    DataCell(_buildEditableCell(group.name, index, 'Название')),
-                    DataCell(_buildEditableCell(group.code, index, 'Код')),
-                    DataCell(_buildEditableCell(group.city, index, 'Город')),
-                    DataCell(_buildEditableCell(group.address, index, 'Адрес')),
-                    DataCell(_buildEditableCell(group.phone, index, 'Телефон')),
-                    DataCell(_buildEditableCell(group.users, index, 'Пользователей')),
-                    DataCell(_buildEditableCell(group.subsidiaries, index, 'Дочерних')),
-                    DataCell(
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _removeItem(index),
-                            tooltip: 'Удалить',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              }).toList(),
-            );
-            }
-          ),
-        ),
-        ),
-      );
-    }
+    final List<Map<String, dynamic>> groupsData = filteredGroups.map((group) => group.toMap()).toList();
+    
+    return UniversalResponsiveTable(
+      data: groupsData,
+      columns: ['Название головного', 'Код головного', 'Название', 'Код', 'Город', 'Адрес', 'Телефон', 'Пользователей', 'Дочерних'],
+      columnKeys: ['Название головного', 'Код головного', 'Название', 'Код', 'Город', 'Адрес', 'Телефон', 'Пользователей', 'Дочерних'],
+      onEdit: (index, field, value) {
+        final group = filteredGroups[index];
+        final updatedGroup = group.copyWithField(field, value.toString());
+        setState(() {
+          _groups[_groups.indexOf(group)] = updatedGroup;
+        });
+      },
+      onDelete: (index) {
+        setState(() {
+          _groups.removeAt(index);
+        });
+      },
+      onAdd: () {
+        _createNewGroup();
+      },
+      primaryColor: Theme.of(context).colorScheme.primary,
+      showFileUpload: true,
     );
   }
 }
@@ -626,5 +559,30 @@ extension GroupCopyWith on Group {
       users: users ?? this.users,
       subsidiaries: subsidiaries ?? this.subsidiaries,
     );
+  }
+
+  Group copyWithField(String field, String value) {
+    switch (field) {
+      case 'Название головного':
+        return copyWith(headName: value);
+      case 'Код головного':
+        return copyWith(headCode: value);
+      case 'Название':
+        return copyWith(name: value);
+      case 'Код':
+        return copyWith(code: value);
+      case 'Город':
+        return copyWith(city: value);
+      case 'Адрес':
+        return copyWith(address: value);
+      case 'Телефон':
+        return copyWith(phone: value);
+      case 'Пользователей':
+        return copyWith(users: value);
+      case 'Дочерних':
+        return copyWith(subsidiaries: value);
+      default:
+        return this;
+    }
   }
 }

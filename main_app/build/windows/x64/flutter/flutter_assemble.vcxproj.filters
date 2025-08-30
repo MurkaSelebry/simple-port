@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <CustomBuild Include="C:\Users\User\Desktop\diplom\diplom\build\windows\x64\CMakeFiles\bc84e4effb9d4a9a109c8b1061a3ecc2\flutter_windows.dll.rule">
+    <CustomBuild Include="C:\Users\User\Desktop\diplom\diplom_last\simple-port\main_app\build\windows\x64\CMakeFiles\eeb559d054429139d08dc4540d08e150\flutter_windows.dll.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
-    <CustomBuild Include="C:\Users\User\Desktop\diplom\diplom\build\windows\x64\CMakeFiles\3090a192588fdcdfc62ce38db3443a28\flutter_assemble.rule">
+    <CustomBuild Include="C:\Users\User\Desktop\diplom\diplom_last\simple-port\main_app\build\windows\x64\CMakeFiles\c1b7976a86f3c7648d40c3840a91ff2f\flutter_assemble.rule">
       <Filter>CMake Rules</Filter>
     </CustomBuild>
-    <CustomBuild Include="C:\Users\User\Desktop\diplom\diplom\windows\flutter\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\User\Desktop\diplom\diplom_last\simple-port\main_app\windows\flutter\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="C:\Users\User\Desktop\diplom\diplom\build\windows\x64\flutter\CMakeFiles\flutter_assemble" />
+    <None Include="C:\Users\User\Desktop\diplom\diplom_last\simple-port\main_app\build\windows\x64\flutter\CMakeFiles\flutter_assemble" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CMake Rules">
-      <UniqueIdentifier>{8DCCA3E2-7C41-3E46-BE74-D141E57F16B5}</UniqueIdentifier>
+      <UniqueIdentifier>{A85758D5-4631-3119-83C3-9D741C5D1180}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

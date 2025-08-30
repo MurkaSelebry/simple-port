@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import '../common/universal_responsive_table.dart';
 
 // Модель данных для заказа
 class Order {
@@ -95,24 +96,204 @@ class Order {
 
 final List<Order> initialOrders = [
   Order(
-    opCode: 'ОфГр',
-    number: '105',
-    type: 'Рекламация',
-    description: 'Прислали горизонтальные...',
-    shipmentNumber: '2943',
-    shipmentDate: '06.06.2024',
-    desiredDate: '06.06.2024',
-    plannedDate: '06.06.2024',
-    creator: 'Vladimir2018',
-    createdAt: '21.05.2024, 13:27',
-    status: 'В план на отгрузку',
-    salon: '...',
-    designer: '...',
-    warehouse: 'Обработка заказа произведена',
+    opCode: 'OP001',
+    number: 'ORD-2024-001',
+    type: 'Заказ',
+    description: 'Кухня "Модерн" - современный кухонный гарнитур',
+    shipmentNumber: 'SH-2024-001',
+    shipmentDate: '2024-01-15',
+    desiredDate: '2024-01-20',
+    plannedDate: '2024-01-20',
+    creator: 'ivan.petrov',
+    createdAt: '2024-01-10',
+    status: 'В обработке',
+    salon: 'Салон "Модерн"',
+    designer: 'maria.sidorova',
+    warehouse: 'Готов',
     production: 'В производстве',
     logistics: '...',
-    payment: 'Не сверено',
-    filePath: '',
+    payment: 'Оплачено',
+    filePath: '/files/order1.pdf',
+  ),
+  Order(
+    opCode: 'OP002',
+    number: 'ORD-2024-002',
+    type: 'Заказ',
+    description: 'Кухня "Классика" - классический кухонный гарнитур',
+    shipmentNumber: 'SH-2024-002',
+    shipmentDate: '2024-01-16',
+    desiredDate: '2024-01-22',
+    plannedDate: '2024-01-22',
+    creator: 'dmitry.kozlov',
+    createdAt: '2024-01-11',
+    status: 'Отгружено на фабрике',
+    salon: 'Салон "Классика"',
+    designer: 'alex.kuznetsov',
+    warehouse: 'Отгружено',
+    production: 'Завершено',
+    logistics: '...',
+    payment: 'Оплачено',
+    filePath: '/files/order2.pdf',
+  ),
+  Order(
+    opCode: 'OP003',
+    number: 'ORD-2024-003',
+    type: 'Заказ',
+    description: 'Кухня "Прованс" - кухня в стиле прованс',
+    shipmentNumber: 'SH-2024-003',
+    shipmentDate: '2024-01-17',
+    desiredDate: '2024-01-25',
+    plannedDate: '2024-01-25',
+    creator: 'maria.sidorova',
+    createdAt: '2024-01-12',
+    status: 'Новый',
+    salon: 'Салон "Прованс"',
+    designer: 'anna.morozova',
+    warehouse: 'В ожидании',
+    production: 'Планируется',
+    logistics: '...',
+    payment: 'Частично оплачено',
+    filePath: '/files/order3.pdf',
+  ),
+  Order(
+    opCode: 'OP004',
+    number: 'ORD-2024-004',
+    type: 'Заказ',
+    description: 'Кухня "Лофт" - кухня в стиле лофт',
+    shipmentNumber: 'SH-2024-004',
+    shipmentDate: '2024-01-18',
+    desiredDate: '2024-01-28',
+    plannedDate: '2024-01-28',
+    creator: 'alex.kuznetsov',
+    createdAt: '2024-01-13',
+    status: 'В обработке',
+    salon: 'Салон "Лофт"',
+    designer: 'ivan.petrov',
+    warehouse: 'Готов',
+    production: 'В производстве',
+    logistics: '...',
+    payment: 'Оплачено',
+    filePath: '/files/order4.pdf',
+  ),
+  Order(
+    opCode: 'OP005',
+    number: 'ORD-2024-005',
+    type: 'Заказ',
+    description: 'Кухня "Минимализм" - минималистичная кухня',
+    shipmentNumber: 'SH-2024-005',
+    shipmentDate: '2024-01-19',
+    desiredDate: '2024-01-30',
+    plannedDate: '2024-01-30',
+    creator: 'anna.morozova',
+    createdAt: '2024-01-14',
+    status: 'Отгружено на фабрике',
+    salon: 'Салон "Минимализм"',
+    designer: 'dmitry.kozlov',
+    warehouse: 'Отгружено',
+    production: 'Завершено',
+    logistics: '...',
+    payment: 'Оплачено',
+    filePath: '/files/order5.pdf',
+  ),
+  Order(
+    opCode: 'OP006',
+    number: 'ORD-2024-006',
+    type: 'Заказ',
+    description: 'Кухня "Скандинавия" - кухня в скандинавском стиле',
+    shipmentNumber: 'SH-2024-006',
+    shipmentDate: '2024-01-20',
+    desiredDate: '2024-02-02',
+    plannedDate: '2024-02-02',
+    creator: 'ivan.petrov',
+    createdAt: '2024-01-15',
+    status: 'В обработке',
+    salon: 'Салон "Скандинавия"',
+    designer: 'maria.sidorova',
+    warehouse: 'Готов',
+    production: 'В производстве',
+    logistics: '...',
+    payment: 'Оплачено',
+    filePath: '/files/order6.pdf',
+  ),
+  Order(
+    opCode: 'OP007',
+    number: 'ORD-2024-007',
+    type: 'Заказ',
+    description: 'Кухня "Хай-тек" - кухня в стиле хай-тек',
+    shipmentNumber: 'SH-2024-007',
+    shipmentDate: '2024-01-21',
+    desiredDate: '2024-02-05',
+    plannedDate: '2024-02-05',
+    creator: 'dmitry.kozlov',
+    createdAt: '2024-01-16',
+    status: 'Новый',
+    salon: 'Салон "Хай-тек"',
+    designer: 'alex.kuznetsov',
+    warehouse: 'В ожидании',
+    production: 'Планируется',
+    logistics: '...',
+    payment: 'Ожидает оплаты',
+    filePath: '/files/order7.pdf',
+  ),
+  Order(
+    opCode: 'OP008',
+    number: 'ORD-2024-008',
+    type: 'Заказ',
+    description: 'Кухня "Кантри" - кухня в деревенском стиле',
+    shipmentNumber: 'SH-2024-008',
+    shipmentDate: '2024-01-22',
+    desiredDate: '2024-02-08',
+    plannedDate: '2024-02-08',
+    creator: 'maria.sidorova',
+    createdAt: '2024-01-17',
+    status: 'В обработке',
+    salon: 'Салон "Кантри"',
+    designer: 'anna.morozova',
+    warehouse: 'Готов',
+    production: 'В производстве',
+    logistics: '...',
+    payment: 'Оплачено',
+    filePath: '/files/order8.pdf',
+  ),
+  Order(
+    opCode: 'OP009',
+    number: 'ORD-2024-009',
+    type: 'Заказ',
+    description: 'Кухня "Арт-деко" - кухня в стиле арт-деко',
+    shipmentNumber: 'SH-2024-009',
+    shipmentDate: '2024-01-23',
+    desiredDate: '2024-02-10',
+    plannedDate: '2024-02-10',
+    creator: 'alex.kuznetsov',
+    createdAt: '2024-01-18',
+    status: 'Отгружено на фабрике',
+    salon: 'Салон "Арт-деко"',
+    designer: 'ivan.petrov',
+    warehouse: 'Отгружено',
+    production: 'Завершено',
+    logistics: '...',
+    payment: 'Оплачено',
+    filePath: '/files/order9.pdf',
+  ),
+  Order(
+    opCode: 'OP010',
+    number: 'ORD-2024-010',
+    type: 'Заказ',
+    description: 'Кухня "Неоклассика" - кухня в неоклассическом стиле',
+    shipmentNumber: 'SH-2024-010',
+    shipmentDate: '2024-01-24',
+    desiredDate: '2024-02-12',
+    plannedDate: '2024-02-12',
+    creator: 'ivan.petrov',
+    createdAt: '2024-01-19',
+    status: 'Новый',
+    salon: 'Салон "Неоклассика"',
+    designer: 'maria.sidorova',
+    warehouse: 'В ожидании',
+    production: 'Планируется',
+    logistics: '...',
+    payment: 'Частично оплачено',
+    filePath: '/files/order10.pdf',
   ),
 ];
 
@@ -780,130 +961,48 @@ class _OrdersState extends State<Orders> {
         ),
       );
     }
+
+    final List<Map<String, dynamic>> ordersData = filteredOrders.map((order) => order.toMap()).toList();
     
-    return Scrollbar(
-      controller: _verticalScrollController,
-      thumbVisibility: true,
-      child: Scrollbar(
-        controller: _horizontalScrollController,
-        thumbVisibility: true,
-        notificationPredicate: (notification) => notification.depth == 1,
-        child: SingleChildScrollView(
-          controller: _verticalScrollController,
-          child: SingleChildScrollView(
-            controller: _horizontalScrollController,
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              decoration: BoxDecoration(color: Colors.white),
-              headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-              dataRowMinHeight: 60,
-              dataRowMaxHeight: 80,
-              columnSpacing: 20, 
-              horizontalMargin: 16,
-              dividerThickness: 1,
-              showCheckboxColumn: false,
-              columns: [
-                DataColumn(label: _buildSortableColumnHeader('Код ОП')),
-                DataColumn(label: _buildSortableColumnHeader('Номер')),
-                DataColumn(label: _buildSortableColumnHeader('Тип')),
-                DataColumn(label: _buildSortableColumnHeader('Описание')),
-                DataColumn(label: _buildSortableColumnHeader('№ отгрузки')),
-                DataColumn(label: _buildSortableColumnHeader('Отгрузка')),
-                DataColumn(label: _buildSortableColumnHeader('Желаемая дата')),
-                DataColumn(label: _buildSortableColumnHeader('Планируемая дата')),
-                DataColumn(label: _buildSortableColumnHeader('Создал')),
-                DataColumn(label: _buildSortableColumnHeader('Создано')),
-                DataColumn(label: _buildSortableColumnHeader('Статус')),
-                DataColumn(label: _buildSortableColumnHeader('Салон')),
-                DataColumn(label: _buildSortableColumnHeader('Конструктор')),
-                DataColumn(label: _buildSortableColumnHeader('Склад комплектации')),
-                DataColumn(label: _buildSortableColumnHeader('Производство')),
-                DataColumn(label: _buildSortableColumnHeader('Логистика')),
-                DataColumn(label: _buildSortableColumnHeader('Оплата')),
-                const DataColumn(
-                  label: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Действия', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ],
-              rows: filteredOrders.asMap().entries.map((entry) {
-                final index = entry.key;
-                final order = entry.value;
-                return DataRow(
-                  color: MaterialStateProperty.resolveWith<Color?>(
-                    (Set<MaterialState> states) {
-                      if (index % 2 == 0) return Colors.grey[100];
-                      return null;
-                    },
-                  ),
-                  cells: [
-                    DataCell(_buildEditableCell(order.opCode, index, 'Код ОП')),
-                    DataCell(_buildEditableCell(order.number, index, 'Номер')),
-                    DataCell(_buildEditableCell(order.type, index, 'Тип')),
-                    DataCell(_buildEditableCell(order.description, index, 'Описание')),
-                    DataCell(_buildEditableCell(order.shipmentNumber, index, '№ отгрузки')),
-                    DataCell(_buildEditableCell(order.shipmentDate, index, 'Отгрузка')),
-                    DataCell(_buildEditableCell(order.desiredDate, index, 'Желаемая дата')),
-                    DataCell(_buildEditableCell(order.plannedDate, index, 'Планируемая дата')),
-                    DataCell(Text(order.creator)),
-                    DataCell(Text(order.createdAt)),
-                    DataCell(
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: _getStatusColor(order.status),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: InkWell(
-                          onTap: () => _showEditDialog(index, 'Статус', order.status),
-                          child: Text(
-                            order.status,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    DataCell(_buildEditableCell(order.salon, index, 'Салон')),
-                    DataCell(_buildEditableCell(order.designer, index, 'Конструктор')),
-                    DataCell(_buildEditableCell(order.warehouse, index, 'Склад комплектации')),
-                    DataCell(_buildEditableCell(order.production, index, 'Производство')),
-                    DataCell(_buildEditableCell(order.logistics, index, 'Логистика')),
-                    DataCell(_buildEditableCell(order.payment, index, 'Оплата')),
-                    DataCell(
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (order.filePath.isEmpty)
-                            IconButton(
-                              icon: const Icon(Icons.upload, color: Colors.blue),
-                              onPressed: () => _pickFile(index),
-                              tooltip: 'Загрузить файл',
-                            )
-                          else
-                            IconButton(
-                              icon: const Icon(Icons.download, color: Colors.green),
-                              onPressed: () => _downloadFile(order.filePath),
-                              tooltip: 'Скачать файл',
-                            ),
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _removeItem(index),
-                            tooltip: 'Удалить',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      ),
+    return UniversalResponsiveTable(
+      data: ordersData,
+      columns: [
+        'Код ОП', 'Номер', 'Тип', 'Описание', '№ отгрузки', 'Отгрузка', 
+        'Желаемая дата', 'Планируемая дата', 'Создал', 'Создано', 'Статус',
+        'Салон', 'Конструктор', 'Склад комплектации', 'Производство', 'Логистика', 'Оплата'
+      ],
+      columnKeys: [
+        'Код ОП', 'Номер', 'Тип', 'Описание', '№ отгрузки', 'Отгрузка', 
+        'Желаемая дата', 'Планируемая дата', 'Создал', 'Создано', 'Статус',
+        'Салон', 'Конструктор', 'Склад комплектации', 'Производство', 'Логистика', 'Оплата'
+      ],
+      onEdit: (index, field, value) {
+        final order = filteredOrders[index];
+        final updatedOrder = order.copyWithField(field, value.toString());
+        setState(() {
+          _orders[_orders.indexOf(order)] = updatedOrder;
+        });
+      },
+      onDelete: (index) {
+        setState(() {
+          _orders.removeAt(index);
+        });
+      },
+      onAdd: () {
+        _createNewOrder();
+      },
+      primaryColor: Theme.of(context).colorScheme.primary,
+      showFileUpload: true,
+      columnTypes: {
+        'Отгрузка': 'date',
+        'Желаемая дата': 'date',
+        'Планируемая дата': 'date',
+        'Создано': 'date',
+        'Статус': 'status',
+      },
+      statusOptions: {
+        'Статус': ['Новый', 'В обработке', 'В производстве', 'В план на отгрузку', 'Отгружен', 'Завершен'],
+      },
     );
   }
 

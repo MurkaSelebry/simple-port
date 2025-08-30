@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import '../common/universal_responsive_table.dart';
 
 // Обновленная модель данных для каталога с полями, соответствующими новому скриншоту
 class Catalog {
@@ -150,35 +151,163 @@ class Catalog {
 // Начальные данные для примера
 final List<Catalog> initialCatalogs = [
   Catalog(
-    codeOP: 'OP001',
-    name: 'Каталог №1',
-    group: 'Мебель',
-    subgroup: 'Кухни',
+    codeOP: 'DP001',
+    name: 'Материал фасада',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
     isHidden: false,
     isExportable: true,
-    externalCode: 'EXT001',
-    externalDesc: 'Основной каталог мебели',
-    addedBy: 'Иванов А.П.',
-    addedDate: '12.03.2025, 08:16',
-    modifiedBy: 'Петров И.С.',
-    modifiedDate: '14.03.2025, 10:23',
-    description: 'Фасад для кухни',
+    externalCode: 'MF-001',
+    externalDesc: 'Материал фасада кухонного гарнитура',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-10',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-15',
+    description: 'Материал фасада кухонного гарнитура',
     filePath: '',
   ),
   Catalog(
-    codeOP: 'OP002',
-    name: 'Каталог №2',
-    group: 'Интерьер',
-    subgroup: 'Спальни',
+    codeOP: 'DP002',
+    name: 'Цвет фасада',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
     isHidden: false,
     isExportable: true,
-    externalCode: 'EXT002',
-    externalDesc: 'Коллекция для спальни',
-    addedBy: 'Смирнова Е.В.',
-    addedDate: '15.03.2025, 12:49',
-    modifiedBy: 'Смирнова Е.В.',
-    modifiedDate: '15.03.2025, 14:30',
-    description: 'Шкаф-купе для спальни',
+    externalCode: 'CF-001',
+    externalDesc: 'Цвет фасада кухонного гарнитура',
+    addedBy: 'dmitry.kozlov',
+    addedDate: '2024-01-11',
+    modifiedBy: 'dmitry.kozlov',
+    modifiedDate: '2024-01-16',
+    description: 'Цвет фасада кухонного гарнитура',
+    filePath: '',
+  ),
+  Catalog(
+    codeOP: 'DP003',
+    name: 'Материал столешницы',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    isHidden: false,
+    isExportable: true,
+    externalCode: 'MS-001',
+    externalDesc: 'Материал столешницы кухонного гарнитура',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-12',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-17',
+    description: 'Материал столешницы кухонного гарнитура',
+    filePath: '',
+  ),
+  Catalog(
+    codeOP: 'DP004',
+    name: 'Фурнитура',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    isHidden: false,
+    isExportable: true,
+    externalCode: 'FU-001',
+    externalDesc: 'Фурнитура для кухонного гарнитура',
+    addedBy: 'alex.kuznetsov',
+    addedDate: '2024-01-13',
+    modifiedBy: 'alex.kuznetsov',
+    modifiedDate: '2024-01-18',
+    description: 'Фурнитура для кухонного гарнитура',
+    filePath: '',
+  ),
+  Catalog(
+    codeOP: 'DP005',
+    name: 'Размеры',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    isHidden: false,
+    isExportable: true,
+    externalCode: 'SZ-001',
+    externalDesc: 'Размеры кухонного гарнитура',
+    addedBy: 'anna.morozova',
+    addedDate: '2024-01-14',
+    modifiedBy: 'anna.morozova',
+    modifiedDate: '2024-01-19',
+    description: 'Размеры кухонного гарнитура',
+    filePath: '',
+  ),
+  Catalog(
+    codeOP: 'DP006',
+    name: 'Тип открывания',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    isHidden: false,
+    isExportable: true,
+    externalCode: 'TO-001',
+    externalDesc: 'Тип открывания дверей кухонного гарнитура',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-15',
+    modifiedBy: 'ivan.petrov',
+    modifiedDate: '2024-01-20',
+    description: 'Тип открывания дверей кухонного гарнитура',
+    filePath: '',
+  ),
+  Catalog(
+    codeOP: 'DP007',
+    name: 'Подсветка',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    isHidden: false,
+    isExportable: true,
+    externalCode: 'PL-001',
+    externalDesc: 'Подсветка кухонного гарнитура',
+    addedBy: 'dmitry.kozlov',
+    addedDate: '2024-01-16',
+    modifiedBy: 'dmitry.kozlov',
+    modifiedDate: '2024-01-21',
+    description: 'Подсветка кухонного гарнитура',
+    filePath: '',
+  ),
+  Catalog(
+    codeOP: 'DP008',
+    name: 'Декор',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    isHidden: false,
+    isExportable: true,
+    externalCode: 'DC-001',
+    externalDesc: 'Декоративные элементы кухонного гарнитура',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-17',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-22',
+    description: 'Декоративные элементы кухонного гарнитура',
+    filePath: '',
+  ),
+  Catalog(
+    codeOP: 'DP009',
+    name: 'Покрытие',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    isHidden: false,
+    isExportable: true,
+    externalCode: 'PC-001',
+    externalDesc: 'Покрытие кухонного гарнитура',
+    addedBy: 'alex.kuznetsov',
+    addedDate: '2024-01-18',
+    modifiedBy: 'alex.kuznetsov',
+    modifiedDate: '2024-01-23',
+    description: 'Покрытие кухонного гарнитура',
+    filePath: '',
+  ),
+  Catalog(
+    codeOP: 'DP010',
+    name: 'Стиль',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    isHidden: false,
+    isExportable: true,
+    externalCode: 'ST-001',
+    externalDesc: 'Стиль кухонного гарнитура',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-19',
+    modifiedBy: 'ivan.petrov',
+    modifiedDate: '2024-01-24',
+    description: 'Стиль кухонного гарнитура',
     filePath: '',
   ),
 ];
@@ -194,11 +323,7 @@ class _DynamicPropertiesState extends State<DynamicProperties> {
   final List<Catalog> _catalogs = [...initialCatalogs];
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
-  bool _isAscending = true;
-  String _sortField = 'Название';
   bool _isLoading = false;
-  final ScrollController _horizontalScrollController = ScrollController();
-  final ScrollController _verticalScrollController = ScrollController();
 
   @override
   void initState() {
@@ -213,8 +338,6 @@ class _DynamicPropertiesState extends State<DynamicProperties> {
   @override
   void dispose() {
     _searchController.dispose();
-    _horizontalScrollController.dispose();
-    _verticalScrollController.dispose();
     super.dispose();
   }
 
@@ -222,353 +345,9 @@ class _DynamicPropertiesState extends State<DynamicProperties> {
     return DateFormat('dd.MM.yyyy, HH:mm').format(date);
   }
 
-  Future<void> _pickFile(int? index) async {
-    setState(() {
-      _isLoading = true;
-    });
 
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.any,
-        allowMultiple: false,
-      );
 
-      if (result != null) {
-        final file = File(result.files.single.path!);
-        final fileName = result.files.single.name;
 
-        setState(() {
-          if (index != null) {
-            // Обновляем существующий каталог
-            _catalogs[index] = _catalogs[index].copyWith(
-              description: fileName,
-              filePath: file.path,
-              modifiedBy: 'Текущий пользователь',
-              modifiedDate: _formatDate(DateTime.now()),
-            );
-          } else {
-            // Добавляем новый каталог
-            final now = DateTime.now();
-            _catalogs.add(Catalog(
-              codeOP: 'OP${_catalogs.length + 1}'.padLeft(5, '0'),
-              name: fileName,
-              group: 'Новая группа',
-              subgroup: 'Новая подгруппа',
-              isHidden: false,
-              isExportable: true,
-              externalCode: 'EXT${_catalogs.length + 1}'.padLeft(5, '0'),
-              externalDesc: 'Описание для ${fileName}',
-              addedBy: 'Текущий пользователь',
-              addedDate: _formatDate(now),
-              modifiedBy: 'Текущий пользователь',
-              modifiedDate: _formatDate(now),
-              description: 'Новый документ',
-              filePath: file.path,
-            ));
-          }
-        });
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Файл "$fileName" успешно ${index != null ? 'обновлен' : 'добавлен'}'),
-            backgroundColor: Colors.green,
-            duration: const Duration(seconds: 2),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Ошибка: ${e.toString()}'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 3),
-        ),
-      );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  void _removeItem(int index) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Подтверждение удаления'),
-          content: const Text('Вы уверены, что хотите удалить этот элемент?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Отмена'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  _catalogs.removeAt(index);
-                });
-                Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Элемент удален'),
-                    backgroundColor: Colors.blue,
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              },
-              child: const Text('Удалить', style: TextStyle(color: Colors.red)),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _downloadFile(String filePath) async {
-    if (filePath.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Нет файла для скачивания'),
-          backgroundColor: Colors.orange,
-          duration: Duration(seconds: 2),
-        ),
-      );
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      final file = File(filePath);
-      if (await file.exists()) {
-        String? directory = await FilePicker.platform.getDirectoryPath();
-
-        if (directory != null) {
-          final fileName = file.uri.pathSegments.last;
-          final downloadPath = '$directory/$fileName';
-          await file.copy(downloadPath);
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Файл сохранен в: $downloadPath'),
-              backgroundColor: Colors.green,
-              duration: const Duration(seconds: 3),
-            ),
-          );
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Файл не найден: $filePath'),
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 3),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Ошибка: ${e.toString()}'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 3),
-        ),
-      );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  void _toggleSort(String field) {
-    setState(() {
-      _isAscending = _sortField == field ? !_isAscending : true;
-      _sortField = field;
-
-      _catalogs.sort((a, b) {
-        var valueA = a.toMap()[field];
-        var valueB = b.toMap()[field];
-        
-        // Особая обработка для булевых значений
-        if (valueA is bool && valueB is bool) {
-          return _isAscending 
-              ? valueA == valueB ? 0 : (valueA ? 1 : -1)
-              : valueB == valueA ? 0 : (valueB ? 1 : -1);
-        }
-        
-        // Для строковых и прочих типов
-        valueA = valueA?.toString() ?? '';
-        valueB = valueB?.toString() ?? '';
-        return _isAscending ? valueA.compareTo(valueB) : valueB.compareTo(valueA);
-      });
-    });
-  }
-
-  Widget _buildEditableCell(dynamic value, int index, String field) {
-    String displayValue;
-    
-    if (value is bool) {
-      displayValue = value ? 'Да' : 'Нет';
-    } else {
-      displayValue = (value?.toString() ?? '').isEmpty ? '---' : value.toString();
-    }
-    
-    return InkWell(
-      onTap: () => _showEditDialog(index, field, value),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Text(
-          displayValue,
-          style: TextStyle(
-            color: displayValue == '---' ? Colors.grey : Colors.black87,
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showEditDialog(int index, String field, dynamic initialValue) {
-    // Для булевых значений показываем переключатель вместо текстового поля
-    if (initialValue is bool) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          bool value = initialValue;
-          return StatefulBuilder(
-            builder: (context, setState) {
-              return AlertDialog(
-                title: Text('Редактировать $field'),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      children: [
-                        Switch(
-                          value: value,
-                          onChanged: (newValue) {
-                            setState(() {
-                              value = newValue;
-                            });
-                          },
-                        ),
-                        Text(value ? 'Да' : 'Нет'),
-                      ],
-                    ),
-                  ],
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Отмена'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      final updatedCatalog = _catalogs[index].copyWithField(field, value);
-                      // Обновляем поля модификации
-                      final modifiedCatalog = updatedCatalog.copyWith(
-                        modifiedBy: 'Текущий пользователь',
-                        modifiedDate: _formatDate(DateTime.now()),
-                      );
-                      setState(() {
-                        this.setState(() {
-                          _catalogs[index] = modifiedCatalog;
-                        });
-                      });
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Сохранить'),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-      );
-      return;
-    }
-
-    // Для остальных типов показываем текстовое поле
-    final TextEditingController controller = TextEditingController(
-      text: initialValue?.toString() ?? '',
-    );
-    final FocusNode focusNode = FocusNode();
-    
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      focusNode.requestFocus();
-    });
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Редактировать $field'),
-          content: TextField(
-            controller: controller,
-            focusNode: focusNode,
-            decoration: InputDecoration(
-              labelText: field,
-              border: const OutlineInputBorder(),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            ),
-            maxLines: field == 'Описание' || field == 'Внешний код описание' ? 3 : 1,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Отмена'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                final updatedCatalog = _catalogs[index].copyWithField(field, controller.text);
-                // Обновляем поля модификации
-                final modifiedCatalog = updatedCatalog.copyWith(
-                  modifiedBy: 'Текущий пользователь',
-                  modifiedDate: _formatDate(DateTime.now()),
-                );
-                setState(() {
-                  _catalogs[index] = modifiedCatalog;
-                });
-                Navigator.of(context).pop();
-              },
-              child: const Text('Сохранить'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _buildSortableColumnHeader(String fieldName) {
-    return GestureDetector(
-      onTap: () => _toggleSort(fieldName),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              fieldName,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(width: 4),
-            if (_sortField == fieldName)
-              Icon(
-                _isAscending ? Icons.arrow_upward : Icons.arrow_downward,
-                size: 16,
-                color: Colors.blue,
-              ),
-          ],
-        ),
-      ),
-    );
-  }
 
   void _exportToCsv() async {
     try {
@@ -844,17 +623,7 @@ class _DynamicPropertiesState extends State<DynamicProperties> {
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     ),
                   ),
-                  // const SizedBox(width: 8),
-                  // ElevatedButton.icon(
-                  //   icon: const Icon(Icons.upload_file),
-                  //   label: const Text('Загрузить файл'),
-                  //   onPressed: () => _pickFile(null),
-                  //   style: ElevatedButton.styleFrom(
-                  //     backgroundColor: Colors.green,
-                  //     foregroundColor: Colors.white,
-                  //     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  //   ),
-                  // ),
+
                   const SizedBox(width: 8),
                   ElevatedButton.icon(
                     icon: const Icon(Icons.file_download),
@@ -898,104 +667,33 @@ class _DynamicPropertiesState extends State<DynamicProperties> {
       );
     }
     
-    return Scrollbar(
-      controller: _verticalScrollController,
-      thumbVisibility: true,
-      child: Scrollbar(
-        controller: _horizontalScrollController,
-        thumbVisibility: true,
-        notificationPredicate: (notification) => notification.depth == 1,
-        child: SingleChildScrollView(
-          controller: _verticalScrollController,
-          child: SingleChildScrollView(
-            controller: _horizontalScrollController,
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              decoration: BoxDecoration(color: Colors.white),
-              headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-              dataRowMinHeight: 60,
-              dataRowMaxHeight: 80,
-              columnSpacing: 20, 
-              horizontalMargin: 16,
-              dividerThickness: 1,
-              showCheckboxColumn: false,
-              columns: [
-                // Столбцы как на предоставленном изображении
-                DataColumn(label: _buildSortableColumnHeader('Код ОП')),
-                DataColumn(label: _buildSortableColumnHeader('Название')),
-                DataColumn(label: _buildSortableColumnHeader('Группа')),
-                DataColumn(label: _buildSortableColumnHeader('Подгруппа')),
-                DataColumn(label: _buildSortableColumnHeader('Скрытое')),
-                DataColumn(label: _buildSortableColumnHeader('Экспортируемое')),
-                DataColumn(label: _buildSortableColumnHeader('Внешний код')),
-                DataColumn(label: _buildSortableColumnHeader('Внешний код описание')),
-                DataColumn(label: _buildSortableColumnHeader('Добавил')),
-                DataColumn(label: _buildSortableColumnHeader('Дата')),
-                DataColumn(label: _buildSortableColumnHeader('Изменил')),
-                DataColumn(label: _buildSortableColumnHeader('Изменено')),
-                DataColumn(label: _buildSortableColumnHeader('Описание')),
-                const DataColumn(
-                  label: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Действия', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ],
-              rows: filteredCatalogs.asMap().entries.map((entry) {
-                final index = entry.key;
-                final catalog = entry.value;
-                return DataRow(
-                  color: MaterialStateProperty.resolveWith<Color?>(
-                    (Set<MaterialState> states) {
-                      if (index % 2 == 0) return Colors.grey[100];
-                      return null;
-                    },
-                  ),
-                  cells: [
-                    DataCell(_buildEditableCell(catalog.codeOP, index, 'Код ОП')),
-                    DataCell(_buildEditableCell(catalog.externalCode, index, 'Название')),
-                    DataCell(_buildEditableCell(catalog.group, index, 'Группа')),
-                    DataCell(_buildEditableCell(catalog.subgroup, index, 'Подгруппа')),
-                    DataCell(_buildEditableCell(catalog.name, index, 'Скрытое')),
-                    DataCell(_buildEditableCell(catalog.codeOP, index, 'Экспортируемое')),
-                    DataCell(_buildEditableCell(catalog.externalCode, index, 'Внешний код')),
-                    DataCell(_buildEditableCell(catalog.group, index, 'Внешний код описание')),
-                    DataCell(Text(catalog.addedBy)),
-                    DataCell(Text(catalog.addedDate)),
-                    DataCell(Text(catalog.modifiedBy)),
-                    DataCell(Text(catalog.modifiedDate)),
-                    DataCell(_buildEditableCell(catalog.description, index, 'Описание')),
-                    DataCell(
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (catalog.filePath.isEmpty)
-                            IconButton(
-                              icon: const Icon(Icons.upload, color: Colors.blue),
-                              onPressed: () => _pickFile(index),
-                              tooltip: 'Загрузить файл',
-                            )
-                          else
-                            IconButton(
-                              icon: const Icon(Icons.download, color: Colors.green),
-                              onPressed: () => _downloadFile(catalog.filePath),
-                              tooltip: 'Скачать файл',
-                            ),
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _removeItem(index),
-                            tooltip: 'Удалить',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      ),
+    final List<Map<String, dynamic>> catalogsData = filteredCatalogs.map((catalog) => catalog.toMap()).toList();
+    
+    return UniversalResponsiveTable(
+      data: catalogsData,
+      columns: ['Код ОП', 'Название', 'Группа', 'Подгруппа', 'Скрытое', 'Экспортируемое', 'Внешний код', 'Внешний код описание', 'Добавил', 'Дата', 'Изменил', 'Изменено', 'Описание'],
+      columnKeys: ['Код ОП', 'Название', 'Группа', 'Подгруппа', 'Скрытое', 'Экспортируемое', 'Внешний код', 'Внешний код описание', 'Добавил', 'Дата', 'Изменил', 'Изменено', 'Описание'],
+      onEdit: (index, field, value) {
+        final catalog = filteredCatalogs[index];
+        final updatedCatalog = catalog.copyWithField(field, value.toString());
+        setState(() {
+          _catalogs[_catalogs.indexOf(catalog)] = updatedCatalog;
+        });
+      },
+      onDelete: (index) {
+        setState(() {
+          _catalogs.removeAt(index);
+        });
+      },
+      onAdd: () {
+        _createNewCatalog();
+      },
+      primaryColor: Theme.of(context).colorScheme.primary,
+      showFileUpload: true,
+      columnTypes: {
+        'Дата': 'date',
+        'Изменено': 'date',
+      },
     );
   }
 }

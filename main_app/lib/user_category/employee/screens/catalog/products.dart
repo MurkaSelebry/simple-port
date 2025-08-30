@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import '../common/universal_responsive_table.dart';
 
 // Обновленная модель данных для каталога с полями, соответствующими скриншотам
 class Catalog {
@@ -205,95 +206,233 @@ class Catalog {
 // Начальные данные для примера
 final List<Catalog> initialCatalogs = [
   Catalog(
-    code: '',
-    group: 'Прочее',
-    subgroup: 'Базис-прочее',
-    subgroupType: 'Комплектующие-Базис',
-    name: 'Прочее',
-    article: 'F-R-Pro',
+    code: 'OP001',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    subgroupType: 'Современные',
+    name: 'Кухня "Модерн" 2.5м',
+    article: 'KM-001',
     unit: 'шт',
-    description: '',
-    expirationDate: '01.01.1',
-    price1: '',
-    price2: '',
-    price3: '',
-    price4: '',
-    price5: '',
-    price6: '',
-    price7: '',
-    addedBy: 'Anton',
-    addedDate: '31.08.2022',
-    modifiedBy: 'Anton',
-    modifiedDate: '31.08.2022',
+    description: 'Современный кухонный гарнитур 2.5 метра',
+    expirationDate: '2025-12-31',
+    price1: '85000.00',
+    price2: '76500.00',
+    price3: '68000.00',
+    price4: '59500.00',
+    price5: '51000.00',
+    price6: '42500.00',
+    price7: '34000.00',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-10',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-15',
     filePath: '',
   ),
   Catalog(
-    code: '',
-    group: 'Комплектующие: Метизы',
-    subgroup: 'Метизы',
-    subgroupType: '',
-    name: 'Стяжка эксцентриковая двойная 15х34',
-    article: 'F-M-EKS-15x34-2',
+    code: 'OP002',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    subgroupType: 'Классические',
+    name: 'Кухня "Классика" 3.0м',
+    article: 'KM-002',
     unit: 'шт',
-    description: '',
-    expirationDate: '30.12.9999',
-    price1: '',
-    price2: '',
-    price3: '',
-    price4: '',
-    price5: '',
-    price6: '',
-    price7: '',
-    addedBy: 'N.Kamakin',
-    addedDate: '31.08.2022',
-    modifiedBy: 's.evstratova',
-    modifiedDate: '23.06.2023',
+    description: 'Классический кухонный гарнитур 3 метра',
+    expirationDate: '2025-12-31',
+    price1: '95000.00',
+    price2: '85500.00',
+    price3: '76000.00',
+    price4: '66500.00',
+    price5: '57000.00',
+    price6: '47500.00',
+    price7: '38000.00',
+    addedBy: 'dmitry.kozlov',
+    addedDate: '2024-01-11',
+    modifiedBy: 'dmitry.kozlov',
+    modifiedDate: '2024-01-16',
     filePath: '',
   ),
   Catalog(
-    code: '',
-    group: 'Комплектующие: Метизы',
-    subgroup: 'Полкодержатели',
-    subgroupType: '',
-    name: 'Полкодержатель KDS-090 под саморез',
-    article: 'F-M-KDS090-SMR',
+    code: 'OP003',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    subgroupType: 'Прованс',
+    name: 'Кухня "Прованс" 2.8м',
+    article: 'KM-003',
     unit: 'шт',
-    description: 'Полкодержатель для стеклянных полок толщиной',
-    expirationDate: '30.12.9999',
-    price1: '',
-    price2: '',
-    price3: '',
-    price4: '',
-    price5: '',
-    price6: '',
-    price7: '',
-    addedBy: 'N.Kamakin',
-    addedDate: '31.08.2022',
-    modifiedBy: 's.evstratova',
-    modifiedDate: '23.06.2023',
+    description: 'Кухня в стиле прованс 2.8 метра',
+    expirationDate: '2025-12-31',
+    price1: '78000.00',
+    price2: '70200.00',
+    price3: '62400.00',
+    price4: '54600.00',
+    price5: '46800.00',
+    price6: '39000.00',
+    price7: '31200.00',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-12',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-17',
     filePath: '',
   ),
   Catalog(
-    code: '',
-    group: 'Комплектующие: Петли',
-    subgroup: 'Петли Blum',
-    subgroupType: '',
-    name: 'Петля CLIP top фальшпанель 6/пружины вклад',
-    article: 'F-P-BL-CT-FP90-BP-VKL',
-    unit: 'компл',
-    description: '',
-    expirationDate: '',
-    price1: '',
-    price2: '',
-    price3: '',
-    price4: '',
-    price5: '',
-    price6: '',
-    price7: '',
-    addedBy: '',
-    addedDate: '',
-    modifiedBy: '',
-    modifiedDate: '',
+    code: 'OP004',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    subgroupType: 'Лофт',
+    name: 'Кухня "Лофт" 3.2м',
+    article: 'KM-004',
+    unit: 'шт',
+    description: 'Кухня в стиле лофт 3.2 метра',
+    expirationDate: '2025-12-31',
+    price1: '92000.00',
+    price2: '82800.00',
+    price3: '73600.00',
+    price4: '64400.00',
+    price5: '55200.00',
+    price6: '46000.00',
+    price7: '36800.00',
+    addedBy: 'alex.kuznetsov',
+    addedDate: '2024-01-13',
+    modifiedBy: 'alex.kuznetsov',
+    modifiedDate: '2024-01-18',
+    filePath: '',
+  ),
+  Catalog(
+    code: 'OP005',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    subgroupType: 'Минимализм',
+    name: 'Кухня "Минимализм" 2.0м',
+    article: 'KM-005',
+    unit: 'шт',
+    description: 'Минималистичная кухня 2 метра',
+    expirationDate: '2025-12-31',
+    price1: '65000.00',
+    price2: '58500.00',
+    price3: '52000.00',
+    price4: '45500.00',
+    price5: '39000.00',
+    price6: '32500.00',
+    price7: '26000.00',
+    addedBy: 'anna.morozova',
+    addedDate: '2024-01-14',
+    modifiedBy: 'anna.morozova',
+    modifiedDate: '2024-01-19',
+    filePath: '',
+  ),
+  Catalog(
+    code: 'OP006',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    subgroupType: 'Скандинавия',
+    name: 'Кухня "Скандинавия" 2.7м',
+    article: 'KM-006',
+    unit: 'шт',
+    description: 'Кухня в скандинавском стиле 2.7 метра',
+    expirationDate: '2025-12-31',
+    price1: '82000.00',
+    price2: '73800.00',
+    price3: '65600.00',
+    price4: '57400.00',
+    price5: '49200.00',
+    price6: '41000.00',
+    price7: '32800.00',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-15',
+    modifiedBy: 'ivan.petrov',
+    modifiedDate: '2024-01-20',
+    filePath: '',
+  ),
+  Catalog(
+    code: 'OP007',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    subgroupType: 'Хай-тек',
+    name: 'Кухня "Хай-тек" 3.5м',
+    article: 'KM-007',
+    unit: 'шт',
+    description: 'Кухня в стиле хай-тек 3.5 метра',
+    expirationDate: '2025-12-31',
+    price1: '120000.00',
+    price2: '108000.00',
+    price3: '96000.00',
+    price4: '84000.00',
+    price5: '72000.00',
+    price6: '60000.00',
+    price7: '48000.00',
+    addedBy: 'dmitry.kozlov',
+    addedDate: '2024-01-16',
+    modifiedBy: 'dmitry.kozlov',
+    modifiedDate: '2024-01-21',
+    filePath: '',
+  ),
+  Catalog(
+    code: 'OP008',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    subgroupType: 'Кантри',
+    name: 'Кухня "Кантри" 2.3м',
+    article: 'KM-008',
+    unit: 'шт',
+    description: 'Кухня в деревенском стиле 2.3 метра',
+    expirationDate: '2025-12-31',
+    price1: '72000.00',
+    price2: '64800.00',
+    price3: '57600.00',
+    price4: '50400.00',
+    price5: '43200.00',
+    price6: '36000.00',
+    price7: '28800.00',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-17',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-22',
+    filePath: '',
+  ),
+  Catalog(
+    code: 'OP009',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    subgroupType: 'Арт-деко',
+    name: 'Кухня "Арт-деко" 2.8м',
+    article: 'KM-009',
+    unit: 'шт',
+    description: 'Кухня в стиле арт-деко 2.8 метра',
+    expirationDate: '2025-12-31',
+    price1: '98000.00',
+    price2: '88200.00',
+    price3: '78400.00',
+    price4: '68600.00',
+    price5: '58800.00',
+    price6: '49000.00',
+    price7: '39200.00',
+    addedBy: 'alex.kuznetsov',
+    addedDate: '2024-01-18',
+    modifiedBy: 'alex.kuznetsov',
+    modifiedDate: '2024-01-23',
+    filePath: '',
+  ),
+  Catalog(
+    code: 'OP010',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    subgroupType: 'Неоклассика',
+    name: 'Кухня "Неоклассика" 3.0м',
+    article: 'KM-010',
+    unit: 'шт',
+    description: 'Кухня в неоклассическом стиле 3 метра',
+    expirationDate: '2025-12-31',
+    price1: '105000.00',
+    price2: '94500.00',
+    price3: '84000.00',
+    price4: '73500.00',
+    price5: '63000.00',
+    price6: '52500.00',
+    price7: '42000.00',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-19',
+    modifiedBy: 'ivan.petrov',
+    modifiedDate: '2024-01-24',
     filePath: '',
   ),
 ];
@@ -309,11 +448,8 @@ class _ProductsState extends State<Products> {
   final List<Catalog> _catalogs = [...initialCatalogs];
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
-  bool _isAscending = true;
-  String _sortField = 'Название';
+
   bool _isLoading = false;
-  final ScrollController _horizontalScrollController = ScrollController();
-  final ScrollController _verticalScrollController = ScrollController();
 
   @override
   void initState() {
@@ -328,8 +464,6 @@ class _ProductsState extends State<Products> {
   @override
   void dispose() {
     _searchController.dispose();
-    _horizontalScrollController.dispose();
-    _verticalScrollController.dispose();
     super.dispose();
   }
 
@@ -337,279 +471,12 @@ class _ProductsState extends State<Products> {
     return DateFormat('dd.MM.yyyy').format(date);
   }
 
-  Future<void> _pickFile(int? index) async {
-    setState(() {
-      _isLoading = true;
-    });
 
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.any,
-        allowMultiple: false,
-      );
 
-      if (result != null) {
-        final file = File(result.files.single.path!);
-        final fileName = result.files.single.name;
 
-        setState(() {
-          if (index != null) {
-            // Обновляем существующий каталог
-            _catalogs[index] = _catalogs[index].copyWith(
-              description: fileName,
-              filePath: file.path,
-              modifiedBy: 'Текущий пользователь',
-              modifiedDate: _formatDate(DateTime.now()),
-            );
-          } else {
-            // Добавляем новый каталог
-            _catalogs.add(Catalog(
-              code: '',
-              group: 'Новая группа',
-              subgroup: 'Новая подгруппа',
-              subgroupType: '',
-              name: fileName,
-              article: 'ART-${_catalogs.length + 1}',
-              unit: 'шт',
-              description: 'Новый документ',
-              expirationDate: '30.12.9999',
-              price1: '',
-              price2: '',
-              price3: '',
-              price4: '',
-              price5: '',
-              price6: '',
-              price7: '',
-              addedBy: 'Текущий пользователь',
-              addedDate: _formatDate(DateTime.now()),
-              modifiedBy: 'Текущий пользователь',
-              modifiedDate: _formatDate(DateTime.now()),
-              filePath: file.path,
-            ));
-          }
-        });
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Файл "$fileName" успешно ${index != null ? 'обновлен' : 'добавлен'}'),
-            backgroundColor: Colors.green,
-            duration: const Duration(seconds: 2),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Ошибка: ${e.toString()}'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 3),
-        ),
-      );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-  
 
-  void _removeItem(int index) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Подтверждение удаления'),
-          content: const Text('Вы уверены, что хотите удалить этот элемент?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Отмена'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  _catalogs.removeAt(index);
-                });
-                Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Элемент удален'),
-                    backgroundColor: Colors.blue,
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              },
-              child: const Text('Удалить', style: TextStyle(color: Colors.red)),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
-  Future<void> _downloadFile(String filePath) async {
-    if (filePath.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Нет файла для скачивания'),
-          backgroundColor: Colors.orange,
-          duration: Duration(seconds: 2),
-        ),
-      );
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      final file = File(filePath);
-      if (await file.exists()) {
-        String? directory = await FilePicker.platform.getDirectoryPath();
-
-        if (directory != null) {
-          final fileName = file.uri.pathSegments.last;
-          final downloadPath = '$directory/$fileName';
-          await file.copy(downloadPath);
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Файл сохранен в: $downloadPath'),
-              backgroundColor: Colors.green,
-              duration: const Duration(seconds: 3),
-            ),
-          );
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Файл не найден: $filePath'),
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 3),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Ошибка: ${e.toString()}'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 3),
-        ),
-      );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  void _toggleSort(String field) {
-    setState(() {
-      _isAscending = _sortField == field ? !_isAscending : true;
-      _sortField = field;
-
-      _catalogs.sort((a, b) {
-        final valueA = a.toMap()[field] ?? '';
-        final valueB = b.toMap()[field] ?? '';
-        return _isAscending ? valueA.compareTo(valueB) : valueB.compareTo(valueA);
-      });
-    });
-  }
-
-  Widget _buildEditableCell(String value, int index, String field) {
-    return InkWell(
-      onTap: () => _showEditDialog(index, field, value),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Text(
-          value.isEmpty ? '---' : value,
-          style: TextStyle(
-            color: value.isEmpty ? Colors.grey : Colors.black87,
-          ),
-        ),
-      ),
-    );
-  }
-
-  void _showEditDialog(int index, String field, String initialValue) {
-    final TextEditingController controller = TextEditingController(text: initialValue);
-    final FocusNode focusNode = FocusNode();
-    
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      focusNode.requestFocus();
-    });
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Редактировать $field'),
-          content: TextField(
-            controller: controller,
-            focusNode: focusNode,
-            decoration: InputDecoration(
-              labelText: field,
-              border: const OutlineInputBorder(),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            ),
-            maxLines: field == 'Описание' ? 3 : 1,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Отмена'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                final updatedCatalog = _catalogs[index].copyWithField(field, controller.text);
-                // Обновляем поля модификации
-                final modifiedCatalog = updatedCatalog.copyWith(
-                  modifiedBy: 'Текущий пользователь',
-                  modifiedDate: _formatDate(DateTime.now()),
-                );
-                setState(() {
-                  _catalogs[index] = modifiedCatalog;
-                });
-                Navigator.of(context).pop();
-              },
-              child: const Text('Сохранить'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _buildSortableColumnHeader(String fieldName) {
-    return GestureDetector(
-      onTap: () => _toggleSort(fieldName),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              fieldName,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(width: 4),
-            if (_sortField == fieldName)
-              Icon(
-                _isAscending ? Icons.arrow_upward : Icons.arrow_downward,
-                size: 16,
-                color: Colors.blue,
-              ),
-          ],
-        ),
-      ),
-    );
-  }
 
   void _exportToCsv() async {
     try {
@@ -909,118 +776,49 @@ class _ProductsState extends State<Products> {
       );
     }
     
-    return Scrollbar(
-      controller: _verticalScrollController,
-      thumbVisibility: true,
-      child: Scrollbar(
-        controller: _horizontalScrollController,
-        thumbVisibility: true,
-        notificationPredicate: (notification) => notification.depth == 1,
-        child: SingleChildScrollView(
-          controller: _verticalScrollController,
-          child: SingleChildScrollView(
-            controller: _horizontalScrollController,
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              decoration: BoxDecoration(color: Colors.white),
-              headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-              dataRowMinHeight: 60,
-              dataRowMaxHeight: 80,
-              columnSpacing: 20, 
-              horizontalMargin: 16,
-              dividerThickness: 1,
-              showCheckboxColumn: false,
+    final List<Map<String, dynamic>> catalogsData = filteredCatalogs.map((catalog) => catalog.toMap()).toList();
+    
+    return UniversalResponsiveTable(
+      data: catalogsData,
               columns: [
-                // Столбцы как на предоставленном изображении
-                DataColumn(label: _buildSortableColumnHeader('Код ОП')),
-                DataColumn(label: _buildSortableColumnHeader('Группа')),
-                DataColumn(label: _buildSortableColumnHeader('Подгруппа')),
-                DataColumn(label: _buildSortableColumnHeader('Тип подгруппы')),
-                DataColumn(label: _buildSortableColumnHeader('Название')),
-                DataColumn(label: _buildSortableColumnHeader('Артикул')),
-                DataColumn(label: _buildSortableColumnHeader('Ед. изм.')),
-                DataColumn(label: _buildSortableColumnHeader('Описание')),
-                DataColumn(label: _buildSortableColumnHeader('Срок действия')),
-                DataColumn(label: _buildSortableColumnHeader('Цена1')),
-                DataColumn(label: _buildSortableColumnHeader('Цена2')),
-                DataColumn(label: _buildSortableColumnHeader('Цена3')),
-                DataColumn(label: _buildSortableColumnHeader('Цена4')),
-                DataColumn(label: _buildSortableColumnHeader('Цена5')),
-                DataColumn(label: _buildSortableColumnHeader('Цена6')),
-                DataColumn(label: _buildSortableColumnHeader('Цена7')),
-                DataColumn(label: _buildSortableColumnHeader('Добавил')),
-                DataColumn(label: _buildSortableColumnHeader('Дата')),
-                DataColumn(label: _buildSortableColumnHeader('Изменил')),
-                DataColumn(label: _buildSortableColumnHeader('Изменено')),
-                const DataColumn(
-                  label: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Действия', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ],
-              rows: filteredCatalogs.asMap().entries.map((entry) {
-                final index = entry.key;
-                final catalog = entry.value;
-                return DataRow(
-                  color: MaterialStateProperty.resolveWith<Color?>(
-                    (Set<MaterialState> states) {
-                      if (index % 2 == 0) return Colors.grey[100];
-                      return null;
-                    },
-                  ),
-                  cells: [
-                    DataCell(_buildEditableCell(catalog.code, index, 'Код ОП')),
-                    DataCell(_buildEditableCell(catalog.group, index, 'Группа')),
-                    DataCell(_buildEditableCell(catalog.subgroup, index, 'Подгруппа')),
-                    DataCell(_buildEditableCell(catalog.subgroupType, index, 'Тип подгруппы')),
-                    DataCell(_buildEditableCell(catalog.name, index, 'Название')),
-                    DataCell(_buildEditableCell(catalog.article, index, 'Артикул')),
-                    DataCell(_buildEditableCell(catalog.unit, index, 'Ед. изм.')),
-                    DataCell(_buildEditableCell(catalog.description, index, 'Описание')),
-                    DataCell(_buildEditableCell(catalog.expirationDate, index, 'Срок действия')),
-                    DataCell(_buildEditableCell(catalog.price1, index, 'Цена1')),
-                    DataCell(_buildEditableCell(catalog.price2, index, 'Цена2')),
-                    DataCell(_buildEditableCell(catalog.price3, index, 'Цена3')),
-                    DataCell(_buildEditableCell(catalog.price4, index, 'Цена4')),
-                    DataCell(_buildEditableCell(catalog.price5, index, 'Цена5')),
-                    DataCell(_buildEditableCell(catalog.price6, index, 'Цена6')),
-                    DataCell(_buildEditableCell(catalog.price7, index, 'Цена7')),
-                    DataCell(Text(catalog.addedBy)),
-                    DataCell(Text(catalog.addedDate)),
-                    DataCell(Text(catalog.modifiedBy)),
-                    DataCell(Text(catalog.modifiedDate)),
-                    DataCell(
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (catalog.filePath.isEmpty)
-                            IconButton(
-                              icon: const Icon(Icons.upload, color: Colors.blue),
-                              onPressed: () => _pickFile(index),
-                              tooltip: 'Загрузить файл',
-                            )
-                          else
-                            IconButton(
-                              icon: const Icon(Icons.download, color: Colors.green),
-                              onPressed: () => _downloadFile(catalog.filePath),
-                              tooltip: 'Скачать файл',
-                            ),
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _removeItem(index),
-                            tooltip: 'Удалить',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      ),
+        'Код ОП', 'Группа', 'Подгруппа', 'Тип подгруппы', 'Название', 'Артикул', 
+        'Ед. изм.', 'Описание', 'Срок действия', 'Цена1', 'Цена2', 'Цена3', 
+        'Цена4', 'Цена5', 'Цена6', 'Цена7', 'Добавил', 'Дата', 'Изменил', 'Изменено'
+      ],
+      columnKeys: [
+        'Код ОП', 'Группа', 'Подгруппа', 'Тип подгруппы', 'Название', 'Артикул', 
+        'Ед. изм.', 'Описание', 'Срок действия', 'Цена1', 'Цена2', 'Цена3', 
+        'Цена4', 'Цена5', 'Цена6', 'Цена7', 'Добавил', 'Дата', 'Изменил', 'Изменено'
+      ],
+      onEdit: (index, field, value) {
+        final catalog = filteredCatalogs[index];
+        final updatedCatalog = catalog.copyWithField(field, value.toString());
+        setState(() {
+          _catalogs[_catalogs.indexOf(catalog)] = updatedCatalog;
+        });
+      },
+      onDelete: (index) {
+        setState(() {
+          _catalogs.removeAt(index);
+        });
+      },
+      onAdd: () {
+        _createNewProduct();
+      },
+      primaryColor: Theme.of(context).colorScheme.primary,
+      showFileUpload: true,
+      columnTypes: {
+        'Цена1': 'number',
+        'Цена2': 'number',
+        'Цена3': 'number',
+        'Цена4': 'number',
+        'Цена5': 'number',
+        'Цена6': 'number',
+        'Цена7': 'number',
+        'Срок действия': 'date',
+        'Дата': 'date',
+        'Изменено': 'date',
+      },
     );
   }
 }

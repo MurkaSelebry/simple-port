@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/User/Desktop/diplom/diplom/windows/runner
+# Install script for directory: C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/runner
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

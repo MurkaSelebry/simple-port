@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/User/Desktop/diplom/diplom/windows/flutter/ephemeral/.plugin_symlinks/permission_handler_windows/windows
+# Install script for directory: C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/flutter/ephemeral/.plugin_symlinks/permission_handler_windows/windows
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

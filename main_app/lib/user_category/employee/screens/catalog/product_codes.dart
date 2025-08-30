@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import '../common/universal_responsive_table.dart';
 
 // Обновленная модель данных для заказа с новыми полями
 class Catalog {
@@ -77,18 +78,74 @@ class Catalog {
 // Начальные данные для примера
 final List<Catalog> initialOrders = [
   Catalog(
-    product: 'Заказ №1',
-    article: 'Иванов А.П.',
-    code: '12.03.2025, 08:16',
-    terminology: 'Петров И.С.',
-    filePath: '',
+    product: 'Кухня "Модерн" 2.5м',
+    article: 'KM-MOD-25',
+    code: 'PC001',
+    terminology: 'Современный кухонный гарнитур 2.5 метра',
+    filePath: '/products/modern-kitchen',
   ),
   Catalog(
-    product: 'Заказ №2',
-    article: 'Смирнова Е.В.',
-    code: '15.03.2025, 12:49',
-    terminology: 'Смирнова Е.В.',
-    filePath: '',
+    product: 'Кухня "Классика" 3.0м',
+    article: 'KM-CLA-30',
+    code: 'PC002',
+    terminology: 'Классический кухонный гарнитур 3 метра',
+    filePath: '/products/classic-kitchen',
+  ),
+  Catalog(
+    product: 'Кухня "Прованс" 2.8м',
+    article: 'KM-PRO-28',
+    code: 'PC003',
+    terminology: 'Кухня в стиле прованс 2.8 метра',
+    filePath: '/products/provence-kitchen',
+  ),
+  Catalog(
+    product: 'Кухня "Лофт" 3.2м',
+    article: 'KM-LOF-32',
+    code: 'PC004',
+    terminology: 'Кухня в стиле лофт 3.2 метра',
+    filePath: '/products/loft-kitchen',
+  ),
+  Catalog(
+    product: 'Кухня "Минимализм" 2.0м',
+    article: 'KM-MIN-20',
+    code: 'PC005',
+    terminology: 'Минималистичная кухня 2 метра',
+    filePath: '/products/minimalism-kitchen',
+  ),
+  Catalog(
+    product: 'Кухня "Скандинавия" 2.7м',
+    article: 'KM-SCA-27',
+    code: 'PC006',
+    terminology: 'Кухня в скандинавском стиле 2.7 метра',
+    filePath: '/products/scandinavia-kitchen',
+  ),
+  Catalog(
+    product: 'Кухня "Хай-тек" 3.5м',
+    article: 'KM-HAI-35',
+    code: 'PC007',
+    terminology: 'Кухня в стиле хай-тек 3.5 метра',
+    filePath: '/products/hi-tech-kitchen',
+  ),
+  Catalog(
+    product: 'Кухня "Кантри" 2.3м',
+    article: 'KM-KAN-23',
+    code: 'PC008',
+    terminology: 'Кухня в деревенском стиле 2.3 метра',
+    filePath: '/products/country-kitchen',
+  ),
+  Catalog(
+    product: 'Кухня "Арт-деко" 2.8м',
+    article: 'KM-ART-28',
+    code: 'PC009',
+    terminology: 'Кухня в стиле арт-деко 2.8 метра',
+    filePath: '/products/art-deco-kitchen',
+  ),
+  Catalog(
+    product: 'Кухня "Неоклассика" 3.0м',
+    article: 'KM-NEO-30',
+    code: 'PC010',
+    terminology: 'Кухня в неоклассическом стиле 3 метра',
+    filePath: '/products/neoclassic-kitchen',
   ),
 ];
 
@@ -612,105 +669,40 @@ class _ProductCodesState extends State<ProductCodes> {
   }
 
   Widget _buildDataTableView() {
-  final filteredOrders = _getFilteredOrders();
-  
-  if (filteredOrders.isEmpty) {
-    return const Center(
-      child: Text(
-        'Нет записей для отображения',
-        style: TextStyle(fontSize: 18, color: Colors.grey),
-      ),
-    );
-  }
-  
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      return Scrollbar(
-        controller: _verticalScrollController,
-        thumbVisibility: true,
-        child: SingleChildScrollView(
-          controller: _verticalScrollController,
-          child: Scrollbar(
-            controller: _horizontalScrollController,
-            thumbVisibility: true,
-            notificationPredicate: (notification) => notification.depth == 1,
-            child: SingleChildScrollView(
-              controller: _horizontalScrollController,
-              scrollDirection: Axis.horizontal,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minWidth: constraints.maxWidth, // Растягиваем на всю ширину
-                ),
-                child: DataTable(
-                  decoration: BoxDecoration(color: Colors.white),
-                  headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-                  dataRowMinHeight: 60,
-                  dataRowMaxHeight: 80,
-                  columnSpacing: 20, 
-                  horizontalMargin: 16,
-                  dividerThickness: 1,
-                  showCheckboxColumn: false,
-                  columns: [
-                    DataColumn(label: _buildSortableColumnHeader('Продукт')),
-                    DataColumn(label: _buildSortableColumnHeader('Артикул')),
-                    DataColumn(label: _buildSortableColumnHeader('Код')),
-                    DataColumn(label: _buildSortableColumnHeader('Терминология')),
-                    const DataColumn(
-                      label: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Действия', style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                  ],
-                  rows: filteredOrders.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final order = entry.value;
-                    return DataRow(
-                      color: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                          if (index % 2 == 0) return Colors.grey[100];
-                          return null;
-                        },
-                      ),
-                      cells: [
-                        DataCell(_buildEditableCell(order.product, index, 'Продукт')),
-                        DataCell(Text(order.article)),
-                        DataCell(Text(order.code)),
-                        DataCell(Text(order.terminology)),
-                        DataCell(
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (order.filePath.isEmpty)
-                                IconButton(
-                                  icon: const Icon(Icons.upload, color: Colors.blue),
-                                  onPressed: () => _pickFile(index),
-                                  tooltip: 'Загрузить файл',
-                                )
-                              else
-                                IconButton(
-                                  icon: const Icon(Icons.download, color: Colors.green),
-                                  onPressed: () => _downloadFile(order.filePath),
-                                  tooltip: 'Скачать файл',
-                                ),
-                              IconButton(
-                                icon: const Icon(Icons.delete, color: Colors.red),
-                                onPressed: () => _removeItem(index),
-                                tooltip: 'Удалить',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
+    final filteredOrders = _getFilteredOrders();
+    
+    if (filteredOrders.isEmpty) {
+      return const Center(
+        child: Text(
+          'Нет записей для отображения',
+          style: TextStyle(fontSize: 18, color: Colors.grey),
         ),
       );
-    },
-  );
-}
+    }
+
+    final List<Map<String, dynamic>> ordersData = filteredOrders.map((order) => order.toMap()).toList();
+    
+    return UniversalResponsiveTable(
+      data: ordersData,
+      columns: ['Продукт', 'Артикул', 'Код', 'Терминология'],
+      columnKeys: ['Продукт', 'Артикул', 'Код', 'Терминология'],
+      onEdit: (index, field, value) {
+        final order = filteredOrders[index];
+        final updatedOrder = order.copyWithField(field, value.toString());
+        setState(() {
+          _orders[_orders.indexOf(order)] = updatedOrder;
+        });
+      },
+      onDelete: (index) {
+        setState(() {
+          _orders.removeAt(index);
+        });
+      },
+      onAdd: () {
+        _createNewOrder();
+      },
+      primaryColor: Theme.of(context).colorScheme.primary,
+      showFileUpload: true,
+    );
+  }
 }

@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import '../common/universal_responsive_table.dart';
 
 // Обновленная модель данных для заказа с новыми полями
 class Catalog {
@@ -93,22 +94,94 @@ class Catalog {
 // Начальные данные для примера
 final List<Catalog> initialOrders = [
   Catalog(
-    name: 'Заказ №1',
-    addedBy: 'Иванов А.П.',
-    addedDate: '12.03.2025, 08:16',
-    modifiedBy: 'Петров И.С.',
-    modifiedDate: '14.03.2025, 10:23',
-    description: 'Фасад для кухни',
-    filePath: '',
+    name: 'Кухня "Модерн"',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-10',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-15',
+    description: 'Современные кухонные гарнитуры',
+    filePath: '/groups/modern',
   ),
   Catalog(
-    name: 'Заказ №2',
-    addedBy: 'Смирнова Е.В.',
-    addedDate: '15.03.2025, 12:49',
-    modifiedBy: 'Смирнова Е.В.',
-    modifiedDate: '15.03.2025, 14:30',
-    description: 'Шкаф-купе для спальни',
-    filePath: '',
+    name: 'Кухня "Классика"',
+    addedBy: 'dmitry.kozlov',
+    addedDate: '2024-01-11',
+    modifiedBy: 'dmitry.kozlov',
+    modifiedDate: '2024-01-16',
+    description: 'Классические кухонные гарнитуры',
+    filePath: '/groups/classic',
+  ),
+  Catalog(
+    name: 'Кухня "Прованс"',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-12',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-17',
+    description: 'Кухни в стиле прованс',
+    filePath: '/groups/provence',
+  ),
+  Catalog(
+    name: 'Кухня "Лофт"',
+    addedBy: 'alex.kuznetsov',
+    addedDate: '2024-01-13',
+    modifiedBy: 'alex.kuznetsov',
+    modifiedDate: '2024-01-18',
+    description: 'Кухни в стиле лофт',
+    filePath: '/groups/loft',
+  ),
+  Catalog(
+    name: 'Кухня "Минимализм"',
+    addedBy: 'anna.morozova',
+    addedDate: '2024-01-14',
+    modifiedBy: 'anna.morozova',
+    modifiedDate: '2024-01-19',
+    description: 'Минималистичные кухни',
+    filePath: '/groups/minimalism',
+  ),
+  Catalog(
+    name: 'Кухня "Скандинавия"',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-15',
+    modifiedBy: 'ivan.petrov',
+    modifiedDate: '2024-01-20',
+    description: 'Кухни в скандинавском стиле',
+    filePath: '/groups/scandinavia',
+  ),
+  Catalog(
+    name: 'Кухня "Хай-тек"',
+    addedBy: 'dmitry.kozlov',
+    addedDate: '2024-01-16',
+    modifiedBy: 'dmitry.kozlov',
+    modifiedDate: '2024-01-21',
+    description: 'Кухни в стиле хай-тек',
+    filePath: '/groups/hi-tech',
+  ),
+  Catalog(
+    name: 'Кухня "Кантри"',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-17',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-22',
+    description: 'Кухни в деревенском стиле',
+    filePath: '/groups/country',
+  ),
+  Catalog(
+    name: 'Кухня "Арт-деко"',
+    addedBy: 'alex.kuznetsov',
+    addedDate: '2024-01-18',
+    modifiedBy: 'alex.kuznetsov',
+    modifiedDate: '2024-01-23',
+    description: 'Кухни в стиле арт-деко',
+    filePath: '/groups/art-deco',
+  ),
+  Catalog(
+    name: 'Кухня "Неоклассика"',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-19',
+    modifiedBy: 'ivan.petrov',
+    modifiedDate: '2024-01-24',
+    description: 'Кухни в неоклассическом стиле',
+    filePath: '/groups/neoclassic',
   ),
 ];
 
@@ -651,96 +724,33 @@ class _GroupsState extends State<Groups> {
         ),
       );
     }
+
+    final List<Map<String, dynamic>> ordersData = filteredOrders.map((order) => order.toMap()).toList();
     
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Scrollbar(
-          controller: _verticalScrollController,
-          thumbVisibility: true,
-          child: SingleChildScrollView(
-            controller: _verticalScrollController,
-            child: Scrollbar(
-              controller: _horizontalScrollController,
-              thumbVisibility: true,
-              notificationPredicate: (notification) => notification.depth == 1,
-              child: SingleChildScrollView(
-                controller: _horizontalScrollController,
-                scrollDirection: Axis.horizontal,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth: constraints.maxWidth, // Растягиваем на всю ширину
-                  ),
-                  child: DataTable(
-                    decoration: BoxDecoration(color: Colors.white),
-                    headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-                    dataRowMinHeight: 60,
-                    dataRowMaxHeight: 80,
-                    columnSpacing: 20, 
-                    horizontalMargin: 16,
-                    dividerThickness: 1,
-                    showCheckboxColumn: false,
-                    columns: [
-                      DataColumn(label: _buildSortableColumnHeader('Название')),
-                      DataColumn(label: _buildSortableColumnHeader('Добавил')),
-                      DataColumn(label: _buildSortableColumnHeader('Дата')),
-                      DataColumn(label: _buildSortableColumnHeader('Изменил')),
-                      DataColumn(label: _buildSortableColumnHeader('Изменено')),
-                      const DataColumn(
-                        label: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text('Действия', style: TextStyle(fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    ],
-                    rows: filteredOrders.asMap().entries.map((entry) {
-                      final index = entry.key;
-                      final order = entry.value;
-                      return DataRow(
-                        color: MaterialStateProperty.resolveWith<Color?>(
-                          (Set<MaterialState> states) {
-                            if (index % 2 == 0) return Colors.grey[100];
-                            return null;
-                          },
-                        ),
-                        cells: [
-                          DataCell(_buildEditableCell(order.name, index, 'Название')),
-                          DataCell(Text(order.addedBy)),
-                          DataCell(Text(order.addedDate)),
-                          DataCell(Text(order.modifiedBy)),
-                          DataCell(Text(order.modifiedDate)),
-                          DataCell(
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if (order.filePath.isEmpty)
-                                  IconButton(
-                                    icon: const Icon(Icons.upload, color: Colors.blue),
-                                    onPressed: () => _pickFile(index),
-                                    tooltip: 'Загрузить файл',
-                                  )
-                                else
-                                  IconButton(
-                                    icon: const Icon(Icons.download, color: Colors.green),
-                                    onPressed: () => _downloadFile(order.filePath),
-                                    tooltip: 'Скачать файл',
-                                  ),
-                                IconButton(
-                                  icon: const Icon(Icons.delete, color: Colors.red),
-                                  onPressed: () => _removeItem(index),
-                                  tooltip: 'Удалить',
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        );
+    return UniversalResponsiveTable(
+      data: ordersData,
+      columns: ['Название', 'Добавил', 'Дата', 'Изменил', 'Изменено', 'Описание'],
+      columnKeys: ['Название', 'Добавил', 'Дата', 'Изменил', 'Изменено', 'Описание'],
+      onEdit: (index, field, value) {
+        final order = filteredOrders[index];
+        final updatedOrder = order.copyWithField(field, value.toString());
+        setState(() {
+          _orders[_orders.indexOf(order)] = updatedOrder;
+        });
+      },
+      onDelete: (index) {
+        setState(() {
+          _orders.removeAt(index);
+        });
+      },
+      onAdd: () {
+        _createNewOrder();
+      },
+      primaryColor: Theme.of(context).colorScheme.primary,
+      showFileUpload: true,
+      columnTypes: {
+        'Дата': 'date',
+        'Изменено': 'date',
       },
     );
   }
