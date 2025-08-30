@@ -5,9 +5,11 @@ import (
 	"main/src/controllers"
 	"main/src/middlewares"
 	"net/http"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
 )
 
 func startupsGroupRouter(r chi.Router) {
@@ -35,17 +37,18 @@ func startupsGroupRouter(r chi.Router) {
 func SetupRoutes() *chi.Mux {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
 
 	// CORS configuration
-	// cors := cors.New(cors.Options{
-	// 	AllowedOrigins:   []string{"*"},
-	// 	AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
-	// 	AllowedHeaders:   []string{"Origin", "Content-Type", "Accept"},
-	// 	ExposedHeaders:   []string{"Content-Length"},
-	// 	AllowCredentials: true,
-	// 	MaxAge:           int(12 * time.Hour / time.Second),
-	// })
-	// r.Use(cors.Handler)
+	corsMiddleware := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Origin", "Content-Type", "Accept", "Authorization"},
+		ExposedHeaders:   []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           int(12 * time.Hour / time.Second),
+	})
+	r.Use(corsMiddleware.Handler)
 
 	r.Route("/api", func(r chi.Router) {
 		startupsGroupRouter(r)

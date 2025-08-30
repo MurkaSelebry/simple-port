@@ -1,0 +1,130 @@
+basePath: /api
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  models.UserSec:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: "#/definitions/gorm.DeletedAt"
+      email:
+        type: string
+      id:
+        type: integer
+      nickname:
+        type: string
+      password:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+host: localhost
+info:
+  contact:
+    email: support@portal.ru
+    name: API Support
+    url: http://portal.ru/support
+  description: Corporate Portal API for employee management
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Corporate Portal API
+  version: "1.0"
+paths:
+  /auth/login:
+    post:
+      consumes:
+        - application/json
+      description: Authenticate user with email and password
+      parameters:
+        - description: User credentials
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: "#/definitions/models.UserSec"
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: User login
+      tags:
+        - Auth
+  /auth/profile:
+    get:
+      description: Get current authenticated user's profile information
+      produces:
+        - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: error
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: unauthorized
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+        - Bearer: []
+      summary: Get user profile
+      tags:
+        - Auth
+  /auth/register:
+    post:
+      consumes:
+        - application/json
+      description: Register a new user with email, password and nickname
+      parameters:
+        - description: User registration data
+          in: body
+          name: user
+          required: true
+          schema:
+            $ref: "#/definitions/models.UserSec"
+      produces:
+        - application/json
+      responses:
+        "201":
+          description: success
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: error
+          schema:
+            additionalProperties: true
+            type: object
+      summary: User registration
+      tags:
+        - Auth
+securityDefinitions:
+  Bearer:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

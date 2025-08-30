@@ -9,6 +9,16 @@ import (
 	"time"
 )
 
+// Login authenticates a user and returns a JWT token
+// @Summary User login
+// @Description Authenticate user with email and password
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param user body models.UserSec true "User credentials"
+// @Success 200 {object} map[string]interface{} "success"
+// @Failure 400 {object} map[string]interface{} "error"
+// @Router /auth/login [post]
 func Login(w http.ResponseWriter, r *http.Request) {
 	var input models.UserSec
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
@@ -38,6 +48,16 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// Register creates a new user account
+// @Summary User registration
+// @Description Register a new user with email, password and nickname
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param user body models.UserSec true "User registration data"
+// @Success 201 {object} map[string]interface{} "success"
+// @Failure 400 {object} map[string]interface{} "error"
+// @Router /auth/register [post]
 func Register(w http.ResponseWriter, r *http.Request) {
 	var input models.UserSec
 	if err := json.NewDecoder(r.Body).Decode(&input); err != nil {
@@ -61,6 +81,16 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// GetProfile returns the current user's profile
+// @Summary Get user profile
+// @Description Get current authenticated user's profile information
+// @Tags Auth
+// @Produce json
+// @Security Bearer
+// @Success 200 {object} map[string]interface{} "success"
+// @Failure 400 {object} map[string]interface{} "error"
+// @Failure 401 {object} map[string]interface{} "unauthorized"
+// @Router /auth/profile [get]
 func GetProfile(w http.ResponseWriter, r *http.Request) {
 	// Retrieve userId from context
 	userId, ok := r.Context().Value("userId").(string)

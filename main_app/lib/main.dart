@@ -1,5 +1,6 @@
 import 'package:diplom/user_category/admin/admin.dart';
 import 'package:diplom/user_category/employee/screens/employee_main.dart';
+import 'package:diplom/services/api_service.dart';
 import 'package:flutter/material.dart';
 void main() {
   runApp(MyApp());
@@ -46,6 +47,9 @@ class _LoginPageState extends State<LoginPage> {
   String? _emailError;
   String? _passwordError;
   String? _nickError;
+  
+  bool _isLoading = false;
+  bool _isLoginMode = true; // true for login, false for register
 
   @override
   void dispose() {
@@ -82,14 +86,67 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  void _login() {
+  void _login() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      print('Ник: $_nick');
-      print('Почта: $_email');
-      print('Пароль: $_password');
-      Navigator.pushReplacementNamed(context, '/employee');
+      
+      setState(() {
+        _isLoading = true;
+      });
+
+      try {
+        Map<String, dynamic> result;
+        
+        if (_isLoginMode) {
+          // Авторизация
+          result = await ApiService.login(
+            email: _email,
+            password: _password,
+          );
+        } else {
+          // Регистрация
+          result = await ApiService.register(
+            email: _email,
+            password: _password,
+            nickname: _nick,
+          );
+        }
+
+        if (result['success']) {
+          // Успешная авторизация/регистрация
+          Navigator.pushReplacementNamed(context, '/employee');
+        } else {
+          // Показываем ошибку
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(result['error'] ?? 'Произошла ошибка'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Ошибка сети: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
     }
+  }
+
+  void _toggleMode() {
+    setState(() {
+      _isLoginMode = !_isLoginMode;
+      _formKey.currentState?.reset();
+      _email = '';
+      _password = '';
+      _nick = '';
+    });
   }
 
   @override
