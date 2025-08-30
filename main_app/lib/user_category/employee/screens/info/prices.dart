@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import '../common/universal_responsive_table.dart';
 
 class Document {
   String description;   // Описание
@@ -83,28 +84,68 @@ class Document {
 
 final List<Document> initialOrders = [
   Document(
-    description: 'Прайс-лист на ЛДСП (апрель 2025)',
-    fileName: 'Прайс_ЛДСП_апрель_2025.xlsx',
-    addedBy: 'Отдел закупок',
-    addedDate: '01.04.2025',
-    readStatus: '',
-    filePath: '',
+    description: 'Актуальные цены на мебельную продукцию',
+    fileName: 'Прайс-лист на мебель (январь 2024).xlsx',
+    addedBy: 'anna.morozova',
+    addedDate: '2024-01-05',
+    readStatus: 'Прочитан',
+    filePath: '/prices/furniture.xlsx',
   ),
   Document(
-    description: 'Актуальные цены на фурнитуру Blum, Hettich',
-    fileName: 'Прайс_фурнитура_2025.pdf',
-    addedBy: 'Менеджер по снабжению',
-    addedDate: '05.04.2025',
-    readStatus: '',
-    filePath: '',
+    description: 'Цены на компьютеры и периферию',
+    fileName: 'Прайс-лист на электронику (январь 2024).xlsx',
+    addedBy: 'dmitry.kozlov',
+    addedDate: '2024-01-06',
+    readStatus: 'Прочитан',
+    filePath: '/prices/electronics.xlsx',
   ),
   Document(
-    description: 'Стоимость услуг покраски МДФ',
-    fileName: 'Прайс_МДФ_покраска.docx',
-    addedBy: 'Производство',
-    addedDate: '10.04.2025',
-    readStatus: '',
-    filePath: '',
+    description: 'Цены на строительные инструменты',
+    fileName: 'Прайс-лист на инструменты (январь 2024).xlsx',
+    addedBy: 'alex.kuznetsov',
+    addedDate: '2024-01-07',
+    readStatus: 'Не прочитан',
+    filePath: '/prices/tools.xlsx',
+  ),
+  Document(
+    description: 'Цены на рабочую одежду и спецодежду',
+    fileName: 'Прайс-лист на одежду (январь 2024).xlsx',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-08',
+    readStatus: 'Прочитан',
+    filePath: '/prices/clothing.xlsx',
+  ),
+  Document(
+    description: 'Цены на продукты питания и напитки',
+    fileName: 'Прайс-лист на продукты (январь 2024).xlsx',
+    addedBy: 'anna.morozova',
+    addedDate: '2024-01-09',
+    readStatus: 'Прочитан',
+    filePath: '/prices/food.xlsx',
+  ),
+  Document(
+    description: 'Специальные цены для оптовых покупателей',
+    fileName: 'Оптовые цены (январь 2024).pdf',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-10',
+    readStatus: 'Не прочитан',
+    filePath: '/prices/wholesale.pdf',
+  ),
+  Document(
+    description: 'Дилерские цены и условия',
+    fileName: 'Прайс-лист для дилеров (январь 2024).xlsx',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-11',
+    readStatus: 'Прочитан',
+    filePath: '/prices/dealers.xlsx',
+  ),
+  Document(
+    description: 'Актуальные скидки и акции',
+    fileName: 'Сезонные скидки (январь 2024).pdf',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-12',
+    readStatus: 'Прочитан',
+    filePath: '/prices/discounts.pdf',
   ),
 ];
 
@@ -119,11 +160,7 @@ class _PricesState extends State<Prices> {
   final List<Document> _orders = [...initialOrders];
   final TextEditingController _searchController = TextEditingController();
   String _searchQuery = '';
-  bool _isAscending = true;
-  String _sortField = 'Описание';
   bool _isLoading = false;
-  final ScrollController _horizontalScrollController = ScrollController();
-  final ScrollController _verticalScrollController = ScrollController();
 
   @override
   void initState() {
@@ -138,8 +175,6 @@ class _PricesState extends State<Prices> {
   @override
   void dispose() {
     _searchController.dispose();
-    _horizontalScrollController.dispose();
-    _verticalScrollController.dispose();
     super.dispose();
   }
 
@@ -147,277 +182,7 @@ class _PricesState extends State<Prices> {
     return DateFormat('dd.MM.yyyy').format(date);
   }
 
-  Future<void> _pickFile(int? index) async {
-    setState(() {
-      _isLoading = true;
-    });
 
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.any,
-        allowMultiple: false,
-      );
-
-      if (result != null) {
-        final file = File(result.files.single.path!);
-        final fileName = result.files.single.name;
-
-        setState(() {
-          if (index != null) {
-            _orders[index] = _orders[index].copyWith(
-              fileName: fileName,
-              filePath: file.path,
-              addedBy: 'Текущий пользователь',
-              addedDate: _formatDate(DateTime.now()),
-            );
-          } else {
-            _orders.add(Document(
-              description: 'Новый документ',
-              fileName: fileName,
-              addedBy: 'Текущий пользователь',
-              addedDate: _formatDate(DateTime.now()),
-              readStatus: '',
-              filePath: file.path,
-            ));
-          }
-        });
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Файл "$fileName" успешно ${index != null ? 'обновлен' : 'добавлен'}'),
-            backgroundColor: Colors.green,
-            duration: const Duration(seconds: 2),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Ошибка: ${e.toString()}'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 3),
-        ),
-      );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  void _removeItem(int index) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Подтверждение удаления'),
-          content: const Text('Вы уверены, что хотите удалить этот элемент?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Отмена'),
-            ),
-            TextButton(
-              onPressed: () {
-                setState(() {
-                  _orders.removeAt(index);
-                });
-                Navigator.of(context).pop();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Элемент удален'),
-                    backgroundColor: Colors.blue,
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              },
-              child: const Text('Удалить', style: TextStyle(color: Colors.red)),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _downloadFile(int index) async {
-    final filePath = _orders[index].filePath;
-    if (filePath.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Нет файла для скачивания'),
-          backgroundColor: Colors.orange,
-          duration: Duration(seconds: 2),
-        ),
-      );
-      return;
-    }
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    try {
-      final file = File(filePath);
-      if (await file.exists()) {
-        String? directory = await FilePicker.platform.getDirectoryPath();
-
-        if (directory != null) {
-          final fileName = file.uri.pathSegments.last;
-          final downloadPath = '$directory/$fileName';
-          await file.copy(downloadPath);
-
-          // Обновляем статус на "Прочитано" с текущей датой
-          setState(() {
-            _orders[index] = _orders[index].copyWith(
-              readStatus: _formatDate(DateTime.now()),
-            );
-          });
-
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Файл сохранен в: $downloadPath'),
-              backgroundColor: Colors.green,
-              duration: const Duration(seconds: 3),
-            ),
-          );
-        }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Файл не найден: $filePath'),
-            backgroundColor: Colors.red,
-            duration: const Duration(seconds: 3),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Ошибка: ${e.toString()}'),
-          backgroundColor: Colors.red,
-          duration: const Duration(seconds: 3),
-        ),
-      );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-
-  void _toggleSort(String field) {
-    setState(() {
-      _isAscending = _sortField == field ? !_isAscending : true;
-      _sortField = field;
-
-      _orders.sort((a, b) {
-        final valueA = a.toMap()[field] ?? '';
-        final valueB = b.toMap()[field] ?? '';
-        return _isAscending ? valueA.compareTo(valueB) : valueB.compareTo(valueA);
-      });
-    });
-  }
-
-  Widget _buildEditableCell(dynamic value, int index, String field) {
-    String displayValue;
-    
-    if (value is bool) {
-      displayValue = value ? 'Да' : 'Нет';
-    } else {
-      displayValue = (value?.toString() ?? '').isEmpty ? '---' : value.toString();
-    }
-    
-    return InkWell(
-      onTap: () => _showEditDialog(index, field, value),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(4),
-        ),
-        child: Text(
-          displayValue,
-          style: TextStyle(
-            color: displayValue == '---' ? Colors.grey : Colors.black87,
-          ),
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-    );
-  }
-
-  void _showEditDialog(int index, String field, String initialValue) {
-    final TextEditingController controller = TextEditingController(text: initialValue);
-    final FocusNode focusNode = FocusNode();
-    
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      focusNode.requestFocus();
-    });
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Редактировать $field'),
-          content: TextField(
-            controller: controller,
-            focusNode: focusNode,
-            decoration: InputDecoration(
-              labelText: field,
-              border: const OutlineInputBorder(),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            ),
-            maxLines: field == 'Описание' ? 3 : 1,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Отмена'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                final updatedOrder = _orders[index].copyWithField(field, controller.text);
-                setState(() {
-                  _orders[index] = updatedOrder;
-                });
-                Navigator.of(context).pop();
-              },
-              child: const Text('Сохранить'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _buildSortableColumnHeader(String fieldName) {
-    return GestureDetector(
-      onTap: () => _toggleSort(fieldName),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Expanded(
-              child: Text(
-                fieldName,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(width: 4),
-            if (_sortField == fieldName)
-              Icon(
-                _isAscending ? Icons.arrow_upward : Icons.arrow_downward,
-                size: 16,
-                color: Colors.blue,
-              ),
-          ],
-        ),
-      ),
-    );
-  }
 
   void _exportToCsv() async {
     try {
@@ -639,153 +404,33 @@ class _PricesState extends State<Prices> {
         ),
       );
     }
+
+    final List<Map<String, dynamic>> ordersData = filteredOrders.map((order) => order.toMap()).toList();
     
-    return Scrollbar(
-      controller: _verticalScrollController,
-      thumbVisibility: true,
-      child: SingleChildScrollView(
-        controller: _horizontalScrollController,
-        child: Container(
-          width: double.infinity,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              // Вычисляем ширину для каждой колонки
-              final totalWidth = constraints.maxWidth;
-              final actionWidth = 250.0;
-              final remainingWidth = totalWidth - actionWidth;
-              
-              final descriptionWidth = remainingWidth * 0.35;
-              final fileNameWidth = remainingWidth * 0.25;
-              final addedByWidth = remainingWidth * 0.2;
-              final dateWidth = remainingWidth * 0.1;
-              final statusWidth = remainingWidth * 0.1;
-              
-              return DataTable(
-                decoration: BoxDecoration(color: Colors.white),
-                headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-                dataRowMinHeight: 60,
-                dataRowMaxHeight: 80,
-                columnSpacing: 20,
-                horizontalMargin: 16,
-                dividerThickness: 1,
-                showCheckboxColumn: false,
-                columns: [
-                  DataColumn(
-                    label: Container(
-                      width: descriptionWidth,
-                      child: _buildSortableColumnHeader('Описание'),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Container(
-                      width: fileNameWidth,
-                      child: _buildSortableColumnHeader('Имя файла'),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Container(
-                      width: addedByWidth,
-                      child: _buildSortableColumnHeader('Кем добавлено'),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Container(
-                      width: dateWidth,
-                      child: _buildSortableColumnHeader('Дата добавления'),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Container(
-                      width: statusWidth,
-                      child: _buildSortableColumnHeader('Прочитан'),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Container(
-                      width: actionWidth,
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Действия', style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                  ),
-                ],
-                rows: filteredOrders.asMap().entries.map((entry) {
-                  final index = entry.key;
-                  final order = entry.value;
-                  return DataRow(
-                    color: MaterialStateProperty.resolveWith<Color?>(
-                      (Set<MaterialState> states) {
-                        if (index % 2 == 0) return Colors.grey[100];
-                        return null;
-                      },
-                    ),
-                    cells: [
-                      DataCell(
-                        Container(
-                          width: descriptionWidth,
-                          child: _buildEditableCell(order.description, index, 'Описание'),
-                        ),
-                      ),
-                      DataCell(
-                        Container(
-                          width: fileNameWidth,
-                          child: _buildEditableCell(order.fileName, index, 'Имя файла'),
-                        ),
-                      ),
-                      DataCell(
-                        Container(
-                          width: addedByWidth,
-                          child: Text(order.addedBy),
-                        ),
-                      ),
-                      DataCell(
-                        Container(
-                          width: dateWidth,
-                          child: Text(order.addedDate),
-                        ),
-                      ),
-                      DataCell(
-                        Container(
-                          width: statusWidth,
-                          child: Text(order.readStatus),
-                        ),
-                      ),
-                      DataCell(
-                        Container(
-                          width: actionWidth,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (order.filePath.isEmpty)
-                                IconButton(
-                                  icon: const Icon(Icons.upload, color: Colors.blue),
-                                  onPressed: () => _pickFile(index),
-                                  tooltip: 'Загрузить файл',
-                                )
-                              else
-                                IconButton(
-                                  icon: const Icon(Icons.download, color: Colors.green),
-                                  onPressed: () => _downloadFile(index),
-                                  tooltip: 'Скачать файл',
-                                ),
-                              IconButton(
-                                icon: const Icon(Icons.delete, color: Colors.red),
-                                onPressed: () => _removeItem(index),
-                                tooltip: 'Удалить',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                }).toList(),
-              );
-            },
-          ),
-        ),
-      ),
+    return UniversalResponsiveTable(
+      data: ordersData,
+      columns: ['Описание', 'Имя файла', 'Кем добавлено', 'Дата добавления', 'Прочитан'],
+      columnKeys: ['Описание', 'Имя файла', 'Кем добавлено', 'Дата добавления', 'Прочитан'],
+      onEdit: (index, field, value) {
+        final order = filteredOrders[index];
+        final updatedOrder = order.copyWithField(field, value.toString());
+        setState(() {
+          _orders[_orders.indexOf(order)] = updatedOrder;
+        });
+      },
+      onDelete: (index) {
+        setState(() {
+          _orders.removeAt(index);
+        });
+      },
+      onAdd: () {
+        _createNewOrder();
+      },
+      primaryColor: Theme.of(context).colorScheme.primary,
+      showFileUpload: true,
+      columnTypes: {
+        'Дата добавления': 'date',
+      },
     );
   }
 }

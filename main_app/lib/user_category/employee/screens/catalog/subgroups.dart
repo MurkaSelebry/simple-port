@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import '../common/universal_responsive_table.dart';
 
 // Обновленная модель данных для каталога с полями, соответствующими скриншоту
 class Catalog {
@@ -109,25 +110,113 @@ class Catalog {
 // Начальные данные для примера
 final List<Catalog> initialCatalogs = [
   Catalog(
-    externalCode: 'EXT001',
-    group: 'Мебель',
-    name: 'Каталог №1',
-    addedBy: 'Иванов А.П.',
-    addedDate: '12.03.2025, 08:16',
-    modifiedBy: 'Петров И.С.',
-    modifiedDate: '14.03.2025, 10:23',
-    description: 'Фасад для кухни',
+    externalCode: 'SG001',
+    group: 'Кухонная мебель',
+    name: 'Кухня "Модерн" 2.5м',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-10',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-15',
+    description: 'Современный кухонный гарнитур 2.5 метра',
     filePath: '',
   ),
   Catalog(
-    externalCode: 'EXT002',
-    group: 'Интерьер',
-    name: 'Каталог №2',
-    addedBy: 'Смирнова Е.В.',
-    addedDate: '15.03.2025, 12:49',
-    modifiedBy: 'Смирнова Е.В.',
-    modifiedDate: '15.03.2025, 14:30',
-    description: 'Шкаф-купе для спальни',
+    externalCode: 'SG002',
+    group: 'Кухонная мебель',
+    name: 'Кухня "Классика" 3.0м',
+    addedBy: 'dmitry.kozlov',
+    addedDate: '2024-01-11',
+    modifiedBy: 'dmitry.kozlov',
+    modifiedDate: '2024-01-16',
+    description: 'Классический кухонный гарнитур 3 метра',
+    filePath: '',
+  ),
+  Catalog(
+    externalCode: 'SG003',
+    group: 'Кухонная мебель',
+    name: 'Кухня "Прованс" 2.8м',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-12',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-17',
+    description: 'Кухня в стиле прованс 2.8 метра',
+    filePath: '',
+  ),
+  Catalog(
+    externalCode: 'SG004',
+    group: 'Кухонная мебель',
+    name: 'Кухня "Лофт" 3.2м',
+    addedBy: 'alex.kuznetsov',
+    addedDate: '2024-01-13',
+    modifiedBy: 'alex.kuznetsov',
+    modifiedDate: '2024-01-18',
+    description: 'Кухня в стиле лофт 3.2 метра',
+    filePath: '',
+  ),
+  Catalog(
+    externalCode: 'SG005',
+    group: 'Кухонная мебель',
+    name: 'Кухня "Минимализм" 2.0м',
+    addedBy: 'anna.morozova',
+    addedDate: '2024-01-14',
+    modifiedBy: 'anna.morozova',
+    modifiedDate: '2024-01-19',
+    description: 'Минималистичная кухня 2 метра',
+    filePath: '',
+  ),
+  Catalog(
+    externalCode: 'SG006',
+    group: 'Кухонная мебель',
+    name: 'Кухня "Скандинавия" 2.7м',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-15',
+    modifiedBy: 'ivan.petrov',
+    modifiedDate: '2024-01-20',
+    description: 'Кухня в скандинавском стиле 2.7 метра',
+    filePath: '',
+  ),
+  Catalog(
+    externalCode: 'SG007',
+    group: 'Кухонная мебель',
+    name: 'Кухня "Хай-тек" 3.5м',
+    addedBy: 'dmitry.kozlov',
+    addedDate: '2024-01-16',
+    modifiedBy: 'dmitry.kozlov',
+    modifiedDate: '2024-01-21',
+    description: 'Кухня в стиле хай-тек 3.5 метра',
+    filePath: '',
+  ),
+  Catalog(
+    externalCode: 'SG008',
+    group: 'Кухонная мебель',
+    name: 'Кухня "Кантри" 2.3м',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-17',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-22',
+    description: 'Кухня в деревенском стиле 2.3 метра',
+    filePath: '',
+  ),
+  Catalog(
+    externalCode: 'SG009',
+    group: 'Кухонная мебель',
+    name: 'Кухня "Арт-деко" 2.8м',
+    addedBy: 'alex.kuznetsov',
+    addedDate: '2024-01-18',
+    modifiedBy: 'alex.kuznetsov',
+    modifiedDate: '2024-01-23',
+    description: 'Кухня в стиле арт-деко 2.8 метра',
+    filePath: '',
+  ),
+  Catalog(
+    externalCode: 'SG010',
+    group: 'Кухонная мебель',
+    name: 'Кухня "Неоклассика" 3.0м',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-19',
+    modifiedBy: 'ivan.petrov',
+    modifiedDate: '2024-01-24',
+    description: 'Кухня в неоклассическом стиле 3 метра',
     filePath: '',
   ),
 ];
@@ -695,101 +784,34 @@ Widget _buildDataTableView() {
       ),
     );
   }
+
+  final List<Map<String, dynamic>> catalogsData = filteredCatalogs.map((catalog) => catalog.toMap()).toList();
   
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      return Scrollbar(
-        controller: _verticalScrollController,
-        thumbVisibility: true,
-        child: SingleChildScrollView(
-          controller: _verticalScrollController,
-          child: Scrollbar(
-            controller: _horizontalScrollController,
-            thumbVisibility: true,
-            notificationPredicate: (notification) => notification.depth == 1,
-            child: SingleChildScrollView(
-              controller: _horizontalScrollController,
-              scrollDirection: Axis.horizontal,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minWidth: constraints.maxWidth, // Растягиваем на всю доступную ширину
-                ),
-                child: DataTable(
-                  decoration: BoxDecoration(color: Colors.white),
-                  headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-                  dataRowMinHeight: 60,
-                  dataRowMaxHeight: 80,
-                  columnSpacing: 20, 
-                  horizontalMargin: 16,
-                  dividerThickness: 1,
-                  showCheckboxColumn: false,
-                  columns: [
-                    DataColumn(label: _buildSortableColumnHeader('Внешний код')),
-                    DataColumn(label: _buildSortableColumnHeader('Группа')),
-                    DataColumn(label: _buildSortableColumnHeader('Название')),
-                    DataColumn(label: _buildSortableColumnHeader('Добавил')),
-                    DataColumn(label: _buildSortableColumnHeader('Дата')),
-                    DataColumn(label: _buildSortableColumnHeader('Изменил')),
-                    DataColumn(label: _buildSortableColumnHeader('Изменено')),
-                    const DataColumn(
-                      label: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Действия', style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                  ],
-                  rows: filteredCatalogs.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final catalog = entry.value;
-                    return DataRow(
-                      color: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                          if (index % 2 == 0) return Colors.grey[100];
-                          return null;
-                        },
-                      ),
-                      cells: [
-                        DataCell(_buildEditableCell(catalog.externalCode, index, 'Внешний код')),
-                        DataCell(_buildEditableCell(catalog.group, index, 'Группа')),
-                        DataCell(_buildEditableCell(catalog.name, index, 'Название')),
-                        DataCell(Text(catalog.addedBy)),
-                        DataCell(Text(catalog.addedDate)),
-                        DataCell(Text(catalog.modifiedBy)),
-                        DataCell(Text(catalog.modifiedDate)),
-                        DataCell(
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (catalog.filePath.isEmpty)
-                                IconButton(
-                                  icon: const Icon(Icons.upload, color: Colors.blue),
-                                  onPressed: () => _pickFile(index),
-                                  tooltip: 'Загрузить файл',
-                                )
-                              else
-                                IconButton(
-                                  icon: const Icon(Icons.download, color: Colors.green),
-                                  onPressed: () => _downloadFile(catalog.filePath),
-                                  tooltip: 'Скачать файл',
-                                ),
-                              IconButton(
-                                icon: const Icon(Icons.delete, color: Colors.red),
-                                onPressed: () => _removeItem(index),
-                                tooltip: 'Удалить',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
+  return UniversalResponsiveTable(
+    data: catalogsData,
+    columns: ['Внешний код', 'Группа', 'Название', 'Добавил', 'Дата', 'Изменил', 'Изменено'],
+    columnKeys: ['Внешний код', 'Группа', 'Название', 'Добавил', 'Дата', 'Изменил', 'Изменено'],
+    onEdit: (index, field, value) {
+      final catalog = filteredCatalogs[index];
+      final updatedCatalog = catalog.copyWithField(field, value.toString());
+      setState(() {
+        _catalogs[_catalogs.indexOf(catalog)] = updatedCatalog;
+      });
+    },
+    onDelete: (index) {
+      setState(() {
+        _catalogs.removeAt(index);
+      });
+    },
+    onAdd: () {
+      _createNewCatalog();
+    },
+    primaryColor: Theme.of(context).colorScheme.primary,
+    showFileUpload: true,
+    columnTypes: {
+      'Дата': 'date',
+      'Изменено': 'date',
     },
   );
-}
+  }
 }

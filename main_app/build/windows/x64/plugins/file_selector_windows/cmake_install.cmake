@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/User/Desktop/diplom/diplom/windows/flutter/ephemeral/.plugin_symlinks/file_selector_windows/windows
+# Install script for directory: C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/flutter/ephemeral/.plugin_symlinks/file_selector_windows/windows
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

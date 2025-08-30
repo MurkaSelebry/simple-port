@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import '../common/universal_responsive_table.dart';
 
 class Status {
   String priority;
@@ -119,26 +120,91 @@ final List<String> availableRoles = [
 final List<Status> initialUsers = [
   Status(
     priority: '1',
-    name: 'Возвратная упаковка создана',
-    color: '#e3d3fw3',
-    type: 'Возвратная упаковка',
+    name: 'Новый',
+    color: '#4CAF50',
+    type: 'Заказ',
     byDefault: true,
     included: true,
     roles: 2,
     transitions: 4,
     notify: true,
   ),
-
   Status(
     priority: '2',
-    name: 'Ожидание материалов',
-    color: '#g3dfg3f',
-    type: 'Склад Комплектации',
-    byDefault: true,
+    name: 'В обработке',
+    color: '#2196F3',
+    type: 'Заказ',
+    byDefault: false,
+    included: true,
+    roles: 3,
+    transitions: 3,
+    notify: true,
+  ),
+  Status(
+    priority: '3',
+    name: 'Готов к отгрузке',
+    color: '#FF9800',
+    type: 'Заказ',
+    byDefault: false,
     included: true,
     roles: 2,
-    transitions: 4,
+    transitions: 2,
     notify: true,
+  ),
+  Status(
+    priority: '4',
+    name: 'Отправлен',
+    color: '#9C27B0',
+    type: 'Заказ',
+    byDefault: false,
+    included: true,
+    roles: 2,
+    transitions: 1,
+    notify: true,
+  ),
+  Status(
+    priority: '5',
+    name: 'Доставлен',
+    color: '#4CAF50',
+    type: 'Заказ',
+    byDefault: false,
+    included: true,
+    roles: 1,
+    transitions: 0,
+    notify: false,
+  ),
+  Status(
+    priority: '6',
+    name: 'Отменен',
+    color: '#F44336',
+    type: 'Заказ',
+    byDefault: false,
+    included: false,
+    roles: 2,
+    transitions: 0,
+    notify: true,
+  ),
+  Status(
+    priority: '7',
+    name: 'Возврат',
+    color: '#FF5722',
+    type: 'Заказ',
+    byDefault: false,
+    included: true,
+    roles: 2,
+    transitions: 1,
+    notify: true,
+  ),
+  Status(
+    priority: '8',
+    name: 'В ожидании',
+    color: '#607D8B',
+    type: 'Заказ',
+    byDefault: false,
+    included: true,
+    roles: 1,
+    transitions: 2,
+    notify: false,
   ),
 ];
 
@@ -676,7 +742,7 @@ class _StatusesState extends State<Statuses> {
     }).toList();
   }
 
- Widget _buildDataTableView() {
+  Widget _buildDataTableView() {
     final filteredStatuses = _getFilteredUsers();
     
     if (filteredStatuses.isEmpty) {
@@ -687,116 +753,39 @@ class _StatusesState extends State<Statuses> {
         ),
       );
     }
-    
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      final availableWidth = constraints.maxWidth;
-      
-    return Scrollbar(
-      controller: _verticalScrollController,
-      thumbVisibility: true,
-      child: SingleChildScrollView(
-        controller: _horizontalScrollController,
-        child: Container(
-          width: double.infinity,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              // Вычисляем ширину для каждой колонки
-              final totalWidth = constraints.maxWidth;
-              final actionWidth = 350.0;
-              final remainingWidth = totalWidth - actionWidth;
-              
-              final descriptionWidth = remainingWidth * 0.35;
-              final fileNameWidth = remainingWidth * 0.25;
-              final addedByWidth = remainingWidth * 0.2;
-              final dateWidth = remainingWidth * 0.1;
-              final statusWidth = remainingWidth * 0.1;
 
-            return DataTable(
-              decoration: BoxDecoration(color: Colors.white),
-              headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-              dataRowMinHeight: 60,
-              dataRowMaxHeight: 80,
-              columnSpacing: 20, 
-              horizontalMargin: 16,
-              dividerThickness: 1,
-              showCheckboxColumn: false,
-              columns: [
-                DataColumn(
-                  label: _buildSortableColumnHeader('Очередность'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Название'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Цвет'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Тип'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('По умолчанию'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Включен'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Ролей'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Переходов'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Уведомлять'),
-                ),
-                const DataColumn(
-                  label: Text('Действия'),
-                ),
-              ],
-              rows: List<DataRow>.generate(
-                filteredStatuses.length,
-                (index) {
-                  final status = filteredStatuses[index];
-                  return DataRow(
-                    cells: [
-                      DataCell(_buildEditableCell(status.priority, index, 'Очередность')),
-                      DataCell(_buildEditableCell(status.name, index, 'Название')),
-                      DataCell(_buildEditableCell(status.color, index, 'Цвет')),
-                      DataCell(_buildEditableCell(status.type, index, 'Тип')),
-                      DataCell(_buildEditableCell(status.byDefault, index, 'По умолчанию')),
-                      DataCell(_buildEditableCell(status.included, index, 'Включен')),
-                      DataCell(_buildEditableCell(status.roles, index, 'Ролей')),
-                      DataCell(_buildEditableCell(status.transitions, index, 'Переходов')),
-                      DataCell(_buildEditableCell(status.notify, index, 'Уведомлять')),
-                      DataCell(
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit, color: Colors.blue),
-                              tooltip: 'Редактировать',
-                              onPressed: () => _showEditStatusDialog(index),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.red),
-                              tooltip: 'Удалить',
-                              onPressed: () => _removeUser(index),
-                              ),
-                            ],
-                          ),
-                        ),
-                    ]
-                      );
-                }).toList(),
-              );
-            }
-            ),
-          ),
-        ),
-      );
-    },
-  );
-}
+    final List<Map<String, dynamic>> statusesData = filteredStatuses.map((status) => status.toMap()).toList();
+    
+    return UniversalResponsiveTable(
+      data: statusesData,
+      columns: ['Очередность', 'Название', 'Цвет', 'Тип', 'По умолчанию', 'Включен', 'Ролей', 'Переходов', 'Уведомлять'],
+      columnKeys: ['Очередность', 'Название', 'Цвет', 'Тип', 'По умолчанию', 'Включен', 'Ролей', 'Переходов', 'Уведомлять'],
+      onEdit: (index, field, value) {
+        final status = filteredStatuses[index];
+        final updatedStatus = status.copyWithField(field, value);
+        setState(() {
+          _statuses[_statuses.indexOf(status)] = updatedStatus;
+        });
+      },
+      onDelete: (index) {
+        setState(() {
+          _statuses.removeAt(index);
+        });
+      },
+      onAdd: () {
+        _createNewStatus();
+      },
+      primaryColor: Theme.of(context).colorScheme.primary,
+      showFileUpload: true,
+      columnTypes: {
+        'По умолчанию': 'status',
+        'Включен': 'status',
+        'Уведомлять': 'status',
+        'Ролей': 'number',
+        'Переходов': 'number',
+      },
+    );
+  }
 
   void _showEditStatusDialog(int index) {
     final status = _statuses[index];

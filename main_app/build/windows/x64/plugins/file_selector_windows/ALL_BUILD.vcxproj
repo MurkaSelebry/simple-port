@@ -21,7 +21,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E66B7620-C882-398D-A6AA-C3E6FB407AD1}</ProjectGuid>
+    <ProjectGuid>{7321885B-319D-3FC3-BC0A-867F69EEF4C6}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
@@ -88,11 +88,11 @@
     </Midl>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\User\Desktop\diplom\diplom\windows\flutter\ephemeral\.plugin_symlinks\file_selector_windows\windows\CMakeLists.txt">
+    <CustomBuild Include="C:\Users\User\Desktop\diplom\diplom_last\simple-port\main_app\windows\flutter\ephemeral\.plugin_symlinks\file_selector_windows\windows\CMakeLists.txt">
       <UseUtf8Encoding>Always</UseUtf8Encoding>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/User/Desktop/diplom/diplom/windows/flutter/ephemeral/.plugin_symlinks/file_selector_windows/windows/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/flutter/ephemeral/.plugin_symlinks/file_selector_windows/windows/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/User/Desktop/diplom/diplom/windows -BC:/Users/User/Desktop/diplom/diplom/build/windows/x64 --check-stamp-file C:/Users/User/Desktop/diplom/diplom/build/windows/x64/plugins/file_selector_windows/CMakeFiles/generate.stamp
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows -BC:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64 --check-stamp-file C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/plugins/file_selector_windows/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -101,11 +101,11 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\User\Desktop\diplom\diplom\build\windows\x64\plugins\file_selector_windows\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\User\Desktop\diplom\diplom_last\simple-port\main_app\build\windows\x64\plugins\file_selector_windows\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Building Custom Rule C:/Users/User/Desktop/diplom/diplom/windows/flutter/ephemeral/.plugin_symlinks/file_selector_windows/windows/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Building Custom Rule C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/flutter/ephemeral/.plugin_symlinks/file_selector_windows/windows/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">setlocal
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/User/Desktop/diplom/diplom/windows -BC:/Users/User/Desktop/diplom/diplom/build/windows/x64 --check-stamp-file C:/Users/User/Desktop/diplom/diplom/build/windows/x64/plugins/file_selector_windows/CMakeFiles/generate.stamp
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows -BC:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64 --check-stamp-file C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/plugins/file_selector_windows/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -114,11 +114,11 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">C:\Users\User\Desktop\diplom\diplom\build\windows\x64\plugins\file_selector_windows\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">C:\Users\User\Desktop\diplom\diplom_last\simple-port\main_app\build\windows\x64\plugins\file_selector_windows\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/User/Desktop/diplom/diplom/windows/flutter/ephemeral/.plugin_symlinks/file_selector_windows/windows/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/flutter/ephemeral/.plugin_symlinks/file_selector_windows/windows/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/User/Desktop/diplom/diplom/windows -BC:/Users/User/Desktop/diplom/diplom/build/windows/x64 --check-stamp-file C:/Users/User/Desktop/diplom/diplom/build/windows/x64/plugins/file_selector_windows/CMakeFiles/generate.stamp
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows -BC:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64 --check-stamp-file C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/plugins/file_selector_windows/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -127,21 +127,21 @@ exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\User\Desktop\diplom\diplom\build\windows\x64\plugins\file_selector_windows\CMakeFiles\generate.stamp</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\User\Desktop\diplom\diplom_last\simple-port\main_app\build\windows\x64\plugins\file_selector_windows\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\User\Desktop\diplom\diplom\build\windows\x64\ZERO_CHECK.vcxproj">
-      <Project>{BF0187CB-C74C-3BA8-ADF4-34BB28E419A8}</Project>
+    <ProjectReference Include="C:\Users\User\Desktop\diplom\diplom_last\simple-port\main_app\build\windows\x64\ZERO_CHECK.vcxproj">
+      <Project>{9FC2810A-51B6-3867-9AB8-D591A7471EB2}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </ProjectReference>
-    <ProjectReference Include="C:\Users\User\Desktop\diplom\diplom\build\windows\x64\plugins\file_selector_windows\file_selector_windows_plugin.vcxproj">
-      <Project>{C99FB94A-FF73-3F59-8127-E26DC0CF7883}</Project>
+    <ProjectReference Include="C:\Users\User\Desktop\diplom\diplom_last\simple-port\main_app\build\windows\x64\plugins\file_selector_windows\file_selector_windows_plugin.vcxproj">
+      <Project>{0B691B27-5903-36DC-9DA0-2487932CAE86}</Project>
       <Name>file_selector_windows_plugin</Name>
     </ProjectReference>
   </ItemGroup>

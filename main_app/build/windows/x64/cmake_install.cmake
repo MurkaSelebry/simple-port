@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/User/Desktop/diplom/diplom/windows
+# Install script for directory: C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,165 +34,165 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/User/Desktop/diplom/diplom/build/windows/x64/flutter/cmake_install.cmake")
+  include("C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/flutter/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/cmake_install.cmake")
+  include("C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/User/Desktop/diplom/diplom/build/windows/x64/plugins/file_selector_windows/cmake_install.cmake")
+  include("C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/plugins/file_selector_windows/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/User/Desktop/diplom/diplom/build/windows/x64/plugins/permission_handler_windows/cmake_install.cmake")
+  include("C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/plugins/permission_handler_windows/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug/diplom.exe")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug/diplom.exe")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug" TYPE EXECUTABLE FILES "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug/diplom.exe")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug" TYPE EXECUTABLE FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug/diplom.exe")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/diplom.exe")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/diplom.exe")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile" TYPE EXECUTABLE FILES "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/diplom.exe")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile" TYPE EXECUTABLE FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/diplom.exe")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/diplom.exe")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/diplom.exe")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release" TYPE EXECUTABLE FILES "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/diplom.exe")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release" TYPE EXECUTABLE FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/diplom.exe")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug/data/icudtl.dat")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug/data/icudtl.dat")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug/data" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom/windows/flutter/ephemeral/icudtl.dat")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug/data" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/flutter/ephemeral/icudtl.dat")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/data/icudtl.dat")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/data/icudtl.dat")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/data" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom/windows/flutter/ephemeral/icudtl.dat")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/data" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/flutter/ephemeral/icudtl.dat")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/data/icudtl.dat")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/data/icudtl.dat")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/data" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom/windows/flutter/ephemeral/icudtl.dat")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/data" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/flutter/ephemeral/icudtl.dat")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug/flutter_windows.dll")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug/flutter_windows.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom/windows/flutter/ephemeral/flutter_windows.dll")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/flutter/ephemeral/flutter_windows.dll")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/flutter_windows.dll")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/flutter_windows.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom/windows/flutter/ephemeral/flutter_windows.dll")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/flutter/ephemeral/flutter_windows.dll")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/flutter_windows.dll")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/flutter_windows.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom/windows/flutter/ephemeral/flutter_windows.dll")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/windows/flutter/ephemeral/flutter_windows.dll")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug/file_selector_windows_plugin.dll;C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug/permission_handler_windows_plugin.dll")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug/file_selector_windows_plugin.dll;C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug/permission_handler_windows_plugin.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug" TYPE FILE FILES
-      "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/plugins/file_selector_windows/Debug/file_selector_windows_plugin.dll"
-      "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/plugins/permission_handler_windows/Debug/permission_handler_windows_plugin.dll"
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug" TYPE FILE FILES
+      "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/plugins/file_selector_windows/Debug/file_selector_windows_plugin.dll"
+      "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/plugins/permission_handler_windows/Debug/permission_handler_windows_plugin.dll"
       )
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/file_selector_windows_plugin.dll;C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/permission_handler_windows_plugin.dll")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/file_selector_windows_plugin.dll;C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/permission_handler_windows_plugin.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile" TYPE FILE FILES
-      "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/plugins/file_selector_windows/Profile/file_selector_windows_plugin.dll"
-      "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/plugins/permission_handler_windows/Profile/permission_handler_windows_plugin.dll"
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile" TYPE FILE FILES
+      "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/plugins/file_selector_windows/Profile/file_selector_windows_plugin.dll"
+      "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/plugins/permission_handler_windows/Profile/permission_handler_windows_plugin.dll"
       )
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/file_selector_windows_plugin.dll;C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/permission_handler_windows_plugin.dll")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/file_selector_windows_plugin.dll;C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/permission_handler_windows_plugin.dll")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release" TYPE FILE FILES
-      "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/plugins/file_selector_windows/Release/file_selector_windows_plugin.dll"
-      "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/plugins/permission_handler_windows/Release/permission_handler_windows_plugin.dll"
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release" TYPE FILE FILES
+      "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/plugins/file_selector_windows/Release/file_selector_windows_plugin.dll"
+      "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/plugins/permission_handler_windows/Release/permission_handler_windows_plugin.dll"
       )
   endif()
 endif()
@@ -200,49 +200,49 @@ endif()
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug/")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug/")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom/build/native_assets/windows/")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/native_assets/windows/")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom/build/native_assets/windows/")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/native_assets/windows/")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom/build/native_assets/windows/")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/native_assets/windows/")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     
-  file(REMOVE_RECURSE "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug/data/flutter_assets")
+  file(REMOVE_RECURSE "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug/data/flutter_assets")
   
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     
-  file(REMOVE_RECURSE "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/data/flutter_assets")
+  file(REMOVE_RECURSE "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/data/flutter_assets")
   
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     
-  file(REMOVE_RECURSE "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/data/flutter_assets")
+  file(REMOVE_RECURSE "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/data/flutter_assets")
   
   endif()
 endif()
@@ -250,58 +250,58 @@ endif()
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Dd][Ee][Bb][Uu][Gg])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug/data/flutter_assets")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug/data/flutter_assets")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Debug/data" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom/build//flutter_assets")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Debug/data" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build//flutter_assets")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/data/flutter_assets")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/data/flutter_assets")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/data" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom/build//flutter_assets")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/data" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build//flutter_assets")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/data/flutter_assets")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/data/flutter_assets")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/data" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom/build//flutter_assets")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/data" TYPE DIRECTORY FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build//flutter_assets")
   endif()
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Runtime" OR NOT CMAKE_INSTALL_COMPONENT)
   if(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Pp][Rr][Oo][Ff][Ii][Ll][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/data/app.so")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/data/app.so")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Profile/data" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom/build/windows/app.so")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Profile/data" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/app.so")
   elseif(CMAKE_INSTALL_CONFIG_NAME MATCHES "^([Rr][Ee][Ll][Ee][Aa][Ss][Ee])$")
     list(APPEND CMAKE_ABSOLUTE_DESTINATION_FILES
-     "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/data/app.so")
+     "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/data/app.so")
     if(CMAKE_WARN_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(WARNING "ABSOLUTE path INSTALL DESTINATION : ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
     if(CMAKE_ERROR_ON_ABSOLUTE_INSTALL_DESTINATION)
       message(FATAL_ERROR "ABSOLUTE path INSTALL DESTINATION forbidden (by caller): ${CMAKE_ABSOLUTE_DESTINATION_FILES}")
     endif()
-    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/runner/Release/data" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom/build/windows/app.so")
+    file(INSTALL DESTINATION "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/runner/Release/data" TYPE FILE FILES "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/app.so")
   endif()
 endif()
 
@@ -313,5 +313,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/User/Desktop/diplom/diplom/build/windows/x64/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/User/Desktop/diplom/diplom_last/simple-port/main_app/build/windows/x64/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

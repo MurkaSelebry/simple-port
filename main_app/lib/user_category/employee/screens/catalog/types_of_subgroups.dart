@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import '../common/universal_responsive_table.dart';
 
 // Обновленная модель данных для каталога с полями, соответствующими скриншоту
 class Catalog {
@@ -109,25 +110,113 @@ class Catalog {
 // Начальные данные для примера
 final List<Catalog> initialCatalogs = [
   Catalog(
-    group: 'EXT001',
-    subgroup: 'Мебель',
-    name: 'Каталог №1',
-    addedBy: 'Иванов А.П.',
-    addedDate: '12.03.2025, 08:16',
-    modifiedBy: 'Петров И.С.',
-    modifiedDate: '14.03.2025, 10:23',
-    description: 'Фасад для кухни',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    name: 'Современные',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-10',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-15',
+    description: 'Современные стили кухонной мебели',
     filePath: '',
   ),
   Catalog(
-    group: 'EXT002',
-    subgroup: 'Интерьер',
-    name: 'Каталог №2',
-    addedBy: 'Смирнова Е.В.',
-    addedDate: '15.03.2025, 12:49',
-    modifiedBy: 'Смирнова Е.В.',
-    modifiedDate: '15.03.2025, 14:30',
-    description: 'Шкаф-купе для спальни',
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    name: 'Классические',
+    addedBy: 'dmitry.kozlov',
+    addedDate: '2024-01-11',
+    modifiedBy: 'dmitry.kozlov',
+    modifiedDate: '2024-01-16',
+    description: 'Классические стили кухонной мебели',
+    filePath: '',
+  ),
+  Catalog(
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    name: 'Прованс',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-12',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-17',
+    description: 'Стиль прованс для кухонной мебели',
+    filePath: '',
+  ),
+  Catalog(
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    name: 'Лофт',
+    addedBy: 'alex.kuznetsov',
+    addedDate: '2024-01-13',
+    modifiedBy: 'alex.kuznetsov',
+    modifiedDate: '2024-01-18',
+    description: 'Стиль лофт для кухонной мебели',
+    filePath: '',
+  ),
+  Catalog(
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    name: 'Минимализм',
+    addedBy: 'anna.morozova',
+    addedDate: '2024-01-14',
+    modifiedBy: 'anna.morozova',
+    modifiedDate: '2024-01-19',
+    description: 'Минималистичные стили кухонной мебели',
+    filePath: '',
+  ),
+  Catalog(
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    name: 'Скандинавия',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-15',
+    modifiedBy: 'ivan.petrov',
+    modifiedDate: '2024-01-20',
+    description: 'Скандинавский стиль кухонной мебели',
+    filePath: '',
+  ),
+  Catalog(
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    name: 'Хай-тек',
+    addedBy: 'dmitry.kozlov',
+    addedDate: '2024-01-16',
+    modifiedBy: 'dmitry.kozlov',
+    modifiedDate: '2024-01-21',
+    description: 'Стиль хай-тек для кухонной мебели',
+    filePath: '',
+  ),
+  Catalog(
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    name: 'Кантри',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-17',
+    modifiedBy: 'maria.sidorova',
+    modifiedDate: '2024-01-22',
+    description: 'Деревенский стиль кухонной мебели',
+    filePath: '',
+  ),
+  Catalog(
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    name: 'Арт-деко',
+    addedBy: 'alex.kuznetsov',
+    addedDate: '2024-01-18',
+    modifiedBy: 'alex.kuznetsov',
+    modifiedDate: '2024-01-23',
+    description: 'Стиль арт-деко для кухонной мебели',
+    filePath: '',
+  ),
+  Catalog(
+    group: 'Кухонная мебель',
+    subgroup: 'Кухонные гарнитуры',
+    name: 'Неоклассика',
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-19',
+    modifiedBy: 'ivan.petrov',
+    modifiedDate: '2024-01-24',
+    description: 'Неоклассический стиль кухонной мебели',
     filePath: '',
   ),
 ];
@@ -695,100 +784,33 @@ class _TypesOfSubgroupsState extends State<TypesOfSubgroups> {
       ),
     );
   }
+
+  final List<Map<String, dynamic>> catalogsData = filteredCatalogs.map((catalog) => catalog.toMap()).toList();
   
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      return Scrollbar(
-        controller: _verticalScrollController,
-        thumbVisibility: true,
-        child: SingleChildScrollView(
-          controller: _verticalScrollController,
-          child: Scrollbar(
-            controller: _horizontalScrollController,
-            thumbVisibility: true,
-            notificationPredicate: (notification) => notification.depth == 1,
-            child: SingleChildScrollView(
-              controller: _horizontalScrollController,
-              scrollDirection: Axis.horizontal,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minWidth: constraints.maxWidth, // Растягиваем на всю ширину
-                ),
-                child: DataTable(
-                  decoration: BoxDecoration(color: Colors.white),
-                  headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-                  dataRowMinHeight: 60,
-                  dataRowMaxHeight: 80,
-                  columnSpacing: 20, 
-                  horizontalMargin: 16,
-                  dividerThickness: 1,
-                  showCheckboxColumn: false,
-                  columns: [
-                    DataColumn(label: _buildSortableColumnHeader('Группа')),
-                    DataColumn(label: _buildSortableColumnHeader('Подгруппа')),
-                    DataColumn(label: _buildSortableColumnHeader('Название')),
-                    DataColumn(label: _buildSortableColumnHeader('Добавил')),
-                    DataColumn(label: _buildSortableColumnHeader('Дата')),
-                    DataColumn(label: _buildSortableColumnHeader('Изменил')),
-                    DataColumn(label: _buildSortableColumnHeader('Изменено')),
-                    const DataColumn(
-                      label: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('Действия', style: TextStyle(fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                  ],
-                  rows: filteredCatalogs.asMap().entries.map((entry) {
-                    final index = entry.key;
-                    final catalog = entry.value;
-                    return DataRow(
-                      color: MaterialStateProperty.resolveWith<Color?>(
-                        (Set<MaterialState> states) {
-                          if (index % 2 == 0) return Colors.grey[100];
-                          return null;
-                        },
-                      ),
-                      cells: [
-                        DataCell(_buildEditableCell(catalog.group, index, 'Группа')),
-                        DataCell(_buildEditableCell(catalog.subgroup, index, 'Подгруппа')),
-                        DataCell(_buildEditableCell(catalog.name, index, 'Название')),
-                        DataCell(Text(catalog.addedBy)),
-                        DataCell(Text(catalog.addedDate)),
-                        DataCell(Text(catalog.modifiedBy)),
-                        DataCell(Text(catalog.modifiedDate)),
-                        DataCell(
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              if (catalog.filePath.isEmpty)
-                                IconButton(
-                                  icon: const Icon(Icons.upload, color: Colors.blue),
-                                  onPressed: () => _pickFile(index),
-                                  tooltip: 'Загрузить файл',
-                                )
-                              else
-                                IconButton(
-                                  icon: const Icon(Icons.download, color: Colors.green),
-                                  onPressed: () => _downloadFile(catalog.filePath),
-                                  tooltip: 'Скачать файл',
-                                ),
-                              IconButton(
-                                icon: const Icon(Icons.delete, color: Colors.red),
-                                onPressed: () => _removeItem(index),
-                                tooltip: 'Удалить',
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
+  return UniversalResponsiveTable(
+    data: catalogsData,
+    columns: ['Внешний код', 'Группа', 'Подгруппа', 'Название', 'Добавил', 'Дата', 'Изменил', 'Изменено'],
+    columnKeys: ['Внешний код', 'Группа', 'Подгруппа', 'Название', 'Добавил', 'Дата', 'Изменил', 'Изменено'],
+    onEdit: (index, field, value) {
+      final catalog = filteredCatalogs[index];
+      final updatedCatalog = catalog.copyWithField(field, value.toString());
+      setState(() {
+        _catalogs[_catalogs.indexOf(catalog)] = updatedCatalog;
+      });
+    },
+    onDelete: (index) {
+      setState(() {
+        _catalogs.removeAt(index);
+      });
+    },
+              onAdd: () {
+      _createNewCatalog();
+    },
+    primaryColor: Theme.of(context).colorScheme.primary,
+    showFileUpload: true,
+    columnTypes: {
+      'Дата': 'date',
+      'Изменено': 'date',
     },
   );
 }

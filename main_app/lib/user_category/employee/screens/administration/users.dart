@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'responsive_users_table.dart';
 
 // Обновленная модель данных для пользователей с множественными ролями
 class User {
@@ -108,31 +109,76 @@ final List<String> availableRoles = [
 // Начальные данные для примера
 final List<User> initialUsers = [
   User(
-    username: 'admin',
-    email: 'admin@example.com',
-    roles: ['Администратор', 'Супервизор'],
-    groupsCount: 3,
-    isActive: true,
-    addedBy: 'Система',
-    addedDate: '10.01.2025, 00:00',
-  ),
-  User(
-    username: 'manager',
-    email: 'manager@example.com',
-    roles: ['Менеджер', 'Оператор'],
+    username: 'ivan.petrov',
+    email: 'ivan.petrov@company.com',
+    roles: ['Менеджер', 'Администратор'],
     groupsCount: 2,
     isActive: true,
     addedBy: 'admin',
-    addedDate: '15.01.2025, 10:15',
+    addedDate: '2024-01-10',
   ),
   User(
-    username: 'user1',
-    email: 'user1@example.com',
-    roles: ['Пользователь'],
+    username: 'maria.sidorova',
+    email: 'maria.sidorova@company.com',
+    roles: ['Менеджер'],
+    groupsCount: 1,
+    isActive: true,
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-12',
+  ),
+  User(
+    username: 'alex.kuznetsov',
+    email: 'alex.kuznetsov@company.com',
+    roles: ['Аналитик', 'Менеджер'],
+    groupsCount: 2,
+    isActive: false,
+    addedBy: 'admin',
+    addedDate: '2024-01-08',
+  ),
+  User(
+    username: 'elena.volkova',
+    email: 'elena.volkova@company.com',
+    roles: ['Директор'],
+    groupsCount: 1,
+    isActive: true,
+    addedBy: 'admin',
+    addedDate: '2024-01-05',
+  ),
+  User(
+    username: 'dmitry.kozlov',
+    email: 'dmitry.kozlov@company.com',
+    roles: ['Разработчик'],
+    groupsCount: 1,
+    isActive: true,
+    addedBy: 'ivan.petrov',
+    addedDate: '2024-01-15',
+  ),
+  User(
+    username: 'anna.morozova',
+    email: 'anna.morozova@company.com',
+    roles: ['Бухгалтер'],
+    groupsCount: 1,
+    isActive: true,
+    addedBy: 'elena.volkova',
+    addedDate: '2024-01-11',
+  ),
+  User(
+    username: 'sergey.novikov',
+    email: 'sergey.novikov@company.com',
+    roles: ['Менеджер по продажам'],
     groupsCount: 1,
     isActive: false,
-    addedBy: 'manager',
-    addedDate: '20.01.2025, 14:30',
+    addedBy: 'maria.sidorova',
+    addedDate: '2024-01-13',
+  ),
+  User(
+    username: 'olga.lebedev',
+    email: 'olga.lebedev@company.com',
+    roles: ['HR менеджер'],
+    groupsCount: 1,
+    isActive: true,
+    addedBy: 'elena.volkova',
+    addedDate: '2024-01-09',
   ),
 ];
 
@@ -888,110 +934,22 @@ class _UsersState extends State<Users> {
       );
     }
     
-    return LayoutBuilder(
-    builder: (context, constraints) {
-      final availableWidth = constraints.maxWidth;
-      
-    return Scrollbar(
-      controller: _verticalScrollController,
-      thumbVisibility: true,
-      child: SingleChildScrollView(
-        controller: _horizontalScrollController,
-        child: Container(
-          width: double.infinity,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              // Вычисляем ширину для каждой колонки
-              final totalWidth = constraints.maxWidth;
-              final actionWidth = 350.0;
-              final remainingWidth = totalWidth - actionWidth;
-              
-              final descriptionWidth = remainingWidth * 0.35;
-              final fileNameWidth = remainingWidth * 0.25;
-              final addedByWidth = remainingWidth * 0.2;
-              final dateWidth = remainingWidth * 0.1;
-              final statusWidth = remainingWidth * 0.1;
-              
-              return DataTable(
-              decoration: BoxDecoration(color: Colors.white),
-              headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-              dataRowMinHeight: 60,
-              dataRowMaxHeight: 80,
-              columnSpacing: 20, 
-              horizontalMargin: 16,
-              dividerThickness: 1,
-              showCheckboxColumn: false,
-              columns: [
-                DataColumn(
-                  label: _buildSortableColumnHeader('Имя пользователя'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Почта'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Количество ролей'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Роли'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Количество групп'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Активирован'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Добавил'),
-                ),
-                DataColumn(
-                  label: _buildSortableColumnHeader('Дата добавления'),
-                ),
-                const DataColumn(
-                  label: Text('Действия'),
-                ),
-              ],
-              rows: List<DataRow>.generate(
-                filteredUsers.length,
-                (index) {
-                  final user = filteredUsers[index];
-                  return DataRow(
-                    cells: [
-                      DataCell(_buildEditableCell(user.username, index, 'Имя пользователя')),
-                      DataCell(_buildEditableCell(user.email, index, 'Почта')),
-                      DataCell(Text(user.roles.length.toString())),
-                      DataCell(_buildEditableCell(user.roles, index, 'Роли')),
-                      DataCell(_buildEditableCell(user.groupsCount, index, 'Количество групп')),
-                      DataCell(_buildEditableCell(user.isActive, index, 'Активирован')),
-                      DataCell(_buildEditableCell(user.addedBy, index, 'Добавил')),
-                      DataCell(_buildEditableCell(user.addedDate, index, 'Дата добавления')),
-                      DataCell(
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit, color: Colors.blue),
-                              tooltip: 'Редактировать',
-                              onPressed: () => _showEditUserDialog(index),
-                            ),
-                            IconButton(
-                              icon: const Icon(Icons.delete, color: Colors.red),
-                              tooltip: 'Удалить',
-                              onPressed: () => _removeUser(index),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              )
-              );
-            }
-            ),
-          ),
-        ),
-      );
-    }
+    // Преобразуем список пользователей в формат для таблицы
+    final List<Map<String, dynamic>> usersData = filteredUsers.map((user) => user.toMap()).toList();
+    
+    return ResponsiveUsersTable(
+      users: usersData,
+      onEdit: (index, field, value) {
+        final user = filteredUsers[index];
+        final updatedUser = user.copyWithField(field, value);
+        setState(() {
+          _users[_users.indexOf(user)] = updatedUser;
+        });
+      },
+      onDelete: (index) {
+        _removeUser(index);
+      },
+      primaryColor: Theme.of(context).colorScheme.primary,
     );
   }
 

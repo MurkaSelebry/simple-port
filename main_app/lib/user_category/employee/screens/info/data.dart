@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import '../common/universal_responsive_table.dart';
 
 // Данные для каждой категории
 final List<Map<String, String>> generalDocuments = [
@@ -45,25 +46,28 @@ Widget buildFilteredTable({
         : titleB.compareTo(titleA);
   });
 
-  return DataTable(
-    columns: const [
-      DataColumn(label: Text('Название')),
-      DataColumn(label: Text('Описание')),
-      DataColumn(label: Text('Действия')),
-    ],
-    rows: filteredItems.asMap().entries.map((entry) {
-      final index = entry.key;
-      final item = entry.value;
-      return DataRow(cells: [
-        DataCell(Text(item['Название']!)),
-        DataCell(Text(item['Описание']!)),
-        DataCell(
-          IconButton(
-            icon: const Icon(Icons.delete, color: Colors.red),
-            onPressed: () => removeItem(index),
-          ),
-        ),
-      ]);
-    }).toList(),
+  // Convert to the format expected by UniversalResponsiveTable
+  final List<Map<String, dynamic>> convertedData = filteredItems.map((item) => {
+    'Название': item['Название'],
+    'Описание': item['Описание'],
+  }).toList();
+
+  return UniversalResponsiveTable(
+    data: convertedData,
+    columns: ['Название', 'Описание'],
+    columnKeys: ['Название', 'Описание'],
+    onEdit: (index, field, value) {
+      // Handle edit if needed
+    },
+    onDelete: (index) {
+      removeItem(index);
+    },
+    onAdd: () {
+      addItem();
+    },
+    primaryColor: color,
+    showFileUpload: false,
+    showSearch: true,
+    showSort: true,
   );
 }

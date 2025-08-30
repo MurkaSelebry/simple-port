@@ -4,6 +4,7 @@ import 'package:diplom/user_category/employee/screens/orders/orders_page.dart';
 import 'package:diplom/user_category/employee/screens/screens.dart';
 import 'package:http/http.dart' as http; // <--- ДОБАВЛЕНО
 import 'dart:convert';
+import 'common/universal_responsive_table.dart';
 
 class RagResponse {
   final String answer;
@@ -630,65 +631,26 @@ class MessageBubble extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      child: DataTable(
-                        columnSpacing: isMobile ? 12 : 16,
-                        headingRowHeight: isMobile ? 40 : 48,
-                        dataRowHeight: isMobile ? 36 : 42,
-                        columns: [
-                          DataColumn(
-                            label: Text(
-                              'Описание',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: isMobile ? 12 : 14,
-                                color: message.isMe ? Colors.white : Colors.black87,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Text(
-                              'Имя файла',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: isMobile ? 12 : 14,
-                                color: message.isMe ? Colors.white : Colors.black87,
-                              ),
-                            ),
-                          ),
-                        ],
-                        rows: message.files.map((file) {
-                          return DataRow(cells: [
-                            DataCell(
-                              Text(
-                                file.description,
-                                style: TextStyle(
-                                  fontSize: isMobile ? 11 : 12,
-                                  color: message.isMe ? Colors.white.withOpacity(0.9) : Colors.black87,
-                                ),
-                              ),
-                            ),
-                            DataCell(
-                              InkWell(
-                                onTap: () {
-                                  // Действие при нажатии на файл
-                                },
-                                borderRadius: BorderRadius.circular(4),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-                                  child: Text(
-                                    file.fileName,
-                                    style: TextStyle(
-                                      fontSize: isMobile ? 11 : 12,
-                                      color: message.isMe ? Colors.white : Colors.blue.shade600,
-                                      decoration: TextDecoration.underline,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ]);
+                      child: UniversalResponsiveTable(
+                        data: message.files.map((file) => {
+                          'Описание': file.description,
+                          'Имя файла': file.fileName,
                         }).toList(),
+                        columns: ['Описание', 'Имя файла'],
+                        columnKeys: ['Описание', 'Имя файла'],
+                        onEdit: (index, field, value) {
+                          // Handle edit if needed
+                        },
+                        onDelete: (index) {
+                          // Handle delete if needed
+                        },
+                        onAdd: () {
+                          // Handle add if needed
+                        },
+                        primaryColor: message.isMe ? Colors.white : Colors.blue,
+                        showFileUpload: false,
+                        showSearch: false,
+                        showSort: false,
                       ),
                     ),
                   ),

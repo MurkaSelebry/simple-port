@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import '../common/universal_responsive_table.dart';
 
 // Модель данных для заказа
 class Order {
@@ -87,22 +88,184 @@ class Order {
 
 final List<Order> initialOrders = [
   Order(
-    orderNumber: '105',
-    opCode: 'ОфГр',
-    shipmentNumber: '2943',
-    shipmentDate: '06.06.2024',
+    orderNumber: 'ORD-2024-001',
+    opCode: 'OP001',
+    shipmentNumber: 'SH-2024-001',
+    shipmentDate: '2024-01-15',
     line: 'Линия 1',
-    description: 'Прислали горизонтальные...',
-    packageType: 'Коробка',
+    description: 'Кухонный гарнитур в современном стиле',
+    packageType: 'коробка',
     defaultPackages: '2',
-    number: '105',
-    fromLetters: 'АБВ',
-    details: '5',
-    createdAt: '21.05.2024, 13:27',
-    status: 'В план на отгрузку',
-    returnable: '1',
+    number: '1',
+    fromLetters: 'А',
+    details: 'Детали заказа',
+    createdAt: '2024-01-10',
+    status: 'в обработке',
+    returnable: '0',
     city: 'Москва',
-    filePath: '',
+    filePath: '/files/order1.pdf',
+  ),
+  Order(
+    orderNumber: 'ORD-2024-002',
+    opCode: 'OP002',
+    shipmentNumber: 'SH-2024-002',
+    shipmentDate: '2024-01-16',
+    line: 'Линия 2',
+    description: 'Классический кухонный гарнитур',
+    packageType: 'паллета',
+    defaultPackages: '3',
+    number: '2',
+    fromLetters: 'Б',
+    details: 'Детали заказа',
+    createdAt: '2024-01-11',
+    status: 'отменен',
+    returnable: '0',
+    city: 'Санкт-Петербург',
+    filePath: '/files/order2.pdf',
+  ),
+  Order(
+    orderNumber: 'ORD-2024-003',
+    opCode: 'OP003',
+    shipmentNumber: 'SH-2024-003',
+    shipmentDate: '2024-01-17',
+    line: 'Линия 3',
+    description: 'Кухня в стиле прованс',
+    packageType: 'мешок',
+    defaultPackages: '1',
+    number: '3',
+    fromLetters: 'В',
+    details: 'Детали заказа',
+    createdAt: '2024-01-12',
+    status: 'новый',
+    returnable: '0',
+    city: 'Екатеринбург',
+    filePath: '/files/order3.pdf',
+  ),
+  Order(
+    orderNumber: 'ORD-2024-004',
+    opCode: 'OP004',
+    shipmentNumber: 'SH-2024-004',
+    shipmentDate: '2024-01-18',
+    line: 'Линия 4',
+    description: 'Кухня в стиле лофт',
+    packageType: 'ящик',
+    defaultPackages: '2',
+    number: '4',
+    fromLetters: 'Г',
+    details: 'Детали заказа',
+    createdAt: '2024-01-13',
+    status: 'в обработке',
+    returnable: '0',
+    city: 'Новосибирск',
+    filePath: '/files/order4.pdf',
+  ),
+  Order(
+    orderNumber: 'ORD-2024-005',
+    opCode: 'OP005',
+    shipmentNumber: 'SH-2024-005',
+    shipmentDate: '2024-01-19',
+    line: 'Линия 5',
+    description: 'Минималистичная кухня',
+    packageType: 'коробка',
+    defaultPackages: '1',
+    number: '5',
+    fromLetters: 'Д',
+    details: 'Детали заказа',
+    createdAt: '2024-01-14',
+    status: 'завершен',
+    returnable: '0',
+    city: 'Казань',
+    filePath: '/files/order5.pdf',
+  ),
+  Order(
+    orderNumber: 'ORD-2024-006',
+    opCode: 'OP006',
+    shipmentNumber: 'SH-2024-006',
+    shipmentDate: '2024-01-20',
+    line: 'Линия 6',
+    description: 'Кухня в скандинавском стиле',
+    packageType: 'паллета',
+    defaultPackages: '2',
+    number: '6',
+    fromLetters: 'Е',
+    details: 'Детали заказа',
+    createdAt: '2024-01-15',
+    status: 'в обработке',
+    returnable: '0',
+    city: 'Нижний Новгород',
+    filePath: '/files/order6.pdf',
+  ),
+  Order(
+    orderNumber: 'ORD-2024-007',
+    opCode: 'OP007',
+    shipmentNumber: 'SH-2024-007',
+    shipmentDate: '2024-01-21',
+    line: 'Линия 7',
+    description: 'Кухня в стиле хай-тек',
+    packageType: 'ящик',
+    defaultPackages: '3',
+    number: '7',
+    fromLetters: 'Ж',
+    details: 'Детали заказа',
+    createdAt: '2024-01-16',
+    status: 'новый',
+    returnable: '0',
+    city: 'Ростов-на-Дону',
+    filePath: '/files/order7.pdf',
+  ),
+  Order(
+    orderNumber: 'ORD-2024-008',
+    opCode: 'OP008',
+    shipmentNumber: 'SH-2024-008',
+    shipmentDate: '2024-01-22',
+    line: 'Линия 8',
+    description: 'Кухня в деревенском стиле',
+    packageType: 'коробка',
+    defaultPackages: '2',
+    number: '8',
+    fromLetters: 'З',
+    details: 'Детали заказа',
+    createdAt: '2024-01-17',
+    status: 'в обработке',
+    returnable: '0',
+    city: 'Уфа',
+    filePath: '/files/order8.pdf',
+  ),
+  Order(
+    orderNumber: 'ORD-2024-009',
+    opCode: 'OP009',
+    shipmentNumber: 'SH-2024-009',
+    shipmentDate: '2024-01-23',
+    line: 'Линия 9',
+    description: 'Кухня в стиле арт-деко',
+    packageType: 'паллета',
+    defaultPackages: '2',
+    number: '9',
+    fromLetters: 'И',
+    details: 'Детали заказа',
+    createdAt: '2024-01-18',
+    status: 'завершен',
+    returnable: '0',
+    city: 'Волгоград',
+    filePath: '/files/order9.pdf',
+  ),
+  Order(
+    orderNumber: 'ORD-2024-010',
+    opCode: 'OP010',
+    shipmentNumber: 'SH-2024-010',
+    shipmentDate: '2024-01-24',
+    line: 'Линия 10',
+    description: 'Кухня в неоклассическом стиле',
+    packageType: 'ящик',
+    defaultPackages: '2',
+    number: '10',
+    fromLetters: 'К',
+    details: 'Детали заказа',
+    createdAt: '2024-01-19',
+    status: 'новый',
+    returnable: '0',
+    city: 'Пермь',
+    filePath: '/files/order10.pdf',
   ),
 ];
 
@@ -746,126 +909,38 @@ class _OrdersState extends State<PackagingLines> {
         ),
       );
     }
+
+    final List<Map<String, dynamic>> ordersData = filteredOrders.map((order) => order.toMap()).toList();
     
-    return Scrollbar(
-      controller: _verticalScrollController,
-      thumbVisibility: true,
-      child: Scrollbar(
-        controller: _horizontalScrollController,
-        thumbVisibility: true,
-        notificationPredicate: (notification) => notification.depth == 1,
-        child: SingleChildScrollView(
-          controller: _verticalScrollController,
-          child: SingleChildScrollView(
-            controller: _horizontalScrollController,
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-              decoration: BoxDecoration(color: Colors.white),
-              headingRowColor: MaterialStateProperty.all(Colors.blue[50]),
-              dataRowMinHeight: 60,
-              dataRowMaxHeight: 80,
-              columnSpacing: 20, 
-              horizontalMargin: 16,
-              dividerThickness: 1,
-              showCheckboxColumn: false,
-              columns: [
-                DataColumn(label: _buildSortableColumnHeader('Номер заказа')),
-                DataColumn(label: _buildSortableColumnHeader('Код ОП')),
-                DataColumn(label: _buildSortableColumnHeader('Номер отгрузки')),
-                DataColumn(label: _buildSortableColumnHeader('Отгрузка')),
-                DataColumn(label: _buildSortableColumnHeader('Линия')),
-                DataColumn(label: _buildSortableColumnHeader('Описание')),
-                DataColumn(label: _buildSortableColumnHeader('Тип упаковки')),
-                DataColumn(label: _buildSortableColumnHeader('Упаковка по умолчанию')),
-                DataColumn(label: _buildSortableColumnHeader('Номер')),
-                DataColumn(label: _buildSortableColumnHeader('Из букв')),
-                DataColumn(label: _buildSortableColumnHeader('Деталей')),
-                DataColumn(label: _buildSortableColumnHeader('Создано')),
-                DataColumn(label: _buildSortableColumnHeader('Общий статус')),
-                DataColumn(label: _buildSortableColumnHeader('Возвратных')),
-                DataColumn(label: _buildSortableColumnHeader('Город')),
-                const DataColumn(
-                  label: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Действия', style: TextStyle(fontWeight: FontWeight.bold)),
-                  ),
-                ),
-              ],
-              rows: filteredOrders.asMap().entries.map((entry) {
-                final index = entry.key;
-                final order = entry.value;
-                return DataRow(
-                  color: MaterialStateProperty.resolveWith<Color?>(
-                    (Set<MaterialState> states) {
-                      if (index % 2 == 0) return Colors.grey[100];
-                      return null;
-                    },
-                  ),
-                  cells: [
-                    DataCell(_buildEditableCell(order.orderNumber, index, 'Номер заказа')),
-                    DataCell(_buildEditableCell(order.opCode, index, 'Код ОП')),
-                    DataCell(_buildEditableCell(order.shipmentNumber, index, 'Номер отгрузки')),
-                    DataCell(_buildEditableCell(order.shipmentDate, index, 'Отгрузка')),
-                    DataCell(_buildEditableCell(order.line, index, 'Линия')),
-                    DataCell(_buildEditableCell(order.description, index, 'Описание')),
-                    DataCell(_buildEditableCell(order.packageType, index, 'Тип упаковки')),
-                    DataCell(_buildEditableCell(order.defaultPackages, index, 'Упаковка по умолчанию')),
-                    DataCell(_buildEditableCell(order.number, index, 'Номер')),
-                    DataCell(_buildEditableCell(order.fromLetters, index, 'Из букв')),
-                    DataCell(_buildEditableCell(order.details, index, 'Деталей')),
-                    DataCell(Text(order.createdAt)),
-                    DataCell(
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: _getStatusColor(order.status),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: InkWell(
-                          onTap: () => _showEditDialog(index, 'Общий статус', order.status),
-                          child: Text(
-                            order.status,
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    DataCell(_buildEditableCell(order.returnable, index, 'Возвратных')),
-                    DataCell(_buildEditableCell(order.city, index, 'Город')),
-                    DataCell(
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          if (order.filePath.isEmpty)
-                            IconButton(
-                              icon: const Icon(Icons.upload, color: Colors.blue),
-                              onPressed: () => _pickFile(index),
-                              tooltip: 'Загрузить файл',
-                            )
-                          else
-                            IconButton(
-                              icon: const Icon(Icons.download, color: Colors.green),
-                              onPressed: () => _downloadFile(order.filePath),
-                              tooltip: 'Скачать файл',
-                            ),
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _removeItem(index),
-                            tooltip: 'Удалить',
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      ),
+    return UniversalResponsiveTable(
+      data: ordersData,
+      columns: ['Номер заказа', 'Код ОП', 'Номер отгрузки', 'Отгрузка', 'Линия', 'Описание', 'Тип упаковки', 'Упаковка по умолчанию', 'Номер', 'Из букв', 'Деталей', 'Создано', 'Общий статус', 'Возвратных', 'Город'],
+      columnKeys: ['Номер заказа', 'Код ОП', 'Номер отгрузки', 'Отгрузка', 'Линия', 'Описание', 'Тип упаковки', 'Упаковка по умолчанию', 'Номер', 'Из букв', 'Деталей', 'Создано', 'Общий статус', 'Возвратных', 'Город'],
+      onEdit: (index, field, value) {
+        final order = filteredOrders[index];
+        final updatedOrder = order.copyWithField(field, value.toString());
+        setState(() {
+          _orders[_orders.indexOf(order)] = updatedOrder;
+        });
+      },
+      onDelete: (index) {
+        setState(() {
+          _orders.removeAt(index);
+        });
+      },
+      onAdd: () {
+        _createNewOrder();
+      },
+      primaryColor: Theme.of(context).colorScheme.primary,
+      showFileUpload: true,
+      columnTypes: {
+        'Отгрузка': 'date',
+        'Создано': 'date',
+        'Общий статус': 'status',
+      },
+      statusOptions: {
+        'Общий статус': ['новый', 'в обработке', 'в производстве', 'в план на отгрузку', 'готов', 'отменен'],
+      },
     );
   }
 
